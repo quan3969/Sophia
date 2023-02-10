@@ -344,11 +344,11 @@ FileTransferDialog -Detailed
 
 # Display the recycle bin files delete confirmation dialog
 # Запрашивать подтверждение на удаление файлов в корзину
-RecycleBinDeleteConfirmation -Enable
+# RecycleBinDeleteConfirmation -Enable
 
 # Do not display the recycle bin files delete confirmation dialog (default value)
 # Не запрашивать подтверждение на удаление файлов в корзину (значение по умолчанию)
-# RecycleBinDeleteConfirmation -Disable
+RecycleBinDeleteConfirmation -Disable
 
 # Hide recently used files in Quick access
 # Скрыть недавно использовавшиеся файлы на панели быстрого доступа
@@ -594,19 +594,19 @@ BSoDStopError -Enable
 
 # Choose when to be notified about changes to your computer: never notify
 # Настройка уведомления об изменении параметров компьютера: никогда не уведомлять
-AdminApprovalMode -Never
+# AdminApprovalMode -Never
 
 # Choose when to be notified about changes to your computer: notify me only when apps try to make changes to my computer (default value)
 # Настройка уведомления об изменении параметров компьютера: уведомлять меня только при попытках приложений внести изменения в компьютер (значение по умолчанию)
-# AdminApprovalMode -Default
+AdminApprovalMode -Default
 
 # Turn on access to mapped drives from app running with elevated permissions with Admin Approval Mode enabled
 # Включить доступ к сетевым дискам при включенном режиме одобрения администратором при доступе из программ, запущенных с повышенными правами
-MappedDrivesAppElevatedAccess -Enable
+# MappedDrivesAppElevatedAccess -Enable
 
 # Turn off access to mapped drives from app running with elevated permissions with Admin Approval Mode enabled (default value)
 # Выключить доступ к сетевым дискам при включенном режиме одобрения администратором при доступе из программ, запущенных с повышенными правами (значение по умолчанию)
-# MappedDrivesAppElevatedAccess -Disable
+MappedDrivesAppElevatedAccess -Disable
 
 # Turn off Delivery Optimization
 # Выключить оптимизацию доставки
@@ -694,7 +694,7 @@ NetworkAdaptersSavePower -Disable
 	Выключить IP версии 6 (TCP/IPv6)
 	Перед выполнением функции будет проведена проверка: поддерживает ли ваш провайдер IPv6, используя ресурс https://ipv6-test.com
 #>
-IPv6Component -Disable
+# IPv6Component -Disable
 
 <#
 	Enable the Internet Protocol Version 6 (TCP/IPv6) component for all network connections (default value)
@@ -703,7 +703,7 @@ IPv6Component -Disable
 	Включить IP версии 6 (TCP/IPv6) (значение по умолчанию)
 	Перед выполнением функции будет проведена проверка: поддерживает ли ваш провайдер IPv6, используя ресурс https://ipv6-test.com
 #>
-# IPv6Component -Enable
+IPv6Component -Enable
 
 <#
 	Enable the Internet Protocol Version 6 (TCP/IPv6) component for all network connections. Prefer IPv4 over IPv6
@@ -822,11 +822,11 @@ F1HelpPage -Disable
 
 # Enable Num Lock at startup
 # Включить Num Lock при загрузке
-NumLock -Enable
+# NumLock -Enable
 
 # Disable Num Lock at startup (default value)
 # Выключить Num Lock при загрузке (значение по умолчанию)
-# NumLock -Disable
+NumLock -Disable
 
 # Disable Caps Lock
 # Выключить Caps Lock
@@ -862,19 +862,19 @@ ThumbnailCacheRemoval -Disable
 
 # Automatically saving my restartable apps and restart them when I sign back in
 # Автоматически сохранять мои перезапускаемые приложения из системы и перезапускать их при повторном входе
-SaveRestartableApps -Enable
+# SaveRestartableApps -Enable
 
 # Turn off automatically saving my restartable apps and restart them when I sign back in (default value)
 # Выключить автоматическое сохранение моих перезапускаемых приложений из системы и перезапускать их при повторном входе (значение по умолчанию)
-# SaveRestartableApps -Disable
+SaveRestartableApps -Disable
 
 # Enable "Network Discovery" and "File and Printers Sharing" for workgroup networks
 # Включить сетевое обнаружение и общий доступ к файлам и принтерам для рабочих групп
-NetworkDiscovery -Enable
+# NetworkDiscovery -Enable
 
 # Disable "Network Discovery" and "File and Printers Sharing" for workgroup networks (default value)
 # Выключить сетевое обнаружение и общий доступ к файлам и принтерам для рабочих групп (значение по умолчанию)
-# NetworkDiscovery -Disable
+NetworkDiscovery -Disable
 
 # Automatically adjust active hours for me based on daily usage
 # Автоматически изменять период активности для этого устройства на основе действий
@@ -970,11 +970,11 @@ PreventEdgeShortcutCreation -Channels Stable, Beta, Dev, Canary
 
 # Run the Windows PowerShell shortcut from the Start menu as Administrator
 # Запускать ярлык Windows PowerShell в меню "Пуск" от имени Администратора
-RunPowerShellShortcut -Elevated
+# RunPowerShellShortcut -Elevated
 
 # Run the Windows PowerShell shortcut from the Start menu as user (default value)
 # Запускать ярлык Windows PowerShell в меню "Пуск" от имени пользователя (значение по умолчанию)
-# RunPowerShellShortcut -NonElevated
+RunPowerShellShortcut -NonElevated
 
 # Show default Start layout (for 22621+ build only) (default value)
 # Отображать стандартный макет начального экрана (только для сборок 22621+) (значение по умолчанию)
@@ -1249,7 +1249,7 @@ SaveZoneInformation -Disable
 	Включить DNS-over-HTTPS для IPv4
 	Действительные IPv4-адреса: 1.0.0.1, 1.1.1.1, 149.112.112.112, 8.8.4.4, 8.8.8.8, 9.9.9.9
 #>
-DNSoverHTTPS -Enable -PrimaryDNS 1.0.0.1 -SecondaryDNS 1.1.1.1
+DNSoverHTTPS -Enable -PrimaryDNS 223.5.5.5 -SecondaryDNS 119.29.29.29
 
 # Disable DNS-over-HTTPS for IPv4 (default value)
 # Выключить DNS-over-HTTPS для IPv4 (значение по умолчанию)
@@ -1323,11 +1323,11 @@ IncludeInLibraryContext -Hide
 
 # Hide the "Send to" item from the folders context menu
 # Скрыть пункт "Отправить" из контекстного меню папок
-SendToContext -Hide
+# SendToContext -Hide
 
 # Show the "Send to" item in the folders context menu (default value)
 # Отобразить пункт "Отправить" в контекстном меню папок (значение по умолчанию)
-# SendToContext -Show
+SendToContext -Show
 
 # Hide the "Compressed (zipped) Folder" item from the "New" context menu
 # Скрыть пункт "Сжатая ZIP-папка" из контекстного меню "Создать"
