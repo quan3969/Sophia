@@ -767,7 +767,7 @@ LatestInstalled.NET -Enable
 	Функция будет применена только в случае, если в пресете настроено удаление приложения OneDrive или приложение уже удалено,
 	иначе в OneDrive ломается функционал резервного копирования для папок "Рабочий стол" и "Изображения"
 #>
-WinPrtScrFolder -Desktop
+# WinPrtScrFolder -Desktop
 
 # Save screenshots by pressing Win+PrtScr in the Pictures folder (default value)
 # Cохранять скриншоты по нажатию Win+PrtScr в папку "Изображения" (значение по умолчанию)
