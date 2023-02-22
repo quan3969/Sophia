@@ -2,8 +2,8 @@
 	.SYNOPSIS
 	Sophia Script is a PowerShell module for Windows 10 & Windows 11 fine-tuning and automating the routine tasks
 
-	Version: v5.15.1
-	Date: 06.02.2023
+	Version: v5.15.2
+	Date: 11.02.2023
 
 	Copyright (c) 2014—2023 farag
 	Copyright (c) 2019—2023 farag & Inestic
@@ -84,7 +84,7 @@ function Checks
 				Start-Sleep -Seconds 1
 
 				# Check for UWP apps updates
-				Get-CimInstance -Namespace root\cimv2\mdm\dmmap -ClassName MDM_EnterpriseModernAppManagement_AppManagement01 | Invoke-CimMethod -MethodName UpdateScanMethod
+				Get-CimInstance -Namespace root/CIMV2/mdm/dmmap -ClassName MDM_EnterpriseModernAppManagement_AppManagement01 | Invoke-CimMethod -MethodName UpdateScanMethod
 
 				# Open the "Windows Update" page
 				Start-Process -FilePath "ms-settings:windowsupdate"
@@ -261,13 +261,13 @@ function Checks
 		# Checking whether WMI is corrupted
 		try
 		{
-			Get-CimInstance -ClassName MSFT_MpComputerStatus -Namespace root/microsoft/windows/defender -ErrorAction Stop | Out-Null
+			Get-CimInstance -ClassName MSFT_MpComputerStatus -Namespace root/Microsoft/Windows/Defender -ErrorAction Stop | Out-Null
 		}
 		catch [Microsoft.Management.Infrastructure.CimException]
 		{
 			# Provider Load Failure exception
 			Write-Warning -Message $Global:Error.Exception.Message | Select-Object -First 1
-			Write-Warning -Message $Localization.WindowsBroken
+			Write-Warning -Message $Localization.DefenderBroken
 
 			Start-Process -FilePath "https://t.me/sophia_chat"
 
@@ -282,7 +282,7 @@ function Checks
 	}
 	catch [Microsoft.PowerShell.Commands.ServiceCommandException]
 	{
-		Write-Warning -Message $Localization.WindowsBroken
+		Write-Warning -Message $Localization.DefenderBroken
 		Start-Process -FilePath "https://t.me/sophia_chat"
 		exit
 	}
@@ -295,11 +295,12 @@ function Checks
 		# Check Microsoft Defender state
 		if ($null -eq (Get-CimInstance -Namespace root/SecurityCenter2 -ClassName AntiVirusProduct -ErrorAction Ignore))
 		{
-			Write-Warning -Message $Localization.WindowsBroken
+			Write-Warning -Message $Localization.DefenderBroken
 			Start-Process -FilePath "https://t.me/sophia_chat"
 			exit
 		}
 
+		# Check Microsoft Defender state
 		$productState = (Get-CimInstance -Namespace root/SecurityCenter2 -ClassName Antivirusproduct | Where-Object -FilterScript {$_.instanceGuid -eq "{D68DDC3A-831F-4fae-9E44-DA132C1ACF46}"}).productState
 		$DefenderState = ('0x{0:x}' -f $productState).Substring(3, 2)
 		if ($DefenderState -notmatch "00|01")
@@ -319,7 +320,7 @@ function Checks
 	# Specify whether Antispyware protection is enabled
 	if ((Get-ItemPropertyValue -Path "HKLM:\SOFTWARE\Microsoft\Windows nt\CurrentVersion" -Name EditionID) -ne "EnterpriseG")
 	{
-		if ((Get-CimInstance -ClassName MSFT_MpComputerStatus -Namespace root/microsoft/windows/defender).AntispywareEnabled)
+		if ((Get-CimInstance -ClassName MSFT_MpComputerStatus -Namespace root/Microsoft/Windows/Defender).AntispywareEnabled)
 		{
 			$Script:DefenderAntispywareEnabled = $true
 		}
@@ -340,7 +341,7 @@ function Checks
 		{
 			if ($Script:DefenderproductState)
 			{
-				if ((Get-CimInstance -ClassName MSFT_MpComputerStatus -Namespace root/microsoft/windows/defender).ProductStatus -eq 1)
+				if ((Get-CimInstance -ClassName MSFT_MpComputerStatus -Namespace root/Microsoft/Windows/Defender).ProductStatus -eq 1)
 				{
 					$Script:DefenderProductStatus = $false
 				}
@@ -387,7 +388,7 @@ function Checks
 	# https://docs.microsoft.com/en-us/graph/api/resources/intune-devices-windowsdefenderproductstatus?view=graph-rest-beta
 	if ((Get-ItemPropertyValue -Path "HKLM:\SOFTWARE\Microsoft\Windows nt\CurrentVersion" -Name EditionID) -ne "EnterpriseG")
 	{
-		if ((Get-CimInstance -ClassName MSFT_MpComputerStatus -Namespace root/microsoft/windows/defender).AMEngineVersion -eq "0.0.0.0")
+		if ((Get-CimInstance -ClassName MSFT_MpComputerStatus -Namespace root/Microsoft/Windows/Defender).AMEngineVersion -eq "0.0.0.0")
 		{
 			$Script:DefenderAMEngineVersion = $false
 		}
@@ -4488,7 +4489,7 @@ function OneDrive
 					# https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-movefileexa
 					# The system does not move the file until the operating system is restarted
 					# The system moves the file immediately after AUTOCHK is executed, but before creating any paging files
-					$Signature = @{
+					$Script:Signature = @{
 						Namespace        = "WinAPI"
 						Name             = "DeleteFiles"
 						Language         = "CSharp"
@@ -4509,7 +4510,7 @@ public static bool MarkFileDelete (string sourcefile)
 					}
 
 					# If there are some files or folders left in %OneDrive%
-					if ((Get-ChildItem -Path $env:OneDrive -ErrorAction Ignore | Measure-Object).Count -ne 0)
+					if ((Get-ChildItem -Path $env:OneDrive -Force -ErrorAction Ignore | Measure-Object).Count -ne 0)
 					{
 						if (-not ("WinAPI.DeleteFiles" -as [type]))
 						{
@@ -4534,7 +4535,12 @@ public static bool MarkFileDelete (string sourcefile)
 			}
 
 			Remove-ItemProperty -Path HKCU:\Environment -Name OneDrive, OneDriveConsumer -Force -ErrorAction Ignore
-			Remove-Item -Path HKCU:\Software\Microsoft\OneDrive, HKLM:\SOFTWARE\WOW6432Node\Microsoft\OneDrive, "$env:ProgramData\Microsoft OneDrive", $env:SystemDrive\OneDriveTemp -Recurse -Force -ErrorAction Ignore
+			$Path = @(
+				"HKCU:\Software\Microsoft\OneDrive",
+				"$env:ProgramData\Microsoft OneDrive",
+				"$env:SystemDrive\OneDriveTemp"
+			)
+			Remove-Item -Path $Path -Recurse -Force -ErrorAction Ignore
 			Unregister-ScheduledTask -TaskName *OneDrive* -Confirm:$false -ErrorAction Ignore
 
 			# Getting the OneDrive folder path
@@ -4586,7 +4592,7 @@ public static bool MarkFileDelete (string sourcefile)
 				return
 			}
 
-			if (Test-Path -Path $env:SystemRoot\System32\OneDriveSetup.exe)
+			if (Test-Path -Path $env:SystemRoot\SysWOW64\OneDriveSetup.exe)
 			{
 				Write-Information -MessageData "" -InformationAction Continue
 				Write-Verbose -Message $Localization.OneDriveInstalling -Verbose
@@ -8508,6 +8514,15 @@ function Set-Association
 
 	$ProgramPath = [System.Environment]::ExpandEnvironmentVariables($ProgramPath)
 
+	if (-not (Test-Path -Path $ProgramPath))
+	{
+		Write-Verbose -Message $Localization.Skipped -Verbose
+		Write-Error -Message $Localization.NoInternetConnection -ErrorAction SilentlyContinue
+		Write-Error -Message ($Localization.RestartFunction -f $MyInvocation.Line) -ErrorAction SilentlyContinue
+
+		return
+	}
+
 	if ($Icon)
 	{
 		$Icon = [System.Environment]::ExpandEnvironmentVariables($Icon)
@@ -8803,23 +8818,27 @@ namespace RegistryUtils
 			$Extension
 		)
 
-		$OrigProgID = (Get-ItemProperty -Path "HKLM:\SOFTWARE\Classes\$Extension" -Name "(default)" -ErrorAction Ignore)."(default)"
-		if ($OrigProgID)
+		# Due to "Set-StrictMode -Version Latest" we have to check everything
+		if ((Test-Path -Path "HKLM:\SOFTWARE\Classes\$Extension") -and (Get-ItemProperty -Path "HKLM:\SOFTWARE\Classes\$Extension" -Name "(default)" -ErrorAction Ignore))
 		{
-			# Save possible ProgIds history with extension
-			New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ApplicationAssociationToasts" -Name "$ProgID_$Extension" -PropertyType DWord -Value 0 -Force
+			if ((Get-ItemProperty -Path "HKLM:\SOFTWARE\Classes\$Extension" -Name "(default)" -ErrorAction Ignore)."(default)")
+			{
+				# Save possible ProgIds history with extension
+				New-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\ApplicationAssociationToasts -Name "$($ProgID)_$($Extension)" -PropertyType DWord -Value 0 -Force
+			}
 		}
 
-		$Name = "{0}_$Extension" -f (Split-Path -Path $ProgId -Leaf)
-		New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ApplicationAssociationToasts" -Name $Name -PropertyType DWord -Value 0 -Force
+		$Name = "{0}_$($Extension)" -f (Split-Path -Path $ProgId -Leaf)
+		New-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\ApplicationAssociationToasts -Name $Name -PropertyType DWord -Value 0 -Force
 
-		if ("$ProgId_$Extension" -ne $Name)
+		if ("$($ProgID)_$($Extension)" -ne $Name)
 		{
-			New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ApplicationAssociationToasts" -Name "$ProgId_$Extension" -PropertyType DWord -Value 0 -Force
+			New-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\ApplicationAssociationToasts -Name "$($ProgID)_$($Extension)" -PropertyType DWord -Value 0 -Force
 		}
 
 		# If ProgId doesn't exist set the specified ProgId for the extensions
-		if (-not $OrigProgID)
+		# Due to "Set-StrictMode -Version Latest" we have to check everything
+		if (-not (Get-Variable -Name OrigProgID -ErrorAction Ignore))
 		{
 			if (-not (Test-Path -Path "HKCU:\Software\Classes\$Extension"))
 			{
@@ -8836,7 +8855,8 @@ namespace RegistryUtils
 		New-ItemProperty -Path "HKCU:\Software\Classes\$Extension\OpenWithProgids" -Name $ProgId -PropertyType None -Value ([byte[]]@()) -Force
 
 		# Set the system ProgId to the extension parameters for the File Explorer to the possible options for the assignment, and if absent set the specified ProgId
-		if ($OrigProgID)
+		# Due to "Set-StrictMode -Version Latest" we have to check everything
+		if (Get-Variable -Name OrigProgID -ErrorAction Ignore)
 		{
 			if (-not (Test-Path -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\FileExts\$Extension\OpenWithProgids"))
 			{
@@ -8894,13 +8914,17 @@ namespace RegistryUtils
 		)
 
 		# If there is the system extension ProgId, write it to the already configured by default
-		if ((Get-ItemProperty -Path "HKLM:\SOFTWARE\Classes\$Extension" -Name "(default)" -ErrorAction Ignore)."(default)")
+		# Due to "Set-StrictMode -Version Latest" we have to check everything
+		if ((Test-Path -Path "HKLM:\SOFTWARE\Classes\$Extension") -and (Get-ItemProperty -Path "HKLM:\SOFTWARE\Classes\$Extension" -Name "(default)" -ErrorAction Ignore))
 		{
-			if (-not (Test-Path -Path Registry::HKEY_USERS\.DEFAULT\Software\Microsoft\Windows\CurrentVersion\FileAssociations\ProgIds))
+			if ((Get-ItemProperty -Path "HKLM:\SOFTWARE\Classes\$Extension" -Name "(default)" -ErrorAction Ignore)."(default)")
 			{
-				New-Item -Path Registry::HKEY_USERS\.DEFAULT\Software\Microsoft\Windows\CurrentVersion\FileAssociations\ProgIds -Force
+				if (-not (Test-Path -Path Registry::HKEY_USERS\.DEFAULT\Software\Microsoft\Windows\CurrentVersion\FileAssociations\ProgIds))
+				{
+					New-Item -Path Registry::HKEY_USERS\.DEFAULT\Software\Microsoft\Windows\CurrentVersion\FileAssociations\ProgIds -Force
+				}
+				New-ItemProperty -Path Registry::HKEY_USERS\.DEFAULT\Software\Microsoft\Windows\CurrentVersion\FileAssociations\ProgIds -Name "_$($Extension)" -PropertyType DWord -Value 1 -Force
 			}
-			New-ItemProperty -Path Registry::HKEY_USERS\.DEFAULT\Software\Microsoft\Windows\CurrentVersion\FileAssociations\ProgIds -Name "_$Extension" -PropertyType DWord -Value 1 -Force
 		}
 
 		# Setting 'NoOpenWith' for all registered the extension ProgIDs
@@ -8928,12 +8952,24 @@ namespace RegistryUtils
 			}
 		}
 
-		$picture = (Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\KindMap" -Name $Extension -ErrorAction Ignore).$Extension
-		$PBrush = (Get-ItemProperty -Path "HKLM:\SOFTWARE\Classes\PBrush\CLSID" -Name "(default)" -ErrorAction Ignore)."(default)"
-
-		if (($picture -eq "picture") -and $PBrush)
+		# Due to "Set-StrictMode -Version Latest" we have to check everything
+		if (Get-ItemProperty -Path HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\KindMap -Name $Extension -ErrorAction Ignore)
 		{
-			New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\ApplicationAssociationToasts" -Name "PBrush_$Extension" -PropertyType DWord -Value 0 -Force
+			$picture = (Get-ItemProperty -Path HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\KindMap -Name $Extension -ErrorAction Ignore).$Extension
+		}
+		# Due to "Set-StrictMode -Version Latest" we have to check everything
+		if ((Test-Path -Path HKLM:\SOFTWARE\Classes\PBrush\CLSID) -and (Get-ItemProperty -Path HKLM:\SOFTWARE\Classes\PBrush\CLSID -Name "(default)" -ErrorAction Ignore))
+		{
+			$PBrush = (Get-ItemProperty -Path HKLM:\SOFTWARE\Classes\PBrush\CLSID -Name "(default)" -ErrorAction Ignore)."(default)"
+		}
+
+		# Due to "Set-StrictMode -Version Latest" we have to check everything
+		if (Get-Variable -Name picture -ErrorAction Ignore)
+		{
+			if (($picture -eq "picture") -and $PBrush)
+			{
+				New-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\ApplicationAssociationToasts -Name "PBrush_$($Extension)" -PropertyType DWord -Value 0 -Force
+			}
 		}
 	}
 
@@ -11317,7 +11353,7 @@ function CheckUWPAppsUpdates
 {
 	Write-Information -MessageData "" -InformationAction Continue
 	Write-Verbose -Message $Localization.Patient -Verbose
-	Get-CimInstance -Namespace root\cimv2\mdm\dmmap -ClassName MDM_EnterpriseModernAppManagement_AppManagement01 | Invoke-CimMethod -MethodName UpdateScanMethod
+	Get-CimInstance -Namespace root/CIMV2/mdm/dmmap -ClassName MDM_EnterpriseModernAppManagement_AppManagement01 | Invoke-CimMethod -MethodName UpdateScanMethod
 }
 #endregion UWP apps
 

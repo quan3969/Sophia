@@ -1,6 +1,6 @@
 ﻿ConvertFrom-StringData -StringData @'
 UnsupportedOSBuild                        = Skrypt obsługuje tylko system Windows 11 21H2 version and higher
-UpdateWarning                             = Twoja wersja systemu Windows 11: {0}.{1}. Obsługiwane kompilacje: 22000.1335, 22621.963 i nowsze. Uruchom aktualizację systemu Windows i spróbuj ponownie.
+UpdateWarning                             = Twoja wersja systemu Windows 11: {0}.{1}. Obsługiwane kompilacje: 22621.963 i nowsze. Uruchom aktualizację systemu Windows i spróbuj ponownie.
 UnsupportedLanguageMode                   = Sesja PowerShell działa w trybie ograniczonego języka
 LoggedInUserNotAdmin                      = Zalogowany użytkownik nie posiada uprawnień administratora
 UnsupportedPowerShell                     = Próbujesz uruchomić skrypt przy użyciu PowerShell {0}.{1}. Uruchom skrypt używając odpowiedniej wersji PowerShell
@@ -12,7 +12,7 @@ bin                                       = W folderze bin nie ma żadnych plik�
 RebootPending                             = Komputer oczekuje na ponowne uruchomienie
 UnsupportedRelease                        = Znaleziono nową wersję
 CustomizationWarning                      = \nCzy dostosowałeś funkcje w predefiniowanym pliku {0} przed uruchomieniem Sophia Script?
-WindowsBroken                             = Niektóre składniki systemu Windows mogły zostać uszkodzone
+DefenderBroken                            = Microsoft Defender jest uszkodzony lub usunięty z systemu operacyjnego
 UpdateDefender                            = Definicje programu Microsoft Defender są nieaktualne. Uruchom aktualizację systemu Windows i spróbuj ponownie.
 ControlledFolderAccessDisabled            = Kontrolowany dostęp do folderów został wyłączony
 ScheduledTasks                            = Zaplanowane zadania

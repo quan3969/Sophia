@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 5.15.2 | 6.3.2 — 11.02.2023
+
+* Improved and fixed `WSL-Install` function when WSL output was parsed wrong;
+  * Thanks to @lowl1f3.
+* Improved `OneDrive` function;
+* #449 closed;
+* Minor changes.
+
+* Wrapper 2.6.3
+  * Minor changes.
+
 ## 5.15.1 | 6.3.1 — 06.02.2023
 
 * `WSL` function re-written and renamed into `WSL-Install`
@@ -56,7 +67,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Switched .NET Desktop Runtime 6 to the 7th version;
 * Minor changes.
 
-Wrapper
+## Wrapper
+
 * Removed annoying pop-up notification while importing preset;
 * @BenchTweakGaming.
 
@@ -77,7 +89,8 @@ Wrapper
 * Fixed #406;
 * Minor changes.
 
-Wrapper version bumped to 2.5.8
+## Wrapper version bumped to 2.5.8
+
 * Minor changes and added link to Discord channel;
 * Wrapper 3.0 is on the way.
 

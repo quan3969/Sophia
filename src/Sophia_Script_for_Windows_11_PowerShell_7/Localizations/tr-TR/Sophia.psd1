@@ -1,6 +1,6 @@
 ﻿ConvertFrom-StringData -StringData @'
 UnsupportedOSBuild                        = Bu betik sadece Windows 11 21H2 sürüm ve üstünü destekliyor
-UpdateWarning                             = Windows 11 yapınız: {0}.{1}. Desteklenen yapılar: 22000.1335, 22621.963 ve üstünü destekliyor. Windows Update'i çalıştırın ve tekrar deneyin
+UpdateWarning                             = Windows 11 yapınız: {0}.{1}. Desteklenen yapılar: 22621.963 ve üstünü destekliyor. Windows Update'i çalıştırın ve tekrar deneyin
 UnsupportedLanguageMode                   = Sınırlı bir dil modunda çalışan PowerShell oturumu
 LoggedInUserNotAdmin                      = Oturum açan kullanıcının yönetici hakları yok
 UnsupportedPowerShell                     = Komut dosyasını PowerShell {0}.{1} aracılığıyla çalıştırmaya çalışıyorsunuz. Komut dosyasını uygun PowerShell sürümünde çalıştırın
@@ -12,7 +12,7 @@ bin                                       = bin klasöründe dosya yok. Lütfen 
 RebootPending                             = PC yeniden başlatılmayı bekliyor
 UnsupportedRelease                        = Yeni sürüm bulundu
 CustomizationWarning                      = \nSophia Script'i çalıştırmadan önce {0} ön ayar dosyasındaki her işlevi özelleştirdiniz mi?
-WindowsBroken                             = Bazı Windows bileşenleri bozulmuş olabilir
+DefenderBroken                            = Microsoft Defender bozuk veya işletim sisteminden kaldırıldı
 UpdateDefender                            = Microsoft Defender tanımları güncel değil. Windows Update'i çalıştırın ve tekrar deneyin
 ControlledFolderAccessDisabled            = Kontrollü klasör erişimi devre dışı bırakıldı
 ScheduledTasks                            = Zamanlanan görevler
