@@ -9684,10 +9684,14 @@ function Install-WSL
 {
 	[System.Console]::OutputEncoding = [System.Text.Encoding]::Unicode
 
-	$Distros = (wsl --list --online | Select-Object -Skip 4).Replace("  ", "").Replace("* ", "") | ForEach-Object -Process {
+	$wsl = wsl --list --online
+	# We need to get the string number where the "FRIENDLY NAME" header begins to truncate all other unnecessary strings in the beginning
+	$LineNumber = ($wsl | Select-String -Pattern "FRIENDLY NAME" -CaseSensitive).LineNumber
+	# Remove first strings in output from the first to the $LineNumber
+	$Distros = ($wsl).Replace("* ", "")[($LineNumber)..(($wsl).Count)] | ForEach-Object -Process {
 		[PSCustomObject]@{
-			"Distro" = $_ -split " ", 2 | Select-Object -Last 1
-			"Alias"  = $_ -split " ", 2 | Select-Object -First 1
+			"Distro" = ($_ -split " ", 2 | Select-Object -Last 1).Trim()
+			"Alias"  = ($_ -split " ", 2 | Select-Object -First 1).Trim()
 		}
 	}
 
@@ -14310,8 +14314,8 @@ public static void PostMessage()
 	# Determines whether the app can be seen in Settings where the user can turn notifications on or off
 	New-ItemProperty -Path Registry::HKEY_CLASSES_ROOT\AppUserModelId\Sophia -Name ShowInSettings -Value 0 -PropertyType DWord -Force
 
-	[Windows.UI.Notifications.ToastNotificationManager, Windows.UI.Notifications, ContentType = WindowsRuntime] | Out-Null
-	[Windows.Data.Xml.Dom.XmlDocument, Windows.Data.Xml.Dom.XmlDocument, ContentType = WindowsRuntime] | Out-Null
+	Add-Type -AssemblyName "$PSScriptRoot\..\bin\WinRT.Runtime.dll"
+	Add-Type -AssemblyName "$PSScriptRoot\..\bin\Microsoft.Windows.SDK.NET.dll"
 
 	# Apply policies found in registry to re-build database database due to gpedit.msc relies in its' own database
 	if ((Test-Path -Path "$env:TEMP\Computer.txt") -or (Test-Path -Path "$env:TEMP\User.txt"))
