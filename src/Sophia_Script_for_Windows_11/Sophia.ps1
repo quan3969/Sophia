@@ -106,7 +106,7 @@ if ($Functions)
 #region Protection
 # The mandatory checks. If you want to disable a warning message about whether the preset file was customized, remove the "-Warning" argument
 # Обязательные проверки. Чтобы выключить предупреждение о необходимости настройки пресет-файла, удалите аргумент "-Warning"
-# Checks -Warning
+Checks -Warning
 
 # Enable script logging. Log will be recorded into the script folder. To stop logging just close console or type "Stop-Transcript"
 # Включить логирование работы скрипта. Лог будет записываться в папку скрипта. Чтобы остановить логгирование, закройте консоль или наберите "Stop-Transcript"
@@ -114,7 +114,7 @@ if ($Functions)
 
 # Create a restore point
 # Создать точку восстановления
-# CreateRestorePoint
+CreateRestorePoint
 #endregion Protection
 
 #region Privacy & Telemetry
@@ -197,7 +197,7 @@ WindowsWelcomeExperience -Hide
 
 # Get tips and suggestions when I use Windows (default value)
 # Получать советы и предложения при использованию Windows (значение по умолчанию)
-# WindowsTips -Enable
+WindowsTips -Enable
 
 # Do not get tips and suggestions when I use Windows
 # Не получать советы и предложения при использованию Windows
@@ -247,7 +247,7 @@ BingSearch -Disable
 #region UI & Personalization
 # Show the "This PC" icon on Desktop
 # Отобразить значок "Этот компьютер" на рабочем столе
-# ThisPC -Show
+ThisPC -Show
 
 # Hide the "This PC" icon on Desktop (default value)
 # Скрыть "Этот компьютер" на рабочем столе (значение по умолчанию)
@@ -335,7 +335,7 @@ FileTransferDialog -Detailed
 
 # Display the recycle bin files delete confirmation dialog
 # Запрашивать подтверждение на удаление файлов в корзину
-# RecycleBinDeleteConfirmation -Enable
+RecycleBinDeleteConfirmation -Enable
 
 # Do not display the recycle bin files delete confirmation dialog (default value)
 # Не запрашивать подтверждение на удаление файлов в корзину (значение по умолчанию)
@@ -479,7 +479,7 @@ AppsLanguageSwitch -Enable
 
 # When I grab a windows's title bar and shake it, minimize all other windows
 # При захвате заголовка окна и встряхивании сворачиваются все остальные окна
-# AeroShaking -Enable
+AeroShaking -Enable
 
 # When I grab a windows's title bar and shake it, don't minimize all other windows (default value)
 # При захвате заголовка окна и встряхивании не сворачиваются все остальные окна (значение по умолчанию)
@@ -499,7 +499,7 @@ Cursors -Dark
 
 # Do not group files and folder in the Downloads folder
 # Не группировать файлы и папки в папке Загрузки
-# FolderGroupBy -None
+FolderGroupBy -None
 
 # Group files and folder by date modified in the Downloads folder (default value)
 # Группировать файлы и папки по дате изменения (значение по умолчанию)
@@ -557,7 +557,7 @@ StorageSenseTempFiles -Enable
 
 # Disable hibernation. Do not recommend turning it off on laptops
 # Отключить режим гибернации. Не рекомендуется выключать на ноутбуках
-# Hibernation -Disable
+Hibernation -Disable
 
 # Enable hibernate (default value)
 # Включить режим гибернации (значение по умолчанию)
@@ -581,7 +581,7 @@ Win32LongPathLimit -Disable
 
 # Display Stop error code when BSoD occurs
 # Отображать код Stop-ошибки при появлении BSoD
-# BSoDStopError -Enable
+BSoDStopError -Enable
 
 # Do not Stop error code when BSoD occurs (default value)
 # Не отображать код Stop-ошибки при появлении BSoD (значение по умолчанию)
@@ -589,7 +589,7 @@ Win32LongPathLimit -Disable
 
 # Choose when to be notified about changes to your computer: never notify
 # Настройка уведомления об изменении параметров компьютера: никогда не уведомлять
-# AdminApprovalMode -Never
+AdminApprovalMode -Never
 
 # Choose when to be notified about changes to your computer: notify me only when apps try to make changes to my computer (default value)
 # Настройка уведомления об изменении параметров компьютера: уведомлять меня только при попытках приложений внести изменения в компьютер (значение по умолчанию)
@@ -597,7 +597,7 @@ Win32LongPathLimit -Disable
 
 # Turn on access to mapped drives from app running with elevated permissions with Admin Approval Mode enabled
 # Включить доступ к сетевым дискам при включенном режиме одобрения администратором при доступе из программ, запущенных с повышенными правами
-# MappedDrivesAppElevatedAccess -Enable
+MappedDrivesAppElevatedAccess -Enable
 
 # Turn off access to mapped drives from app running with elevated permissions with Admin Approval Mode enabled (default value)
 # Выключить доступ к сетевым дискам при включенном режиме одобрения администратором при доступе из программ, запущенных с повышенными правами (значение по умолчанию)
@@ -605,7 +605,7 @@ Win32LongPathLimit -Disable
 
 # Turn off Delivery Optimization
 # Выключить оптимизацию доставки
-# DeliveryOptimization -Disable
+DeliveryOptimization -Disable
 
 # Turn on Delivery Optimization (default value)
 # Включить оптимизацию доставки (значение по умолчанию)
@@ -613,7 +613,7 @@ Win32LongPathLimit -Disable
 
 # Always wait for the network at computer startup and logon for workgroup networks
 # Всегда ждать сеть при запуске и входе в систему для рабочих групп
-# WaitNetworkStartup -Enable
+WaitNetworkStartup -Enable
 
 # Never wait for the network at computer startup and logon for workgroup networks (default value)
 # Никогда не ждать сеть при запуске и входе в систему для рабочих групп (значение по умолчанию)
@@ -621,7 +621,7 @@ Win32LongPathLimit -Disable
 
 # Do not let Windows manage my default printer
 # Не разрешать Windows управлять принтером, используемым по умолчанию
-# WindowsManageDefaultPrinter -Disable
+WindowsManageDefaultPrinter -Disable
 
 # Let Windows manage my default printer (default value)
 # Разрешать Windows управлять принтером, используемым по умолчанию (значение по умолчанию)
@@ -655,7 +655,7 @@ WindowsCapabilities -Uninstall
 
 # Receive updates for other Microsoft products
 # Получать обновления для других продуктов Майкрософт
-# UpdateMicrosoftProducts -Enable
+UpdateMicrosoftProducts -Enable
 
 # Do not receive updates for other Microsoft products (default value)
 # Не получать обновления для других продуктов Майкрософт (значение по умолчанию)
@@ -689,7 +689,7 @@ NetworkAdaptersSavePower -Disable
 	Выключить IP версии 6 (TCP/IPv6)
 	Перед выполнением функции будет проведена проверка: поддерживает ли ваш провайдер IPv6, используя ресурс https://ipv6-test.com
 #>
-# IPv6Component -Disable
+IPv6Component -Disable
 
 <#
 	Enable the Internet Protocol Version 6 (TCP/IPv6) component for all network connections (default value)
@@ -726,7 +726,7 @@ InputMethod -English
 	Пользовательские файлы и папки не будут перемещены в новое расположение. Переместите их вручную
 	По умолчанию они располагаются в папке %USERPROFILE%
 #>
-# SetUserShellFolderLocation -Root
+SetUserShellFolderLocation -Root
 
 <#
 	Select folders for user folders location manually using a folder browser dialog
@@ -767,7 +767,7 @@ LatestInstalled.NET -Enable
 	Функция будет применена только в случае, если в пресете настроено удаление приложения OneDrive или приложение уже удалено,
 	иначе в OneDrive ломается функционал резервного копирования для папок "Рабочий стол" и "Изображения"
 #>
-# WinPrtScrFolder -Desktop
+WinPrtScrFolder -Desktop
 
 # Save screenshots by pressing Win+PrtScr in the Pictures folder (default value)
 # Cохранять скриншоты по нажатию Win+PrtScr в папку "Изображения" (значение по умолчанию)
@@ -780,7 +780,7 @@ LatestInstalled.NET -Enable
 	Автоматически запускать средства устранения неполадок, а затем уведомлять
 	Чтобы заработала данная функция, уровень сбора диагностических данных ОС будет установлен на "Необязательные диагностические данные" и включится создание отчетов об ошибках Windows
 #>
-# RecommendedTroubleshooting -Automatically
+RecommendedTroubleshooting -Automatically
 
 <#
 	Ask me before running troubleshooter (default value)
@@ -817,7 +817,7 @@ F1HelpPage -Disable
 
 # Enable Num Lock at startup
 # Включить Num Lock при загрузке
-# NumLock -Enable
+NumLock -Enable
 
 # Disable Num Lock at startup (default value)
 # Выключить Num Lock при загрузке (значение по умолчанию)
@@ -857,7 +857,7 @@ ThumbnailCacheRemoval -Disable
 
 # Automatically saving my restartable apps and restart them when I sign back in
 # Автоматически сохранять мои перезапускаемые приложения из системы и перезапускать их при повторном входе
-# SaveRestartableApps -Enable
+SaveRestartableApps -Enable
 
 # Turn off automatically saving my restartable apps and restart them when I sign back in (default value)
 # Выключить автоматическое сохранение моих перезапускаемых приложений из системы и перезапускать их при повторном входе (значение по умолчанию)
@@ -865,7 +865,7 @@ ThumbnailCacheRemoval -Disable
 
 # Enable "Network Discovery" and "File and Printers Sharing" for workgroup networks
 # Включить сетевое обнаружение и общий доступ к файлам и принтерам для рабочих групп
-# NetworkDiscovery -Enable
+NetworkDiscovery -Enable
 
 # Disable "Network Discovery" and "File and Printers Sharing" for workgroup networks (default value)
 # Выключить сетевое обнаружение и общий доступ к файлам и принтерам для рабочих групп (значение по умолчанию)
@@ -923,7 +923,7 @@ InstallDotNetRuntimes
 # Enable proxying only blocked sites from the unified registry of Roskomnadzor. The function is applicable for Russia only
 # Включить проксирование только заблокированных сайтов из единого реестра Роскомнадзора. Функция применима только для России
 # https://antizapret.prostovpn.org
-# RKNBypass -Enable
+RKNBypass -Enable
 
 # Disable proxying only blocked sites from the unified registry of Roskomnadzor (default value)
 # Выключить проксирование только заблокированных сайтов из единого реестра Роскомнадзора (значение по умолчанию)
@@ -965,7 +965,7 @@ PreventEdgeShortcutCreation -Channels Stable, Beta, Dev, Canary
 
 # Run the Windows PowerShell shortcut from the Start menu as Administrator
 # Запускать ярлык Windows PowerShell в меню "Пуск" от имени Администратора
-# RunPowerShellShortcut -Elevated
+RunPowerShellShortcut -Elevated
 
 # Run the Windows PowerShell shortcut from the Start menu as user (default value)
 # Запускать ярлык Windows PowerShell в меню "Пуск" от имени пользователя (значение по умолчанию)
@@ -1041,7 +1041,7 @@ TeamsAutostart -Disable
 
 # Check for UWP apps updates
 # Проверить обновления UWP-приложений
-# CheckUWPAppsUpdates
+CheckUWPAppsUpdates
 #endregion UWP apps
 
 #region Gaming
@@ -1068,7 +1068,7 @@ XboxGameTips -Disable
 
 # Choose an app and set the "High performance" graphics performance for it. Only if you have a dedicated GPU
 # Выбрать приложение и установить для него параметры производительности графики на "Высокая производительность". Только при наличии внешней видеокарты
-# SetAppGraphicsPerformance
+SetAppGraphicsPerformance
 
 <#
 	Turn on hardware-accelerated GPU scheduling. Restart needed
@@ -1128,7 +1128,7 @@ TempTask -Register
 #region Microsoft Defender & Security
 # Enable Microsoft Defender Exploit Guard network protection
 # Включить защиту сети в Microsoft Defender Exploit Guard
-# NetworkProtection -Enable
+NetworkProtection -Enable
 
 # Disable Microsoft Defender Exploit Guard network protection (default value)
 # Выключить защиту сети в Microsoft Defender Exploit Guard
@@ -1152,7 +1152,7 @@ DismissSmartScreenFilter
 
 # Enable events auditing generated when a process is created (starts)
 # Включить аудит событий, возникающих при создании или запуске процесса
-# AuditProcess -Enable
+AuditProcess -Enable
 
 # Disable events auditing generated when a process is created (starts) (default value)
 # Выключить аудит событий, возникающих при создании или запуске процесса (значение по умолчанию)
@@ -1165,7 +1165,7 @@ DismissSmartScreenFilter
 	Включать командную строку в событиях создания процесса
 	Для того, чтобы работал данный функционал, будет включен аудит событий (AuditProcess -Enable)
 #>
-# CommandLineProcessAudit -Enable
+CommandLineProcessAudit -Enable
 
 # Do not include command line in process creation events (default value)
 # Не включать командную строку в событиях создания процесса (значение по умолчанию)
@@ -1178,7 +1178,7 @@ DismissSmartScreenFilter
 	Создать настраиваемое представление "Создание процесса" в Просмотре событий для журналирования запускаемых процессов и их аргументов
 	Для того, чтобы работал данный функционал, буден включен аудит событий (AuditProcess -Enable) и командной строки (CommandLineProcessAudit -Enable) в событиях создания процесса
 #>
-# EventViewerCustomView -Enable
+EventViewerCustomView -Enable
 
 # Remove the "Process Creation" custom view in the Event Viewer to log executed processes and their arguments (default value)
 # Удалить настаиваемое представление "Создание процесса" в Просмотре событий для журналирования запускаемых процессов и их аргументов (значение по умолчанию)
@@ -1244,7 +1244,7 @@ SaveZoneInformation -Disable
 	Включить DNS-over-HTTPS для IPv4
 	Действительные IPv4-адреса: 1.0.0.1, 1.1.1.1, 149.112.112.112, 8.8.4.4, 8.8.8.8, 9.9.9.9
 #>
-# DNSoverHTTPS -Enable -PrimaryDNS 1.0.0.1 -SecondaryDNS 1.1.1.1
+DNSoverHTTPS -Enable -PrimaryDNS 1.0.0.1 -SecondaryDNS 1.1.1.1
 
 # Disable DNS-over-HTTPS for IPv4 (default value)
 # Выключить DNS-over-HTTPS для IPv4 (значение по умолчанию)
@@ -1318,7 +1318,7 @@ IncludeInLibraryContext -Hide
 
 # Hide the "Send to" item from the folders context menu
 # Скрыть пункт "Отправить" из контекстного меню папок
-# SendToContext -Hide
+SendToContext -Hide
 
 # Show the "Send to" item in the folders context menu (default value)
 # Отобразить пункт "Отправить" в контекстном меню папок (значение по умолчанию)
@@ -1358,7 +1358,7 @@ OpenWindowsTerminalContext -Show
 
 # Open Windows Terminal in context menu as administrator by default
 # Открывать Windows Terminal из контекстного меню от имени администратора по умолчанию
-# OpenWindowsTerminalAdminContext -Enable
+OpenWindowsTerminalAdminContext -Enable
 
 # Do not open Windows Terminal in context menu as administrator by default (default value)
 # Не открывать Windows Terminal из контекстного меню от имени администратора по умолчанию (значение по умолчанию)
