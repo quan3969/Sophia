@@ -103,11 +103,11 @@
     "Arg": {
       "Zero": {
         "Tag": "Disable",
-        "ToolTip": "Отключить задачи диагностического отслеживания"
+        "ToolTip": "Отключить задания диагностического отслеживания"
       },
       "One": {
         "Tag": "Enable",
-        "ToolTip": "Включить задачи диагностического отслеживания (значение по умолчанию)"
+        "ToolTip": "Включить задания диагностического отслеживания (значение по умолчанию)"
       }
     }
   },
@@ -1196,15 +1196,15 @@
     "Arg": {
       "Zero": {
         "Tag": "Disable",
-        "ToolTip": "Выключить IP версии 6 (TCP/IPv6). Перед выполнением функции будет проведена проверка: поддерживает ли ваш провайдер IPv6, используя ресурс https://ipv6-test.com"
+        "ToolTip": "Выключить IP версии 6 (TCP/IPv6). Перед выполнением функции будет проведена проверка: поддерживает ли ваш провайдер IPv6, используя ресурс https://ipify.org"
       },
       "One": {
         "Tag": "Enable",
-        "ToolTip": "Включить IP версии 6 (TCP/IPv6) (значение по умолчанию). Перед выполнением функции будет проведена проверка: поддерживает ли ваш провайдер IPv6, используя ресурс https://ipv6-test.com"
+        "ToolTip": "Включить IP версии 6 (TCP/IPv6) (значение по умолчанию). Перед выполнением функции будет проведена проверка: поддерживает ли ваш провайдер IPv6, используя ресурс https://ipify.org"
       },
       "Two": {
         "Tag": "PreferIPv4overIPv6",
-        "ToolTip": "Включить IP версии 6 (TCP/IPv6). Предпочтение IPv4 перед IPv6. Перед выполнением функции будет проведена проверка: поддерживает ли ваш провайдер IPv6, используя ресурс https://ipv6-test.com"
+        "ToolTip": "Включить IP версии 6 (TCP/IPv6). Предпочтение IPv4 перед IPv6. Перед выполнением функции будет проведена проверка: поддерживает ли ваш провайдер IPv6, используя ресурс https://ipify.org"
       }
     }
   },
@@ -1226,7 +1226,7 @@
   {
     "Id": 520,
     "Region": "System",
-    "Function": "SetUserShellFolderLocation",
+    "Function": "Set-UserShellFolderLocation",
     "Arg": {
       "Zero": {
         "Tag": "Root",
@@ -1516,6 +1516,21 @@
     }
   },
   {
+    "Id": 540,
+    "Region": "System",
+    "Function": "SATADrivesRemovableMedia",
+    "Arg": {
+      "Zero": {
+        "Tag": "Disable",
+        "ToolTip": "Запретить отображать все внутренние SATA-диски как съемные носители в области уведомлений на панели задач"
+      },
+      "One": {
+        "Tag": "Default",
+        "ToolTip": "Отображать все внутренние SATA-диски как съемные носители в области уведомлений на панели задач (значение по умолчанию)"
+      }
+    }
+  },
+  {
     "Id": 600,
     "Region": "WSL",
     "Function": "Install-WSL",
@@ -1559,21 +1574,6 @@
   {
     "Id": 702,
     "Region": "Start menu",
-    "Function": "RunPowerShellShortcut",
-    "Arg": {
-      "Zero": {
-        "Tag": "Elevated",
-        "ToolTip": "Запускать ярлык Windows PowerShell в меню \"Пуск\" от имени Администратора"
-      },
-      "One": {
-        "Tag": "NonElevated",
-        "ToolTip": "Запускать ярлык Windows PowerShell в меню \"Пуск\" от имени пользователя (значение по умолчанию)"
-      }
-    }
-  },
-  {
-    "Id": 703,
-    "Region": "Start menu",
     "Function": "PinToStart -Tiles",
     "ToolTip": "Закрепить на начальном экране следующие ярлыки: Панель управления, Устройства и принтеры, PowerShell",
     "Arg": {
@@ -1592,7 +1592,7 @@
     }
   },
   {
-    "Id": 704,
+    "Id": 703,
     "Region": "Start menu",
     "Function": "PinToStart -UnpinAll",
     "Arg": {
@@ -1681,17 +1681,6 @@
     }
   },
   {
-    "Id": 806,
-    "Region": "UWP apps",
-    "Function": "CheckUWPAppsUpdates",
-    "Arg": {
-      "Zero": {
-        "Tag": "",
-        "ToolTip": "Проверить обновления UWP-приложений"
-      }
-    }
-  },
-  {
     "Id": 900,
     "Region": "Gaming",
     "Function": "XboxGameBar",
@@ -1724,7 +1713,7 @@
   {
     "Id": 902,
     "Region": "Gaming",
-    "Function": "SetAppGraphicsPerformance",
+    "Function": "Set-AppGraphicsPerformance",
     "Arg": {
       "Zero": {
         "Tag": "",
@@ -1754,11 +1743,11 @@
     "Arg": {
       "Zero": {
         "Tag": "Register",
-        "ToolTip": "Создать задачу \"Windows Cleanup\" по очистке неиспользуемых файлов и обновлений Windows в Планировщике заданий. Нативный интерактивный тост всплывает каждые 30 дней. Задача выполняется каждые 30 дней"
+        "ToolTip": "Создать задание \"Windows Cleanup\" по очистке неиспользуемых файлов и обновлений Windows в Планировщике заданий. Нативный интерактивный тост всплывает каждые 30 дней. Задание выполняется каждые 30 дней"
       },
       "One": {
         "Tag": "Delete",
-        "ToolTip": "Удалить задачи \"Windows Cleanup\" и \"Windows Cleanup Notification\" по очистке неиспользуемых файлов и обновлений Windows из Планировщика заданий"
+        "ToolTip": "Удалить задания \"Windows Cleanup\" и \"Windows Cleanup Notification\" по очистке неиспользуемых файлов и обновлений Windows из Планировщика заданий"
       }
     }
   },
@@ -1769,11 +1758,11 @@
     "Arg": {
       "Zero": {
         "Tag": "Register",
-        "ToolTip": "Создать задачу \"SoftwareDistribution\" по очистке папки %SystemRoot%\\SoftwareDistribution\\Download в Планировщике заданий. Задача будет ждать, пока служба обновлений Windows не закончит работу. Задача выполняется каждые 90 дней"
+        "ToolTip": "Создать задание \"SoftwareDistribution\" по очистке папки %SystemRoot%\\SoftwareDistribution\\Download в Планировщике заданий. Задание будет ждать, пока служба обновлений Windows не закончит работу. Задание выполняется каждые 90 дней"
       },
       "One": {
         "Tag": "Delete",
-        "ToolTip": "Удалить задачу \"SoftwareDistribution\" по очистке папки %SystemRoot%\\SoftwareDistribution\\Download из Планировщика заданий"
+        "ToolTip": "Удалить задание \"SoftwareDistribution\" по очистке папки %SystemRoot%\\SoftwareDistribution\\Download из Планировщика заданий"
       }
     }
   },
@@ -1784,11 +1773,11 @@
     "Arg": {
       "Zero": {
         "Tag": "Register",
-        "ToolTip": "Создать задачу \"Temp\" в Планировщике заданий по очистке папки %TEMP%. Удаляться будут только файлы старше одного дня. Задача выполняется каждые 60 дней"
+        "ToolTip": "Создать задание \"Temp\" в Планировщике заданий по очистке папки %TEMP%. Удаляться будут только файлы старше одного дня. Задание выполняется каждые 60 дней"
       },
       "One": {
         "Tag": "Delete",
-        "ToolTip": "Удалить задачу \"Temp\" по очистке папки %TEMP% из Планировщика заданий"
+        "ToolTip": "Удалить задание \"Temp\" по очистке папки %TEMP% из Планировщика заданий"
       }
     }
   },

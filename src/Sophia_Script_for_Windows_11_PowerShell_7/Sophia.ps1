@@ -2,8 +2,8 @@
 	.SYNOPSIS
 	Default preset file for "Sophia Script for Windows 11 (PowerShell 7)"
 
-	Version: v6.3.2
-	Date: 11.02.2023
+	Version: v6.4.2
+	Date: 20.03.2023
 
 	Copyright (c) 2014—2023 farag
 	Copyright (c) 2019—2023 farag & Inestic
@@ -27,11 +27,11 @@
 	.NOTES
 	Supported Windows 11 versions
 	Versions: 22H2
-	Builds: 22621.963+
+	Builds: 22621.1413+
 	Editions: Home/Pro/Enterprise
 
 	.NOTES
-	To use the TAB completion for functions and their arguments dot source the Function.ps1 script first:
+	To use the TAB completion for functions and their arguments dot source the Functions.ps1 script first:
 		. .\Function.ps1 (with a dot at the beginning)
 	Read more in the Functions.ps1 file
 
@@ -69,7 +69,7 @@ param
 
 Clear-Host
 
-$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 11 v6.3.2 (PowerShell 7) | Made with $([char]::ConvertFromUtf32(0x1F497)) of Windows | $([char]0x00A9) farag & Inestic, 2014$([char]0x2013)2023"
+$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 11 v6.4.2 (PowerShell 7) | Made with $([char]::ConvertFromUtf32(0x1F497)) of Windows | $([char]0x00A9) farag & Inestic, 2014$([char]0x2013)2023"
 
 Remove-Module -Name Sophia -Force -ErrorAction Ignore
 Import-Module -Name $PSScriptRoot\Manifest\Sophia.psd1 -PassThru -Force
@@ -137,7 +137,7 @@ CreateRestorePoint
 DiagTrackService -Disable
 
 # Enable the "Connected User Experiences and Telemetry" service (DiagTrack), and allow the connection for the Unified Telemetry Client Outbound Traffic (default value)
-# Включить службу "Функциональные возможности для подключенных пользователей и телеметрия" (DiagTrack) и разрешить подключение для исходящего трафик клиента единой телеметрии  (значение по умолчанию)
+# Включить службу "Функциональные возможности для подключенных пользователей и телеметрия" (DiagTrack) и разрешить подключение для исходящего трафик клиента единой телеметрии (значение по умолчанию)
 # DiagTrackService -Enable
 
 # Set the diagnostic data collection to minimum
@@ -165,11 +165,11 @@ FeedbackFrequency -Never
 # FeedbackFrequency -Automatically
 
 # Turn off the diagnostics tracking scheduled tasks
-# Отключить задачи диагностического отслеживания
+# Отключить задания диагностического отслеживания
 ScheduledTasks -Disable
 
 # Turn on the diagnostics tracking scheduled tasks (default value)
-# Включить задачи диагностического отслеживания (значение по умолчанию)
+# Включить задания диагностического отслеживания (значение по умолчанию)
 # ScheduledTasks -Enable
 
 # Do not use sign-in info to automatically finish setting up device after an update
@@ -326,14 +326,6 @@ SnapAssist -Disable
 # При прикреплении окна показывать, что можно прикрепить рядом с ним (значение по умолчанию)
 # SnapAssist -Enable
 
-# Show snap layouts when I hover over a windows's maximaze button (default value)
-# Показывать макеты прикрепления, частью которых является приложение, при наведении указателя мыши на кнопки панели задач (значение по умолчанию)
-SnapAssistFlyout -Enable
-
-# Hide snap layouts when I hover over a windows's maximaze button
-# Не показывать макеты прикрепления, частью которых является приложение, при наведении указателя мыши на кнопки панели задач
-# SnapAssistFlyout -Disable
-
 # Show the file transfer dialog box in the detailed mode
 # Отображать диалоговое окно передачи файлов в развернутом виде
 FileTransferDialog -Detailed
@@ -374,13 +366,21 @@ TaskbarAlignment -Center
 # Установить выравнивание панели задач по левому краю
 # TaskbarAlignment -Left
 
-# Hide the search button from the taskbar
-# Скрыть кнопку поиска с панели задач
+# Hide the search on the taskbar
+# Скрыть поле или значок поиска на панели задач
 TaskbarSearch -Hide
 
 # Show the search icon on the taskbar
-# Отобразить кнопку поиска на панели задач
-# TaskbarSearch -Show
+# Показать значок поиска на панели задач
+# TaskbarSearch -SearchIcon
+
+# Show the search icon and label on the taskbar
+# Показать значок и метку поиска на панели задач
+# TaskbarSearch -SearchIconLabel
+
+# Show the search box on the taskbar (default value)
+# Показать поле поиска на панели задач (значение по умолчанию)
+# TaskbarSearch -SearchBox
 
 # Hide the Task view button from the taskbar
 # Скрыть кнопку "Представление задач" с панели задач
@@ -577,7 +577,7 @@ Hibernation -Disable
 # TempFolder -SystemDrive
 
 # Change %TEMP% environment variable path to %LOCALAPPDATA%\Temp (default value)
-# Изменить путь переменной среды для %TEMP% на LOCALAPPDATA%\Temp (значение по умолчанию)
+# Изменить путь переменной среды для %TEMP% на %LOCALAPPDATA%\Temp (значение по умолчанию)
 # TempFolder -Default
 
 # Disable the Windows 260 characters path limit
@@ -693,28 +693,28 @@ NetworkAdaptersSavePower -Disable
 
 <#
 	Disable the Internet Protocol Version 6 (TCP/IPv6) component for all network connections
-	Before invoking the function, a check will be run whether your ISP supports the IPv6 protocol using https://ipv6-test.com
+	Before invoking the function, a check will be run whether your ISP supports the IPv6 protocol using https://ipify.org
 
 	Выключить IP версии 6 (TCP/IPv6)
-	Перед выполнением функции будет проведена проверка: поддерживает ли ваш провайдер IPv6, используя ресурс https://ipv6-test.com
+	Перед выполнением функции будет проведена проверка: поддерживает ли ваш провайдер IPv6, используя ресурс https://ipify.org
 #>
 IPv6Component -Disable
 
 <#
 	Enable the Internet Protocol Version 6 (TCP/IPv6) component for all network connections (default value)
-	Before invoking the function, a check will be run whether your ISP supports the IPv6 protocol using https://ipv6-test.com
+	Before invoking the function, a check will be run whether your ISP supports the IPv6 protocol using https://ipify.org
 
 	Включить IP версии 6 (TCP/IPv6) (значение по умолчанию)
-	Перед выполнением функции будет проведена проверка: поддерживает ли ваш провайдер IPv6, используя ресурс https://ipv6-test.com
+	Перед выполнением функции будет проведена проверка: поддерживает ли ваш провайдер IPv6, используя ресурс https://ipify.org
 #>
 # IPv6Component -Enable
 
 <#
 	Enable the Internet Protocol Version 6 (TCP/IPv6) component for all network connections. Prefer IPv4 over IPv6
-	Before invoking the function, a check will be run whether your ISP supports the IPv6 protocol using https://ipv6-test.com
+	Before invoking the function, a check will be run whether your ISP supports the IPv6 protocol using https://ipify.org
 
 	Включить IP версии 6 (TCP/IPv6) и предпочитать. Предпочтение IPv4 перед IPv6
-	Перед выполнением функции будет проведена проверка: поддерживает ли ваш провайдер IPv6, используя ресурс https://ipv6-test.com
+	Перед выполнением функции будет проведена проверка: поддерживает ли ваш провайдер IPv6, используя ресурс https://ipify.org
 #>
 # IPv6Component -PreferIPv4overIPv6
 
@@ -727,7 +727,7 @@ InputMethod -English
 # InputMethod -Default
 
 <#
-	Move user folders location to the root of any drive using the interactive menu
+	Change user folders location to the root of any drive using the interactive menu
 	User files or folders won't me moved to a new location. Move them manually
 	They're located in the %USERPROFILE% folder by default
 
@@ -735,7 +735,7 @@ InputMethod -English
 	Пользовательские файлы и папки не будут перемещены в новое расположение. Переместите их вручную
 	По умолчанию они располагаются в папке %USERPROFILE%
 #>
-SetUserShellFolderLocation -Root
+Set-UserShellFolderLocation -Root
 
 <#
 	Select folders for user folders location manually using a folder browser dialog
@@ -746,7 +746,7 @@ SetUserShellFolderLocation -Root
 	Пользовательские файлы и папки не будут перемещены в новое расположение. Переместите их вручную
 	По умолчанию они располагаются в папке %USERPROFILE%
 #>
-# SetUserShellFolderLocation -Custom
+# Set-UserShellFolderLocation -Custom
 
 <#
 	Change user folders location to the default values
@@ -757,7 +757,7 @@ SetUserShellFolderLocation -Root
 	Пользовательские файлы и папки не будут перемещены в новое расположение. Переместите их вручную
 	По умолчанию они располагаются в папке %USERPROFILE%
 #>
-# SetUserShellFolderLocation -Default
+# Set-UserShellFolderLocation -Default
 
 # Use the latest installed .NET runtime for all apps
 # Использовать последнюю установленную среду выполнения .NET для всех приложений
@@ -941,11 +941,7 @@ RKNBypass -Enable
 
 # Enable all necessary dependencies (reboot may require) and open Microsoft Store WSA page to install Windows Subsystem for Android™ with Amazon Appstore manually
 # Включить все необходимые зависимости (может потребоваться перезагрузка) и открыть страницу WSA в Microsoft Store, чтобы вручную установить Windows Subsystem for Android™ with Amazon Appstore
-# WSA -Enable
-
-# Disable all necessary dependencies (reboot may require) and uninstall Windows Subsystem for Android™ with Amazon Appstore (default value)
-# Выключить все необходимые зависимости и удалить Windows Subsystem for Android™ with Amazon Appstore (значение по умолчанию)
-# WSA -Disable
+# Install-WSA
 
 # List Microsoft Edge channels to prevent desktop shortcut creation upon its' update
 # Перечислите каналы Microsoft Edge для предотвращения создания ярлыков на рабочем столе после его обновления
@@ -954,6 +950,14 @@ PreventEdgeShortcutCreation -Channels Stable, Beta, Dev, Canary
 # Do not prevent desktop shortcut creation upon Microsoft Edge update (default value)
 # Не предотвращать создание ярлыков на рабочем столе при обновлении Microsoft Edge (значение по умолчанию)
 # PreventEdgeShortcutCreation -Disable
+
+# Prevent all internal SATA drives from showing up as removable media in the taskbar notification area
+# Запретить отображать все внутренние SATA-диски как съемные носители в области уведомлений на панели задач
+SATADrivesRemovableMedia -Disable
+
+# Show up all internal SATA drives as removeable media in the taskbar notification area (default value)
+# Отображать все внутренние SATA-диски как съемные носители в области уведомлений на панели задач (значение по умолчанию)
+# SATADrivesRemovableMedia -Default
 #endregion System
 
 #region WSL
@@ -972,24 +976,16 @@ PreventEdgeShortcutCreation -Channels Stable, Beta, Dev, Canary
 # Открепить все приложения от начального экрана
 # UnpinAllStartApps
 
-# Run the Windows PowerShell shortcut from the Start menu as Administrator
-# Запускать ярлык Windows PowerShell в меню "Пуск" от имени Администратора
-RunPowerShellShortcut -Elevated
-
-# Run the Windows PowerShell shortcut from the Start menu as user (default value)
-# Запускать ярлык Windows PowerShell в меню "Пуск" от имени пользователя (значение по умолчанию)
-# RunPowerShellShortcut -NonElevated
-
-# Show default Start layout (for 22621+ build only) (default value)
-# Отображать стандартный макет начального экрана (только для сборок 22621+) (значение по умолчанию)
+# Show default Start layout (default value)
+# Отображать стандартный макет начального экрана (значение по умолчанию)
 # StartLayout -Default
 
-# Show more pins on Start (for 22621+ build only)
-# Отображать больше закреплений на начальном экране (только для сборок 22621+)
+# Show more pins on Start
+# Отображать больше закреплений на начальном экране
 StartLayout -ShowMorePins
 
-# Show more recommendations on Start (for 22621+ build only)
-# Отображать больше рекомендаций на начальном экране (только для сборок 22621+)
+# Show more recommendations on Start
+# Отображать больше рекомендаций на начальном экране
 # StartLayout -ShowMoreRecommendations
 #endregion Start menu
 
@@ -1047,10 +1043,6 @@ TeamsAutostart -Disable
 # Enable Microsoft Teams autostarting (default value)
 # Включить автозагрузку Microsoft Teams (значение по умолчанию)
 # TeamsAutostart -Enable
-
-# Check for UWP apps updates
-# Проверить обновления UWP-приложений
-CheckUWPAppsUpdates
 #endregion UWP apps
 
 #region Gaming
@@ -1077,7 +1069,7 @@ XboxGameTips -Disable
 
 # Choose an app and set the "High performance" graphics performance for it. Only if you have a dedicated GPU
 # Выбрать приложение и установить для него параметры производительности графики на "Высокая производительность". Только при наличии внешней видеокарты
-SetAppGraphicsPerformance
+Set-AppGraphicsPerformance
 
 <#
 	Turn on hardware-accelerated GPU scheduling. Restart needed
@@ -1098,39 +1090,39 @@ GPUScheduling -Enable
 	Create the "Windows Cleanup" scheduled task for cleaning up Windows unused files and updates
 	A native interactive toast notification pops up every 30 days. The task runs every 30 days
 
-	Создать задачу "Windows Cleanup" по очистке неиспользуемых файлов и обновлений Windows в Планировщике заданий
-	Нативный интерактивный тост всплывает каждые 30 дней. Задача выполняется каждые 30 дней
+	Создать задание "Windows Cleanup" по очистке неиспользуемых файлов и обновлений Windows в Планировщике заданий
+	Нативный интерактивный тост всплывает каждые 30 дней. Задание выполняется каждые 30 дней
 #>
 CleanupTask -Register
 
 # Delete the "Windows Cleanup" and "Windows Cleanup Notification" scheduled tasks for cleaning up Windows unused files and updates
-# Удалить задачи "Windows Cleanup" и "Windows Cleanup Notification" по очистке неиспользуемых файлов и обновлений Windows из Планировщика заданий
+# Удалить задания "Windows Cleanup" и "Windows Cleanup Notification" по очистке неиспользуемых файлов и обновлений Windows из Планировщика заданий
 # CleanupTask -Delete
 
 <#
 	Create the "SoftwareDistribution" scheduled task for cleaning up the %SystemRoot%\SoftwareDistribution\Download folder
 	The task will wait until the Windows Updates service finishes running. The task runs every 90 days
 
-	Создать задачу "SoftwareDistribution" по очистке папки %SystemRoot%\SoftwareDistribution\Download в Планировщике заданий
-	Задача будет ждать, пока служба обновлений Windows не закончит работу. Задача выполняется каждые 90 дней
+	Создать задание "SoftwareDistribution" по очистке папки %SystemRoot%\SoftwareDistribution\Download в Планировщике заданий
+	Задание будет ждать, пока служба обновлений Windows не закончит работу. Задание выполняется каждые 90 дней
 #>
 SoftwareDistributionTask -Register
 
 # Delete the "SoftwareDistribution" scheduled task for cleaning up the %SystemRoot%\SoftwareDistribution\Download folder
-# Удалить задачу "SoftwareDistribution" по очистке папки %SystemRoot%\SoftwareDistribution\Download из Планировщика заданий
+# Удалить задание "SoftwareDistribution" по очистке папки %SystemRoot%\SoftwareDistribution\Download из Планировщика заданий
 # SoftwareDistributionTask -Delete
 
 <#
 	Create the "Temp" scheduled task for cleaning up the %TEMP% folder
 	Only files older than one day will be deleted. The task runs every 60 days
 
-	Создать задачу "Temp" в Планировщике заданий по очистке папки %TEMP%
-	Удаляться будут только файлы старше одного дня. Задача выполняется каждые 60 дней
+	Создать задание "Temp" в Планировщике заданий по очистке папки %TEMP%
+	Удаляться будут только файлы старше одного дня. Задание выполняется каждые 60 дней
 #>
 TempTask -Register
 
 # Delete the "Temp" scheduled task for cleaning up the %TEMP% folder
-# Удалить задачу "Temp" по очистке папки %TEMP% из Планировщика заданий
+# Удалить задание "Temp" по очистке папки %TEMP% из Планировщика заданий
 # TempTask -Delete
 #endregion Scheduled tasks
 
@@ -1258,6 +1250,14 @@ DNSoverHTTPS -Enable -PrimaryDNS 1.0.0.1 -SecondaryDNS 1.1.1.1
 # Disable DNS-over-HTTPS for IPv4 (default value)
 # Выключить DNS-over-HTTPS для IPv4 (значение по умолчанию)
 # DNSoverHTTPS -Disable
+
+# Enable Local Security Authority protection to prevent code injection
+# Включить защиту локальной системы безопасности, чтобы предотвратить внедрение кода
+# LocalSecurityAuthority -Enable
+
+# Disable Local Security Authority protection (default value)
+# Выключить защиту локальной системы безопасности (значение по умолчанию)
+# LocalSecurityAuthority -Disable
 #endregion Microsoft Defender & Security
 
 #region Context menu

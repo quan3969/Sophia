@@ -5,6 +5,55 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 5.16.2 | 6.4.2 — 20.03.2023
+
+* Added `LocalSecurityAuthority` function to prevent code injection (for Windows 11 22H2 only);
+  * <https://learn.microsoft.com/en-us/windows-server/security/credentials-protection-and-management/configuring-additional-lsa-protection>
+* Improved `Checks` having expanded the list of blocked harmful tweakers;
+* Fixed `ThumbnailCacheRemoval` function;
+* Removed `SnapAssistFlyout` function;
+* Minor changes.
+
+### Wrapper 2.6.4
+
+* Minor changes.
+
+## 5.16.1 | 6.4.1 — 14.03.2023
+
+* Code refactoring;
+* Fixed a bug in `ShowMenu` function when Windows Terminal console was overbuffered that broke interractive ShowMenu;
+  * Big thanks to [iNNOKENTIY21](https://forum.ru-board.com/profile.cgi?action=show&member=iNNOKENTIY21);
+  * <https://github.com/microsoft/terminal/issues/14992>
+* Fixed `IPv6Component` by switching to <https://ipify.org>
+* Removed `CheckUWPAppsUpdates` function and intergrated into code;
+* Renamed `SetUserShellFolderLocation` function into `Set-UserShellFolderLocation`;
+* Many small changes and improvements.
+
+## 5.16.0 | 6.4.0 — 08.03.2023
+
+* Dropped support for `Windows 11 22000` & `Windows 10 21H2`;
+  * If you run the script on `Windows 11 22000` you will silently download and run [Windows 11 Installation Assistant](https://www.microsoft.com/software-download/windows11), then download the [PC Health Check app](https://support.microsoft.com/en-us/windows/how-to-use-the-pc-health-check-app-9c8abd9b-03ba-4e67-81ef-36f37caa7844) and expand it without installation to prepare for upgrading.
+* `CleanupTask`, `SoftwareDistributionTask`, `TempTask` re-written;
+  * Now all scheduled tasks respect `Focus Assist` mode and won't interrupt while you playing games or watching fullscreen videos with any notification toasts or powershell.exe pop-ups
+  * Uses the [FocusAssistLib.cs](https://github.com/DCourtel/Windows_10_Focus_Assist/blob/master/FocusAssistLibrary/FocusAssistLib.cs) code from @DCourtel!
+  * <https://redplait.blogspot.com/2018/07/wnf-ids-from-perfntcdll-adk-version.html>
+  * **I strongly recommend you to update them** ([how-to](https://github.com/farag2/Sophia-Script-for-Windows#how-to-run-the-specific-functions))
+
+  ```powershell
+  # With dot at the beginning
+  . .\Functions.ps1
+
+  Sophia -Functions "CleanupTask -Register", "SoftwareDistributionTask -Register", "TempTask -Register"
+  ```
+
+* Improved `WSL-Install`;
+* Removed `RunPowerShellShortcut` function as not necessary any more;
+* `WSA` function renamed into `Install-WSA` and has no parameters any more;
+* Added `TaskbarSearch -SearchIconLabel` new parameter to configure search bar design on the taskbar;
+* Added `SATADrivesRemovableMedia` function to prevent all internal SATA drives from showing up as removable media in the taskbar notification area
+* #453 closed;
+* Many small changes and improvements.
+
 ## 5.15.2 | 6.3.2 — 11.02.2023
 
 * Improved and fixed `WSL-Install` function when WSL output was parsed wrong;
@@ -922,7 +971,7 @@ Diff from v5.9
 
 * Calling the specific function was completely rewritten! :rocket:
   * Added the <kbd>Tab</kbd> functions autocompletion by typing its' first letters
-    ![Image](./img/Autocomplete.gif)
+    https://user-images.githubusercontent.com/10544660/225270281-908abad1-d125-4cae-a19b-2cf80d5d2751.mp4
   * The code from moved to the `Functions.ps1` file;
   * If you want to call the specific function you need to [dot source](https://docs.microsoft.com/ru-ru/powershell/module/microsoft.powershell.core/about/about_operators#dot-sourcing-operator-) the `Functions.ps1` first
 

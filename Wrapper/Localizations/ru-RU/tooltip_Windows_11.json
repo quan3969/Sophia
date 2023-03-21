@@ -103,11 +103,11 @@
     "Arg": {
       "Zero": {
         "Tag": "Disable",
-        "ToolTip": "Отключить задачи диагностического отслеживания"
+        "ToolTip": "Отключить задания диагностического отслеживания"
       },
       "One": {
         "Tag": "Enable",
-        "ToolTip": "Включить задачи диагностического отслеживания (значение по умолчанию)"
+        "ToolTip": "Включить задания диагностического отслеживания (значение по умолчанию)"
       }
     }
   },
@@ -384,21 +384,6 @@
   {
     "Id": 308,
     "Region": "UI & Personalization",
-    "Function": "SnapAssistFlyout",
-    "Arg": {
-      "Zero": {
-        "Tag": "Enable",
-        "ToolTip": "Показывать макеты привязки при наведении указателя мыши на кнопку развертывания окна (значение по умолчанию)"
-      },
-      "One": {
-        "Tag": "Disable",
-        "ToolTip": "Скрыть макеты привязки при наведении указателя мыши на кнопку развертывания окна"
-      }
-    }
-  },
-  {
-    "Id": 309,
-    "Region": "UI & Personalization",
     "Function": "SnapAssist",
     "Arg": {
       "Zero": {
@@ -412,7 +397,7 @@
     }
   },
   {
-    "Id": 310,
+    "Id": 309,
     "Region": "UI & Personalization",
     "Function": "FileTransferDialog",
     "Arg": {
@@ -427,7 +412,7 @@
     }
   },
   {
-    "Id": 311,
+    "Id": 310,
     "Region": "UI & Personalization",
     "Function": "RecycleBinDeleteConfirmation",
     "Arg": {
@@ -442,7 +427,7 @@
     }
   },
   {
-    "Id": 312,
+    "Id": 311,
     "Region": "UI & Personalization",
     "Function": "QuickAccessRecentFiles",
     "Arg": {
@@ -457,7 +442,7 @@
     }
   },
   {
-    "Id": 313,
+    "Id": 312,
     "Region": "UI & Personalization",
     "Function": "QuickAccessFrequentFolders",
     "Arg": {
@@ -472,7 +457,7 @@
     }
   },
   {
-    "Id": 314,
+    "Id": 313,
     "Region": "UI & Personalization",
     "Function": "TaskbarAlignment",
     "Arg": {
@@ -487,7 +472,7 @@
     }
   },
   {
-    "Id": 315,
+    "Id": 314,
     "Region": "UI & Personalization",
     "Function": "TaskbarSearch",
     "Arg": {
@@ -497,6 +482,29 @@
       },
       "One": {
         "Tag": "Show",
+        "ToolTip": "Показывать значок поиска на панели задач (значение по умолчанию)"
+      }
+    }
+  },
+  {
+    "Id": 315,
+    "Region": "UI & Personalization",
+    "Function": "TaskbarSearch",
+    "Arg": {
+      "Zero": {
+        "Tag": "Hide",
+        "ToolTip": "Скрыть кнопку поиска на панели задач"
+      },
+      "One": {
+        "Tag": "SearchIcon",
+        "ToolTip": "Показать значок поиска на панели задач"
+      },
+      "Two": {
+        "Tag": "SearchIconLabel",
+        "ToolTip": "Показать значок и метку поиска на панели задач"
+      },
+      "Three": {
+        "Tag": "SearchBox",
         "ToolTip": "Показывать значок поиска на панели задач (значение по умолчанию)"
       }
     }
@@ -1083,15 +1091,15 @@
     "Arg": {
       "Zero": {
         "Tag": "Disable",
-        "ToolTip": "Выключить IP версии 6 (TCP/IPv6). Перед выполнением функции будет проведена проверка: поддерживает ли ваш провайдер IPv6, используя ресурс https://ipv6-test.com"
+        "ToolTip": "Выключить IP версии 6 (TCP/IPv6). Перед выполнением функции будет проведена проверка: поддерживает ли ваш провайдер IPv6, используя ресурс https://ipify.org"
       },
       "One": {
         "Tag": "Enable",
-        "ToolTip": "Включить IP версии 6 (TCP/IPv6) (значение по умолчанию). Перед выполнением функции будет проведена проверка: поддерживает ли ваш провайдер IPv6, используя ресурс https://ipv6-test.com"
+        "ToolTip": "Включить IP версии 6 (TCP/IPv6) (значение по умолчанию). Перед выполнением функции будет проведена проверка: поддерживает ли ваш провайдер IPv6, используя ресурс https://ipify.org"
       },
       "Two": {
         "Tag": "PreferIPv4overIPv6",
-        "ToolTip": "Включить IP версии 6 (TCP/IPv6). Предпочтение IPv4 перед IPv6. Перед выполнением функции будет проведена проверка: поддерживает ли ваш провайдер IPv6, используя ресурс https://ipv6-test.com"
+        "ToolTip": "Включить IP версии 6 (TCP/IPv6). Предпочтение IPv4 перед IPv6. Перед выполнением функции будет проведена проверка: поддерживает ли ваш провайдер IPv6, используя ресурс https://ipify.org"
       }
     }
   },
@@ -1113,7 +1121,7 @@
   {
     "Id": 520,
     "Region": "System",
-    "Function": "SetUserShellFolderLocation",
+    "Function": "Set-UserShellFolderLocation",
     "Arg": {
       "Zero": {
         "Tag": "Root",
@@ -1394,15 +1402,11 @@
   {
     "Id": 539,
     "Region": "System",
-    "Function": "WSA",
+    "Function": "Install-WSA",
     "Arg": {
       "Zero": {
-        "Tag": "Enable",
+        "Tag": "",
         "ToolTip": "Включить все необходимые зависимости (может потребоваться перезагрузка) и открыть страницу WSA в Microsoft Store, чтобы вручную установить Windows Subsystem for Android™ with Amazon Appstore"
-      },
-      "One": {
-        "Tag": "Disable",
-        "ToolTip": "Выключить все необходимые зависимости и удалить Windows Subsystem for Android™ with Amazon Appstore (значение по умолчанию)"
       }
     }
   },
@@ -1445,21 +1449,6 @@
   },
   {
     "Id": 701,
-    "Region": "Start menu",
-    "Function": "RunPowerShellShortcut",
-    "Arg": {
-      "Zero": {
-        "Tag": "Elevated",
-        "ToolTip": "Запускать ярлык Windows PowerShell в меню \"Пуск\" от имени Администратора"
-      },
-      "One": {
-        "Tag": "NonElevated",
-        "ToolTip": "Запускать ярлык Windows PowerShell в меню \"Пуск\" от имени пользователя (значение по умолчанию)"
-      }
-    }
-  },
-  {
-    "Id": 702,
     "Region": "Start menu",
     "Function": "StartLayout",
     "Arg": {
@@ -1556,17 +1545,6 @@
     }
   },
   {
-    "Id": 806,
-    "Region": "UWP apps",
-    "Function": "CheckUWPAppsUpdates",
-    "Arg": {
-      "Zero": {
-        "Tag": "",
-        "ToolTip": "Проверить обновления UWP-приложений"
-      }
-    }
-  },
-  {
     "Id": 900,
     "Region": "Gaming",
     "Function": "XboxGameBar",
@@ -1599,7 +1577,7 @@
   {
     "Id": 902,
     "Region": "Gaming",
-    "Function": "SetAppGraphicsPerformance",
+    "Function": "Set-AppGraphicsPerformance",
     "Arg": {
       "Zero": {
         "Tag": "",
@@ -1629,11 +1607,11 @@
     "Arg": {
       "Zero": {
         "Tag": "Register",
-        "ToolTip": "Создать задачу \"Windows Cleanup\" по очистке неиспользуемых файлов и обновлений Windows в Планировщике заданий. Нативный интерактивный тост всплывает каждые 30 дней. Задача выполняется каждые 30 дней"
+        "ToolTip": "Создать задание \"Windows Cleanup\" по очистке неиспользуемых файлов и обновлений Windows в Планировщике заданий. Нативный интерактивный тост всплывает каждые 30 дней. Задание выполняется каждые 30 дней"
       },
       "One": {
         "Tag": "Delete",
-        "ToolTip": "Удалить задачи \"Windows Cleanup\" и \"Windows Cleanup Notification\" по очистке неиспользуемых файлов и обновлений Windows из Планировщика заданий"
+        "ToolTip": "Удалить задания \"Windows Cleanup\" и \"Windows Cleanup Notification\" по очистке неиспользуемых файлов и обновлений Windows из Планировщика заданий"
       }
     }
   },
@@ -1644,11 +1622,11 @@
     "Arg": {
       "Zero": {
         "Tag": "Register",
-        "ToolTip": "Создать задачу \"SoftwareDistribution\" по очистке папки %SystemRoot%\\SoftwareDistribution\\Download в Планировщике заданий. Задача будет ждать, пока служба обновлений Windows не закончит работу. Задача выполняется каждые 90 дней"
+        "ToolTip": "Создать задание \"SoftwareDistribution\" по очистке папки %SystemRoot%\\SoftwareDistribution\\Download в Планировщике заданий. Задание будет ждать, пока служба обновлений Windows не закончит работу. Задание выполняется каждые 90 дней"
       },
       "One": {
         "Tag": "Delete",
-        "ToolTip": "Удалить задачу \"SoftwareDistribution\" по очистке папки %SystemRoot%\\SoftwareDistribution\\Download из Планировщика заданий"
+        "ToolTip": "Удалить задание \"SoftwareDistribution\" по очистке папки %SystemRoot%\\SoftwareDistribution\\Download из Планировщика заданий"
       }
     }
   },
@@ -1659,11 +1637,11 @@
     "Arg": {
       "Zero": {
         "Tag": "Register",
-        "ToolTip": "Создать задачу \"Temp\" в Планировщике заданий по очистке папки %TEMP%. Удаляться будут только файлы старше одного дня. Задача выполняется каждые 60 дней"
+        "ToolTip": "Создать задание \"Temp\" в Планировщике заданий по очистке папки %TEMP%. Удаляться будут только файлы старше одного дня. Задание выполняется каждые 60 дней"
       },
       "One": {
         "Tag": "Delete",
-        "ToolTip": "Удалить задачу \"Temp\" по очистке папки %TEMP% из Планировщика заданий"
+        "ToolTip": "Удалить задание \"Temp\" по очистке папки %TEMP% из Планировщика заданий"
       }
     }
   },

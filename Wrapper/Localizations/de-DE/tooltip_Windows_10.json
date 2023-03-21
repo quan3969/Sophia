@@ -43,7 +43,7 @@
     "Arg": {
       "Zero": {
         "Tag": "Disable",
-        "ToolTip": "Deaktiviert den Dienst \"Connected User Experiences and Telemetry\" (DiagTrack), und blockiert die Verbindung für den ausgehenden Verkehr des Unified Telemetry Client. Das Deaktivieren des Dienstes \"Benutzererfahrungen und Telemetrie im verbundenen Modus\" (DiagTrack) kann dazu führen, dass Sie keine Xbox-Erfolge mehr erhalten können"
+        "ToolTip": "Deaktiviert den Dienst \"Connected User Experiences and Telemetry\" (DiagTrack), und blockiert die Verbindung für den ausgehenden Verkehr des Unified Telemetry Client. Das Deaktivieren des Dienstes \"Benutzererfahrungen und Telemetrie im verbundenen Modus\" (DiagTrack) kann dazu führen, dass Sie keine Xbox-Erfolge mehr erhalten können, wirkt sich auf Feedback Hub aus"
       },
       "One": {
         "Tag": "Enable",
@@ -1196,15 +1196,15 @@
     "Arg": {
       "Zero": {
         "Tag": "Disable",
-        "ToolTip": "Deaktiviert die Komponente Internet Protocol Version 6 (TCP/IPv6) für alle Netzwerkverbindungen. Bevor die Funktion aufgerufen wird, wird geprüft, ob Ihr ISP das IPv6-Protokoll unterstützt. https://ipv6-test.com"
+        "ToolTip": "Deaktiviert die Komponente Internet Protocol Version 6 (TCP/IPv6) für alle Netzwerkverbindungen. Bevor die Funktion aufgerufen wird, wird geprüft, ob Ihr ISP das IPv6-Protokoll unterstützt. https://ipify.org"
       },
       "One": {
         "Tag": "Enable",
-        "ToolTip": "Aktiviert die Komponente Internet Protocol Version 6 (TCP/IPv6) für alle Netzwerkverbindungen (Standardeinstellung). Bevor die Funktion aufgerufen wird, wird geprüft, ob Ihr ISP das IPv6-Protokoll unterstützt. https://ipv6-test.com"
+        "ToolTip": "Aktiviert die Komponente Internet Protocol Version 6 (TCP/IPv6) für alle Netzwerkverbindungen (Standardeinstellung). Bevor die Funktion aufgerufen wird, wird geprüft, ob Ihr ISP das IPv6-Protokoll unterstützt. https://ipify.org"
       },
       "Two": {
         "Tag": "PreferIPv4overIPv6",
-        "ToolTip": "Aktiviert die Komponente Internet Protocol Version 6 (TCP/IPv6) für alle Netzwerkverbindungen. IPv4 gegenüber IPv6 bevorzugen. Bevor die Funktion aufgerufen wird, wird geprüft, ob Ihr ISP das IPv6-Protokoll unterstützt. https://ipv6-test.com"
+        "ToolTip": "Aktiviert die Komponente Internet Protocol Version 6 (TCP/IPv6) für alle Netzwerkverbindungen. IPv4 gegenüber IPv6 bevorzugen. Bevor die Funktion aufgerufen wird, wird geprüft, ob Ihr ISP das IPv6-Protokoll unterstützt. https://ipify.org"
       }
     }
   },
@@ -1226,7 +1226,7 @@
   {
     "Id": 520,
     "Region": "System",
-    "Function": "SetUserShellFolderLocation",
+    "Function": "Set-UserShellFolderLocation",
     "Arg": {
       "Zero": {
         "Tag": "Root",
@@ -1516,6 +1516,21 @@
     }
   },
   {
+    "Id": 540,
+    "Region": "System",
+    "Function": "SATADrivesRemovableMedia",
+    "Arg": {
+      "Zero": {
+        "Tag": "Disable",
+        "ToolTip": "Verhindern, dass alle internen SATA-Laufwerke im Infobereich der Taskleiste als Wechselmedien angezeigt werden"
+      },
+      "One": {
+        "Tag": "Default",
+        "ToolTip": "Anzeige aller internen SATA-Laufwerke als entfernbare Medien im Infobereich der Taskleiste (Standardwert)"
+      }
+    }
+  },
+  {
     "Id": 600,
     "Region": "WSL",
     "Function": "Install-WSL",
@@ -1559,21 +1574,6 @@
   {
     "Id": 702,
     "Region": "Start menu",
-    "Function": "RunPowerShellShortcut",
-    "Arg": {
-      "Zero": {
-        "Tag": "Elevated",
-        "ToolTip": "Führt die Windows PowerShell-Verknüpfung über das Startmenü als Administrator aus"
-      },
-      "One": {
-        "Tag": "NonElevated",
-        "ToolTip": "Führt die Windows PowerShell-Verknüpfung über das Startmenü als Benutzer aus (Standardeinstellung)"
-      }
-    }
-  },
-  {
-    "Id": 703,
-    "Region": "Start menu",
     "Function": "PinToStart -Tiles",
     "ToolTip": "Folgendene Verknüpfungen: Systemsteuerung, Geräte und Drucker, PowerShell an das Startmenü anheften",
     "Arg": {
@@ -1592,7 +1592,7 @@
     }
   },
   {
-    "Id": 704,
+    "Id": 703,
     "Region": "Start menu",
     "Function": "PinToStart -UnpinAll",
     "Arg": {
@@ -1681,17 +1681,6 @@
     }
   },
   {
-    "Id": 806,
-    "Region": "UWP apps",
-    "Function": "CheckUWPAppsUpdates",
-    "Arg": {
-      "Zero": {
-        "Tag": "",
-        "ToolTip": "Nach UWP-Apps-Updates suchen"
-      }
-    }
-  },
-  {
     "Id": 900,
     "Region": "Gaming",
     "Function": "XboxGameBar",
@@ -1724,7 +1713,7 @@
   {
     "Id": 902,
     "Region": "Gaming",
-    "Function": "SetAppGraphicsPerformance",
+    "Function": "Set-AppGraphicsPerformance",
     "Arg": {
       "Zero": {
         "Tag": "",

@@ -1507,7 +1507,7 @@
     "Region": "System",
     "Control": "cmb",
     "Required": "false",
-    "Function": "SetUserShellFolderLocation",
+    "Function": "Set-UserShellFolderLocation",
     "Arg": {
       "Zero": {
         "Tag": "Root"
@@ -1857,6 +1857,23 @@
     "WindowsDefault": "One"
   },
   {
+    "Id": 539,
+    "Region": "System",
+    "Control": "cmb",
+    "Required": "false",
+    "Function": "SATADrivesRemovableMedia",
+    "Arg": {
+      "Zero": {
+        "Tag": "Disable"
+      },
+      "One": {
+        "Tag": "Default"
+      }
+    },
+    "Preset": "Zero",
+    "WindowsDefault": "One"
+  },
+  {
     "Id": 600,
     "Region": "WSL",
     "Control": "chk",
@@ -1913,25 +1930,6 @@
   {
     "Id": 702,
     "Region": "Start menu",
-    "Control": "cmb",
-    "Required": "false",
-    "Function": "RunPowerShellShortcut",
-    "Arg": {
-      "Zero": {
-        "Tag": "Elevated"
-      },
-      "One": {
-        "Tag": "NonElevated"
-      }
-    },
-    "Preset": "Zero",
-    "WindowsDefault": "One",
-    "LTSC2019": "true",
-    "LTSC2021": "true"
-  },
-  {
-    "Id": 703,
-    "Region": "Start menu",
     "Control": "chk",
     "Required": "false",
     "Function": "PinToStart -Tiles",
@@ -1952,7 +1950,7 @@
     "LTSC2021": "true"
   },
   {
-    "Id": 704,
+    "Id": 703,
     "Region": "Start menu",
     "Control": "chk",
     "Required": "false",
@@ -2073,22 +2071,6 @@
     "LTSC2021": "true"
   },
   {
-    "Id": 807,
-    "Region": "UWP apps",
-    "Control": "chk",
-    "Required": "false",
-    "Function": "CheckUWPAppsUpdates",
-    "Arg": {
-      "Zero": {
-        "Tag": ""
-      }
-    },
-    "Preset": "Zero",
-    "WindowsDefault": "",
-    "LTSC2019": "false",
-    "LTSC2021": "false"
-  },
-  {
     "Id": 900,
     "Region": "Gaming",
     "Control": "cmb",
@@ -2131,7 +2113,7 @@
     "Region": "Gaming",
     "Control": "chk",
     "Required": "false",
-    "Function": "SetAppGraphicsPerformance",
+    "Function": "Set-AppGraphicsPerformance",
     "Arg": {
       "Zero": {
         "Tag": ""

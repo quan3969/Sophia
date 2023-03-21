@@ -43,7 +43,7 @@
     "Arg": {
       "Zero": {
         "Tag": "Disable",
-        "ToolTip": "Disable the \"Connected User Experiences and Telemetry\" service (DiagTrack), and block the connection for the Unified Telemetry Client Outbound Traffic. Disabling the \"Connected User Experiences and Telemetry\" service (DiagTrack) can cause you not being able to get Xbox achievements anymore and affects Feedback Hub"
+        "ToolTip": "Disable the \"Connected User Experiences and Telemetry\" service (DiagTrack), and block the connection for the Unified Telemetry Client Outbound Traffic. Disabling the \"Connected User Experiences and Telemetry\" service (DiagTrack) can cause you not being able to get Xbox achievements anymore and affects Feedback Hub and affects Feedback Hub"
       },
       "One": {
         "Tag": "Enable",
@@ -384,21 +384,6 @@
   {
     "Id": 308,
     "Region": "UI & Personalization",
-    "Function": "SnapAssistFlyout",
-    "Arg": {
-      "Zero": {
-        "Tag": "Enable",
-        "ToolTip": "Show snap layouts when I hover over a windows's maximaze button (default value)"
-      },
-      "One": {
-        "Tag": "Disable",
-        "ToolTip": "Hide snap layouts when I hover over a windows's maximaze button"
-      }
-    }
-  },
-  {
-    "Id": 309,
-    "Region": "UI & Personalization",
     "Function": "SnapAssist",
     "Arg": {
       "Zero": {
@@ -412,7 +397,7 @@
     }
   },
   {
-    "Id": 310,
+    "Id": 309,
     "Region": "UI & Personalization",
     "Function": "FileTransferDialog",
     "Arg": {
@@ -427,7 +412,7 @@
     }
   },
   {
-    "Id": 311,
+    "Id": 310,
     "Region": "UI & Personalization",
     "Function": "RecycleBinDeleteConfirmation",
     "Arg": {
@@ -442,7 +427,7 @@
     }
   },
   {
-    "Id": 312,
+    "Id": 311,
     "Region": "UI & Personalization",
     "Function": "QuickAccessRecentFiles",
     "Arg": {
@@ -457,7 +442,7 @@
     }
   },
   {
-    "Id": 313,
+    "Id": 312,
     "Region": "UI & Personalization",
     "Function": "QuickAccessFrequentFolders",
     "Arg": {
@@ -472,7 +457,7 @@
     }
   },
   {
-    "Id": 314,
+    "Id": 313,
     "Region": "UI & Personalization",
     "Function": "TaskbarAlignment",
     "Arg": {
@@ -487,7 +472,7 @@
     }
   },
   {
-    "Id": 315,
+    "Id": 314,
     "Region": "UI & Personalization",
     "Function": "TaskbarSearch",
     "Arg": {
@@ -496,13 +481,21 @@
         "ToolTip": "Hide the search button from the taskbar"
       },
       "One": {
-        "Tag": "Show",
-        "ToolTip": "Show the search icon on the taskbar (default value)"
+        "Tag": "SearchIcon",
+        "ToolTip": "Show the search icon on the taskbar"
+      },
+      "Two": {
+        "Tag": "SearchIconLabel",
+        "ToolTip": "Show the search icon and label on the taskbar"
+      },
+      "Three": {
+        "Tag": "SearchBox",
+        "ToolTip": "Show the search box on the taskbar (default value)"
       }
     }
   },
   {
-    "Id": 316,
+    "Id": 315,
     "Region": "UI & Personalization",
     "Function": "TaskViewButton",
     "Arg": {
@@ -517,7 +510,7 @@
     }
   },
   {
-    "Id": 317,
+    "Id": 316,
     "Region": "UI & Personalization",
     "Function": "TaskbarWidgets",
     "Arg": {
@@ -532,7 +525,7 @@
     }
   },
   {
-    "Id": 318,
+    "Id": 317,
     "Region": "UI & Personalization",
     "Function": "TaskbarChat",
     "Arg": {
@@ -547,7 +540,7 @@
     }
   },
   {
-    "Id": 319,
+    "Id": 318,
     "Region": "UI & Personalization",
     "Function": "UnpinTaskbarShortcuts -Shortcuts",
     "ToolTip": "Unpin the \"Microsoft Edge\" and \"Microsoft Store\" shortcuts from the taskbar",
@@ -563,7 +556,7 @@
     }
   },
   {
-    "Id": 320,
+    "Id": 319,
     "Region": "UI & Personalization",
     "Function": "ControlPanelView",
     "Arg": {
@@ -582,7 +575,7 @@
     }
   },
   {
-    "Id": 321,
+    "Id": 320,
     "Region": "UI & Personalization",
     "Function": "WindowsColorMode",
     "Arg": {
@@ -597,7 +590,7 @@
     }
   },
   {
-    "Id": 322,
+    "Id": 321,
     "Region": "UI & Personalization",
     "Function": "AppColorMode",
     "Arg": {
@@ -612,7 +605,7 @@
     }
   },
   {
-    "Id": 323,
+    "Id": 322,
     "Region": "UI & Personalization",
     "Function": "FirstLogonAnimation",
     "Arg": {
@@ -627,7 +620,7 @@
     }
   },
   {
-    "Id": 324,
+    "Id": 323,
     "Region": "UI & Personalization",
     "Function": "JPEGWallpapersQuality",
     "Arg": {
@@ -642,7 +635,7 @@
     }
   },
   {
-    "Id": 325,
+    "Id": 324,
     "Region": "UI & Personalization",
     "Function": "TaskManagerWindow",
     "Arg": {
@@ -657,7 +650,7 @@
     }
   },
   {
-    "Id": 326,
+    "Id": 325,
     "Region": "UI & Personalization",
     "Function": "RestartNotification",
     "Arg": {
@@ -672,7 +665,7 @@
     }
   },
   {
-    "Id": 327,
+    "Id": 326,
     "Region": "UI & Personalization",
     "Function": "ShortcutsSuffix",
     "Arg": {
@@ -687,7 +680,7 @@
     }
   },
   {
-    "Id": 328,
+    "Id": 327,
     "Region": "UI & Personalization",
     "Function": "PrtScnSnippingTool",
     "Arg": {
@@ -702,7 +695,7 @@
     }
   },
   {
-    "Id": 329,
+    "Id": 328,
     "Region": "UI & Personalization",
     "Function": "AppsLanguageSwitch",
     "Arg": {
@@ -717,7 +710,7 @@
     }
   },
   {
-    "Id": 330,
+    "Id": 329,
     "Region": "UI & Personalization",
     "Function": "AeroShaking",
     "Arg": {
@@ -732,7 +725,7 @@
     }
   },
   {
-    "Id": 331,
+    "Id": 330,
     "Region": "UI & Personalization",
     "Function": "Cursors",
     "Arg": {
@@ -751,7 +744,7 @@
     }
   },
   {
-    "Id": 339,
+    "Id": 331,
     "Region": "UI & Personalization",
     "Function": "FolderGroupBy",
     "Arg": {
@@ -766,7 +759,7 @@
     }
   },
   {
-    "Id": 340,
+    "Id": 332,
     "Region": "UI & Personalization",
     "Function": "NavigationPaneExpand",
     "Arg": {
@@ -1083,15 +1076,15 @@
     "Arg": {
       "Zero": {
         "Tag": "Disable",
-        "ToolTip": "Disable the Internet Protocol Version 6 (TCP/IPv6) component for all network connections. Before invoking the function, a check will be run whether your ISP supports the IPv6 protocol using https://ipv6-test.com"
+        "ToolTip": "Disable the Internet Protocol Version 6 (TCP/IPv6) component for all network connections. Before invoking the function, a check will be run whether your ISP supports the IPv6 protocol using https://ipify.org"
       },
       "One": {
         "Tag": "Enable",
-        "ToolTip": "Enable the Internet Protocol Version 6 (TCP/IPv6) component for all network connections (default value). Before invoking the function, a check will be run whether your ISP supports the IPv6 protocol using https://ipv6-test.com"
+        "ToolTip": "Enable the Internet Protocol Version 6 (TCP/IPv6) component for all network connections (default value). Before invoking the function, a check will be run whether your ISP supports the IPv6 protocol using https://ipify.org"
       },
       "Two": {
         "Tag": "PreferIPv4overIPv6",
-        "ToolTip": "Enable the Internet Protocol Version 6 (TCP/IPv6) component for all network connections. Prefer IPv4 over IPv6. Before invoking the function, a check will be run whether your ISP supports the IPv6 protocol using https://ipv6-test.com"
+        "ToolTip": "Enable the Internet Protocol Version 6 (TCP/IPv6) component for all network connections. Prefer IPv4 over IPv6. Before invoking the function, a check will be run whether your ISP supports the IPv6 protocol using https://ipify.org"
       }
     }
   },
@@ -1113,11 +1106,11 @@
   {
     "Id": 520,
     "Region": "System",
-    "Function": "SetUserShellFolderLocation",
+    "Function": "Set-UserShellFolderLocation",
     "Arg": {
       "Zero": {
         "Tag": "Root",
-        "ToolTip": "Move user folders location to the root of any drive using the interactive menu. User files or folders won't me moved to a new location. Move them manually. They're located in the %USERPROFILE% folder by default"
+        "ToolTip": "Change user folders location to the root of any drive using the interactive menu. User files or folders won't me moved to a new location. Move them manually. They're located in the %USERPROFILE% folder by default"
       },
       "One": {
         "Tag": "Custom",
@@ -1394,15 +1387,11 @@
   {
     "Id": 539,
     "Region": "System",
-    "Function": "WSA",
+    "Function": "Install-WSA",
     "Arg": {
       "Zero": {
-        "Tag": "Enable",
+        "Tag": "",
         "ToolTip": "Enable all necessary dependencies (reboot may require) and open Microsoft Store WSA page to install Windows Subsystem for Android™ with Amazon Appstore manually"
-      },
-      "One": {
-        "Tag": "Disable",
-        "ToolTip": "Disable all necessary dependencies (reboot may require) and uninstall Windows Subsystem for Android™ with Amazon Appstore (default value)"
       }
     }
   },
@@ -1418,6 +1407,21 @@
       "One": {
         "Tag": "Disable",
         "ToolTip": "Do not prevent desktop shortcut creation upon Microsoft Edge update (default value)"
+      }
+    }
+  },
+  {
+    "Id": 541,
+    "Region": "System",
+    "Function": "SATADrivesRemovableMedia",
+    "Arg": {
+      "Zero": {
+        "Tag": "Disable",
+        "ToolTip": "Prevent all internal SATA drives from showing up as removable media in the taskbar notification area"
+      },
+      "One": {
+        "Tag": "Default",
+        "ToolTip": "Show up all internal SATA drives as removeable media in the taskbar notification area (default value)"
       }
     }
   },
@@ -1445,21 +1449,6 @@
   },
   {
     "Id": 701,
-    "Region": "Start menu",
-    "Function": "RunPowerShellShortcut",
-    "Arg": {
-      "Zero": {
-        "Tag": "Elevated",
-        "ToolTip": "Run the Windows PowerShell shortcut from the Start menu as Administrator"
-      },
-      "One": {
-        "Tag": "NonElevated",
-        "ToolTip": "Run the Windows PowerShell shortcut from the Start menu as user (default value)"
-      }
-    }
-  },
-  {
-    "Id": 702,
     "Region": "Start menu",
     "Function": "StartLayout",
     "Arg": {
@@ -1556,17 +1545,6 @@
     }
   },
   {
-    "Id": 806,
-    "Region": "UWP apps",
-    "Function": "CheckUWPAppsUpdates",
-    "Arg": {
-      "Zero": {
-        "Tag": "",
-        "ToolTip": "Check for UWP apps updates"
-      }
-    }
-  },
-  {
     "Id": 900,
     "Region": "Gaming",
     "Function": "XboxGameBar",
@@ -1599,7 +1577,7 @@
   {
     "Id": 902,
     "Region": "Gaming",
-    "Function": "SetAppGraphicsPerformance",
+    "Function": "Set-AppGraphicsPerformance",
     "Arg": {
       "Zero": {
         "Tag": "",
@@ -1866,6 +1844,21 @@
       "One": {
         "Tag": "Disable",
         "ToolTip": "Disable DNS-over-HTTPS for IPv4 (default value)"
+      }
+    }
+  },
+  {
+    "Id": 1114,
+    "Region": "Microsoft Defender & Security",
+    "Function": "LocalSecurityAuthority",
+    "Arg": {
+      "Zero": {
+        "Tag": "Enable",
+        "ToolTip": "Enable Local Security Authority protection to prevent code injection"
+      },
+      "One": {
+        "Tag": "Disable",
+        "ToolTip": "Disable Local Security Authority protection (default value)"
       }
     }
   },
