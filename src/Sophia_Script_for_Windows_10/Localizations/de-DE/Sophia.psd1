@@ -1,5 +1,5 @@
 ﻿ConvertFrom-StringData -StringData @'
-UnsupportedOSBitness                      = Das Skript unterstützt nur Windows 10 x64
+UnsupportedOSBitness                      = Das Skript unterstützt nur 64-Bit-Windows
 UnsupportedOSBuild                        = \nDas Skript unterstützt Windows 10 22H2+
 UpdateWarning                             = \nDas kumulative Windows 10-Update wurde installiert: {0}. Unterstütztes kumulatives Update: 2728 und höher. Führen Sie Windows Update aus und versuchen Sie es erneut
 UnsupportedLanguageMode                   = \nDie PowerShell-Sitzung wird in einem eingeschränkten Sprachmodus ausgeführt
@@ -12,7 +12,7 @@ bin                                       = \nIm Ordner "bin" befinden sich kein
 RebootPending                             = \nDer PC wartet darauf, neu gestartet zu werden
 UnsupportedRelease                        = \nNeue Version gefunden
 CustomizationWarning                      = \nHaben Sie alle Funktionen in der voreingestellten Datei {0} angepasst, bevor Sie Sophia Script ausführen?
-DefenderBroken                            = \nMicrosoft Defender defekt oder aus dem Betriebssystem entfernt
+WindowsComponentBroken                    = \n{0} defekt oder aus dem Betriebssystem entfernt
 UpdateDefender                            = \nDie Microsoft Defender-Definitionen sind veraltet. Führen Sie Windows Update aus und versuchen Sie es erneut.
 ControlledFolderAccessDisabled            = Kontrollierter Ordnerzugriff deaktiviert
 ScheduledTasks                            = Geplante Aufgaben

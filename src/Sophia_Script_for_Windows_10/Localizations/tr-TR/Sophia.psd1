@@ -1,5 +1,5 @@
 ﻿ConvertFrom-StringData -StringData @'
-UnsupportedOSBitness                      = Bu betik sadece Windows 10 x64 destekliyor
+UnsupportedOSBitness                      = Komut dosyası yalnızca 64 bit Windows'u destekler
 UnsupportedOSBuild                        = \nKomut dosyası, Windows 10 22H2+ sürümlerini destekler
 UpdateWarning                             = \nWindows 10 toplu güncelleştirmesi yüklendi: {0}. Desteklenen toplu güncelleme: 2728 ve üstü. Windows Update'i çalıştırın ve tekrar deneyin
 UnsupportedLanguageMode                   = \nSınırlı bir dil modunda çalışan PowerShell oturumu
@@ -12,7 +12,7 @@ bin                                       = \nbin klasöründe dosya yok. Lütfe
 RebootPending                             = \nPC yeniden başlatılmayı bekliyor
 UnsupportedRelease                        = \nYeni sürüm bulundu
 CustomizationWarning                      = \nSophia Script'i çalıştırmadan önce {0} ön ayar dosyasındaki her işlevi özelleştirdiniz mi?
-DefenderBroken                            = \nMicrosoft Defender bozuk veya işletim sisteminden kaldırıldı
+WindowsComponentBroken                    = \n{0} bozuk veya işletim sisteminden kaldırıldı
 UpdateDefender                            = \nMicrosoft Defender tanımları güncel değil. Windows Update'i çalıştırın ve tekrar deneyin
 ControlledFolderAccessDisabled            = Kontrollü klasör erişimi devre dışı bırakıldı
 ScheduledTasks                            = Zamanlanan görevler

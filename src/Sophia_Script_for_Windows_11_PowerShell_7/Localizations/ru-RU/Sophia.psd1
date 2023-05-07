@@ -1,5 +1,5 @@
 ﻿ConvertFrom-StringData -StringData @'
-UnsupportedOSBuild                        = \nСкрипт поддерживает только Windows 11 22H2 и выше
+UnsupportedOSBuild                        = \nСкрипт поддерживает Windows 11 22H2+
 UpdateWarning                             = \nВаш билд Windows 11: {0}.{1}. Поддерживаемые сборки: 22621.1413 и выше. Запустите обновление Windows и попробуйте заново
 UnsupportedLanguageMode                   = \nСессия PowerShell работает в ограниченном режиме
 LoggedInUserNotAdmin                      = \nТекущий вошедший пользователь не обладает правами администратора
@@ -11,7 +11,7 @@ bin                                       = \nВ папке bin отсутств
 RebootPending                             = \nКомпьютер ожидает перезагрузки
 UnsupportedRelease                        = \nОбнаружена новая версия
 CustomizationWarning                      = \nВы настроили все функции в пресет-файле {0} перед запуском Sophia Script?
-DefenderBroken                            = \nMicrosoft Defender сломан или удален из ОС
+WindowsComponentBroken                    = \n{0} сломан или удален из ОС
 UpdateDefender                            = \nОпределения Microsoft Defender устарели. Запустите обновление Windows
 ControlledFolderAccessDisabled            = Контролируемый доступ к папкам выключен
 ScheduledTasks                            = Запланированные задания

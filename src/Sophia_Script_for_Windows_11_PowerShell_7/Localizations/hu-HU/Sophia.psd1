@@ -1,5 +1,5 @@
 ﻿ConvertFrom-StringData -StringData @'
-UnsupportedOSBuild                        = \nA szkript a Windows 11 22H2 és újabb kiadásokat támogatja
+UnsupportedOSBuild                        = \nA szkript támogatja a Windows 11 22H2+ rendszert
 UpdateWarning                             = \nAz Ön Windows 11 építése: {0}.{1}. Támogatott buildek: 22621.1413 és magasabb verziószámok. Futtassa a Windows Update programot, és próbálja meg újra
 UnsupportedLanguageMode                   = \nA PowerShell munkamenet korlátozott nyelvi üzemmódban fut
 LoggedInUserNotAdmin                      = \nA bejelentkezett felhasználó nem rendelkezik admin jogokkal
@@ -11,7 +11,7 @@ bin                                       = \nA bin mappában nincsenek fájlok.
 RebootPending                             = \nA számítógép újraindításra vár
 UnsupportedRelease                        = \nÚj verzió érhető el
 CustomizationWarning                      = \nSzemélyre szabott minden opciót a {0} preset fájlban, mielőtt futtatni kívánja a Sophia szkriptet?
-DefenderBroken                            = \nA Microsoft Defender elromlott vagy eltávolították az operációs rendszerből
+WindowsComponentBroken                    = \nA {0} elromlott vagy eltávolították az operációs rendszerből
 UpdateDefender                            = \nA Microsoft Defender definíciói elavultak. Futtassa a Windows Update programot, és próbálja meg újra
 ControlledFolderAccessDisabled            = Vezérelt mappához való hozzáférés kikapcsolva
 ScheduledTasks                            = Ütemezett feladatok

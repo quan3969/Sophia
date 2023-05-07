@@ -1,5 +1,5 @@
 ﻿ConvertFrom-StringData -StringData @'
-UnsupportedOSBuild                        = \nBu betik sadece Windows 11 22H2 sürüm ve üstünü destekliyor
+UnsupportedOSBuild                        = \nKomut dosyası Windows 11 22H2+'yı destekler
 UpdateWarning                             = \nWindows 11 yapınız: {0}.{1}. Desteklenen yapılar: 22621.1413 ve üstünü destekliyor. Windows Update'i çalıştırın ve tekrar deneyin
 UnsupportedLanguageMode                   = \nSınırlı bir dil modunda çalışan PowerShell oturumu
 LoggedInUserNotAdmin                      = \nOturum açan kullanıcının yönetici hakları yok
@@ -11,7 +11,7 @@ bin                                       = \nbin klasöründe dosya yok. Lütfe
 RebootPending                             = \nPC yeniden başlatılmayı bekliyor
 UnsupportedRelease                        = \nYeni sürüm bulundu
 CustomizationWarning                      = \nSophia Script'i çalıştırmadan önce {0} ön ayar dosyasındaki her işlevi özelleştirdiniz mi?
-DefenderBroken                            = \nMicrosoft Defender bozuk veya işletim sisteminden kaldırıldı
+WindowsComponentBroken                    = \n{0} bozuk veya işletim sisteminden kaldırıldı
 UpdateDefender                            = \nMicrosoft Defender tanımları güncel değil. Windows Update'i çalıştırın ve tekrar deneyin
 ControlledFolderAccessDisabled            = Kontrollü klasör erişimi devre dışı bırakıldı
 ScheduledTasks                            = Zamanlanan görevler

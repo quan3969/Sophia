@@ -2,8 +2,8 @@
 	.SYNOPSIS
 	Default preset file for "Sophia Script for Windows 10"
 
-	Version: v5.16.2
-	Date: 20.03.2023
+	Version: v5.16.4
+	Date: 01.04.2023
 
 	Copyright (c) 2014—2023 farag
 	Copyright (c) 2019—2023 farag & Inestic
@@ -26,7 +26,7 @@
 
 	.NOTES
 	Supported Windows 10 versions
-	Versions: 22H2
+	Version: 22H2
 	Builds: 19045.2728+
 	Editions: Home/Pro/Enterprise
 	Architecture: x64
@@ -70,7 +70,7 @@ param
 
 Clear-Host
 
-$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 10 v5.16.2 | Made with $([char]::ConvertFromUtf32(0x1F497)) of Windows | $([char]0x00A9) farag & Inestic, 2014$([char]0x2013)2023"
+$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 10 v5.16.4 | Made with $([char]::ConvertFromUtf32(0x1F497)) of Windows | $([char]0x00A9) farag & Inestic, 2014$([char]0x2013)2023"
 
 Remove-Module -Name Sophia -Force -ErrorAction Ignore
 Import-Module -Name $PSScriptRoot\Manifest\Sophia.psd1 -PassThru -Force
@@ -378,10 +378,6 @@ TaskbarSearch -Hide
 # Показать поле поиска на панели задач (значение по умолчанию)
 # TaskbarSearch -SearchBox
 
-# Hide the Task View button on the taskbar
-# Скрыть кнопку Просмотра задач
-TaskViewButton -Hide
-
 # Hide search highlights
 # Скрыть главное в поиске
 SearchHighlights -Hide
@@ -389,6 +385,10 @@ SearchHighlights -Hide
 # Show search highlights (default value)
 # Показать главное в поиске (значение по умолчанию)
 # SearchHighlights -Show
+
+# Hide the Task View button on the taskbar
+# Скрыть кнопку Просмотра задач
+TaskViewButton -Hide
 
 # Show the Task View button on the taskbar (default value)
 # Отобразить кнопку Просмотра задач (значение по умолчанию)

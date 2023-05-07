@@ -2,8 +2,8 @@
 	.SYNOPSIS
 	Sophia Script is a PowerShell module for Windows 10 & Windows 11 fine-tuning and automating the routine tasks
 
-	Version: v5.6.2
-	Date: 20.03.2023
+	Version: v5.6.4
+	Date: 01.04.2023
 
 	Copyright (c) 2014—2023 farag
 	Copyright (c) 2019—2023 farag & Inestic
@@ -56,12 +56,43 @@ function Checks
 	# Unblock all files in the script folder by removing the Zone.Identifier alternate data stream with a value of "3"
 	Get-ChildItem -Path $PSScriptRoot\..\ -File -Recurse -Force | Unblock-File
 
+	[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+
+	# Extract strings from %SystemRoot%\System32\shell32.dll using its' number
+	$Signature = @{
+		Namespace        = "WinAPI"
+		Name             = "GetStr"
+		Language         = "CSharp"
+		UsingNamespace   = "System.Text"
+		MemberDefinition = @"
+[DllImport("kernel32.dll", CharSet = CharSet.Auto)]
+public static extern IntPtr GetModuleHandle(string lpModuleName);
+
+[DllImport("user32.dll", CharSet = CharSet.Auto)]
+internal static extern int LoadString(IntPtr hInstance, uint uID, StringBuilder lpBuffer, int nBufferMax);
+
+public static string GetString(uint strId)
+{
+	IntPtr intPtr = GetModuleHandle("shell32.dll");
+	StringBuilder sb = new StringBuilder(255);
+	LoadString(intPtr, strId, sb, sb.Capacity);
+	return sb.ToString();
+}
+"@
+	}
+	if (-not ("WinAPI.GetStr" -as [type]))
+	{
+		Add-Type @Signature
+	}
+
 	# Detect the OS bitness
 	if (-not [System.Environment]::Is64BitOperatingSystem)
 	{
 		Write-Warning -Message $Localization.UnsupportedOSBitness
+
 		Start-Process -FilePath "https://t.me/sophia_chat"
 		Start-Process -FilePath "https://discord.gg/sSryhaEv79"
+
 		exit
 	}
 
@@ -100,9 +131,11 @@ function Checks
 		$false
 		{
 			Write-Warning -Message $Localization.UnsupportedOSBuild
+
 			Start-Process -FilePath "https://t.me/sophia_chat"
 			Start-Process -FilePath "https://discord.gg/sSryhaEv79"
 			Start-Process -FilePath "https://github.com/farag2/Sophia-Script-for-Windows#system-requirements"
+
 			exit
 		}
 	}
@@ -111,9 +144,11 @@ function Checks
 	if ($ExecutionContext.SessionState.LanguageMode -ne "FullLanguage")
 	{
 		Write-Warning -Message $Localization.UnsupportedLanguageMode
+
 		Start-Process -FilePath "https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_language_modes"
 		Start-Process -FilePath "https://t.me/sophia_chat"
 		Start-Process -FilePath "https://discord.gg/sSryhaEv79"
+
 		exit
 	}
 
@@ -125,8 +160,10 @@ function Checks
 	if ($CurrentUserName -ne $LoginUserName)
 	{
 		Write-Warning -Message $Localization.LoggedInUserNotAdmin
+
 		Start-Process -FilePath "https://t.me/sophia_chat"
 		Start-Process -FilePath "https://discord.gg/sSryhaEv79"
+
 		exit
 	}
 
@@ -134,8 +171,10 @@ function Checks
 	if ($PSVersionTable.PSVersion.Major -ne 5)
 	{
 		Write-Warning -Message ($Localization.UnsupportedPowerShell -f $PSVersionTable.PSVersion.Major, $PSVersionTable.PSVersion.Minor)
+
 		Start-Process -FilePath "https://t.me/sophia_chat"
 		Start-Process -FilePath "https://discord.gg/sSryhaEv79"
+
 		exit
 	}
 
@@ -143,12 +182,14 @@ function Checks
 	if (($Host.Name -match "ISE") -or ($env:TERM_PROGRAM -eq "vscode"))
 	{
 		Write-Warning -Message ($Localization.UnsupportedHost -f $Host.Name.replace("Host", ""))
+
 		Start-Process -FilePath "https://t.me/sophia_chat"
 		Start-Process -FilePath "https://discord.gg/sSryhaEv79"
+
 		exit
 	}
 
-	# Check whether Windows was broken by 3rd party tweakers and trojans
+	# Check whether Windows was broken by 3rd party harmful tweakers and trojans
 	$Tweakers = @{
 		# https://github.com/Sycnex/Windows10Debloater
 		Windows10Debloater  = "$env:SystemDrive\Temp\Windows10Debloater"
@@ -163,9 +204,19 @@ function Checks
 		# https://win10tweaker.ru
 		"Win 10 Tweaker"    = "HKCU:\Software\Win 10 Tweaker"
 		# https://forum.ru-board.com/topic.cgi?forum=5&topic=50519
-		"Modern Tweaker"    = "Registry::HKEY_CLASSES_ROOT\.exts\shell\open\command"
+		"Modern Tweaker"    = "Registry::HKEY_CLASSES_ROOT\CLSID\{645FF040-5081-101B-9F08-00AA002F954E}\shell\Modern Cleaner"
 		# https://boosterx.ru
 		BoosterX            = "$env:ProgramFiles\GameModeX\GameModeX.exe"
+		# https://forum.ru-board.com/topic.cgi?forum=5&topic=14285&start=400#11
+		"Defender Control"  = "$env:APPDATA\Defender Control"
+		# https://forum.ru-board.com/topic.cgi?forum=5&topic=14285&start=260#12
+		"Defender Switch"   = "$env:ProgramData\DSW"
+		# https://revi.cc/revios/download
+		"Revision Tool"     = "${env:ProgramFiles(x86)}\Revision Tool"
+		# https://www.youtube.com/watch?v=L0cj_I6OF2o
+		"WinterOS Tweaker"  = "$env:SystemRoot\WinterOS*"
+		# https://github.com/ThePCDuke/WinCry
+		WinCry              = "$env:SystemRoot\TempCleaner.exe"
 	}
 	foreach ($Tweaker in $Tweakers.Keys)
 	{
@@ -174,28 +225,44 @@ function Checks
 			if ($Tweakers[$Tweaker] -eq "HKCU:\Software\Win 10 Tweaker")
 			{
 				Write-Warning -Message $Localization.Win10TweakerWarning
+
 				Start-Process -FilePath "https://youtu.be/na93MS-1EkM"
 				Start-Process -FilePath "https://pikabu.ru/story/byekdor_v_win_10_tweaker_ili_sovremennyie_metodyi_borbyi_s_piratstvom_8227558"
 				Start-Process -FilePath "https://t.me/sophia_chat"
 				Start-Process -FilePath "https://discord.gg/sSryhaEv79"
+
 				exit
 			}
 
 			Write-Warning -Message ($Localization.TweakerWarning -f $Tweaker)
+
 			Start-Process -FilePath "https://t.me/sophia_chat"
 			Start-Process -FilePath "https://discord.gg/sSryhaEv79"
+
 			exit
 		}
+	}
+
+	# Flibustier custom Windows image
+	if (Get-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\Services\.NETFramework\Performance -Name *flibustier)
+	{
+		Write-Warning -Message ($Localization.TweakerWarning -f "flblauncher")
+
+		Start-Process -FilePath "https://t.me/sophia_chat"
+		Start-Process -FilePath "https://discord.gg/sSryhaEv79"
+
+		exit
 	}
 
 	# Check whether LGPO.exe exists in the bin folder
 	if (-not (Test-Path -Path "$PSScriptRoot\..\bin\LGPO.exe"))
 	{
 		Write-Warning -Message $Localization.Bin
-		Start-Sleep -Seconds 5
+
 		Start-Process -FilePath "https://github.com/farag2/Sophia-Script-for-Windows/releases/latest"
 		Start-Process -FilePath "https://t.me/sophia_chat"
 		Start-Process -FilePath "https://discord.gg/sSryhaEv79"
+
 		exit
 	}
 
@@ -212,16 +279,16 @@ function Checks
 	if (($PendingActions | Test-Path) -contains $true)
 	{
 		Write-Warning -Message $Localization.RebootPending
+
 		Start-Process -FilePath "https://t.me/sophia_chat"
 		Start-Process -FilePath "https://discord.gg/sSryhaEv79"
+
 		exit
 	}
 
 	# Check if the current module version is the latest one
 	try
 	{
-		[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-
 		# Check the internet connection
 		$Parameters = @{
 			Uri              = "https://www.google.com"
@@ -238,8 +305,9 @@ function Checks
 		{
 			# https://github.com/farag2/Sophia-Script-for-Windows/blob/master/sophia_script_versions.json
 			$Parameters = @{
-				Uri              = "https://raw.githubusercontent.com/farag2/Sophia-Script-for-Windows/master/sophia_script_versions.json"
-				UseBasicParsing  = $true
+				Uri             = "https://raw.githubusercontent.com/farag2/Sophia-Script-for-Windows/master/sophia_script_versions.json"
+				Verbose         = $true
+				UseBasicParsing = $true
 			}
 			$LatestRelease = (Invoke-RestMethod @Parameters).Sophia_Script_Windows_10_LTSC2019
 			$CurrentRelease = (Get-Module -Name Sophia).Version.ToString()
@@ -247,11 +315,10 @@ function Checks
 			{
 				Write-Warning -Message $Localization.UnsupportedRelease
 
-				Start-Sleep -Seconds 5
-
 				Start-Process -FilePath "https://github.com/farag2/Sophia-Script-for-Windows/releases/latest"
 				Start-Process -FilePath "https://t.me/sophia_chat"
 				Start-Process -FilePath "https://discord.gg/sSryhaEv79"
+
 				exit
 			}
 		}
@@ -277,34 +344,22 @@ function Checks
 	{
 		# Provider Load Failure exception
 		Write-Warning -Message $Global:Error.Exception.Message | Select-Object -First 1
-		Write-Warning -Message $Localization.DefenderBroken
+		Write-Warning -Message $Localization.DefenderBroken -f "Microsoft Defender" ###
 
 		Start-Process -FilePath "https://t.me/sophia_chat"
 		Start-Process -FilePath "https://discord.gg/sSryhaEv79"
 
 		exit
 	}
-
-	# Checking services
-	try
-	{
-		$Services = Get-Service -Name Windefend, SecurityHealthService, wscsvc -ErrorAction Stop
-	}
-	catch [Microsoft.PowerShell.Commands.ServiceCommandException]
-	{
-		Write-Warning -Message $Localization.DefenderBroken
-		Start-Process -FilePath "https://t.me/sophia_chat"
-		Start-Process -FilePath "https://discord.gg/sSryhaEv79"
-		exit
-	}
-	$Script:DefenderServices = ($Services | Where-Object -FilterScript {$_.Status -ne "running"} | Measure-Object).Count -lt $Services.Count
 
 	# Check Microsoft Defender state
 	if ($null -eq (Get-CimInstance -Namespace root/SecurityCenter2 -ClassName AntiVirusProduct -ErrorAction Ignore))
 	{
-		Write-Warning -Message $Localization.DefenderBroken
+		Write-Warning -Message $Localization.DefenderBroken -f "Microsoft Defender" ###
+
 		Start-Process -FilePath "https://t.me/sophia_chat"
 		Start-Process -FilePath "https://discord.gg/sSryhaEv79"
+
 		exit
 	}
 
@@ -319,6 +374,21 @@ function Checks
 	{
 		$Script:DefenderproductState = $false
 	}
+	# Checking services
+	try
+	{
+		$Services = Get-Service -Name Windefend, SecurityHealthService, wscsvc -ErrorAction Stop
+	}
+	catch [Microsoft.PowerShell.Commands.ServiceCommandException]
+	{
+		Write-Warning -Message $Localization.DefenderBroken -f "Microsoft Defender"
+
+		Start-Process -FilePath "https://t.me/sophia_chat"
+		Start-Process -FilePath "https://discord.gg/sSryhaEv79"
+
+		exit
+	}
+	$Script:DefenderServices = ($Services | Where-Object -FilterScript {$_.Status -ne "running"} | Measure-Object).Count -lt $Services.Count
 
 	# Specify whether Antispyware protection is enabled
 	if ((Get-CimInstance -ClassName MSFT_MpComputerStatus -Namespace root/Microsoft/Windows/Defender).AntispywareEnabled)
@@ -457,32 +527,141 @@ function Checks
 	}
 	#endregion Defender checks
 
-	# Extract strings from %SystemRoot%\System32\shell32.dll using its' number
-	$Signature = @{
-		Namespace        = "WinAPI"
-		Name             = "GetStr"
-		Language         = "CSharp"
-		UsingNamespace   = "System.Text"
-		MemberDefinition = @"
-[DllImport("kernel32.dll", CharSet = CharSet.Auto)]
-public static extern IntPtr GetModuleHandle(string lpModuleName);
-
-[DllImport("user32.dll", CharSet = CharSet.Auto)]
-internal static extern int LoadString(IntPtr hInstance, uint uID, StringBuilder lpBuffer, int nBufferMax);
-
-public static string GetString(uint strId)
-{
-	IntPtr intPtr = GetModuleHandle("shell32.dll");
-	StringBuilder sb = new StringBuilder(255);
-	LoadString(intPtr, strId, sb, sb.Capacity);
-	return sb.ToString();
-}
-"@
-	}
-	if (-not ("WinAPI.GetStr" -as [type]))
+	# Enable back the SysMain service if it was disabled by harmful tweakers
+	if ((Get-Service -Name SysMain).Status -eq "Stopped")
 	{
-		Add-Type @Signature
+		Get-Service -Name SysMain | Set-Service -StartupType Automatic
+		Get-Service -Name SysMain | Start-Service
+
+		Start-Process -FilePath "https://www.outsidethebox.ms/19318/"
 	}
+
+	# Automatically manage paging file size for all drives
+	if (-not (Get-CimInstance -ClassName CIM_ComputerSystem).AutomaticManagedPageFile)
+	{
+		Get-CimInstance -ClassName CIM_ComputerSystem | Set-CimInstance -Property @{AutomaticManagedPageFile = $true}
+	}
+
+	# Remove firewalled IP addresses that block Microsoft recourses added by harmful tweakers
+	# https://wpd.app
+	Get-NetFirewallRule | Where-Object -FilterScript {($_.DisplayName -match "Blocker MicrosoftTelemetry") -or ($_.DisplayName -match "Blocker MicrosoftExtra") -or ($_.DisplayName -match "windowsSpyBlocker")} | Remove-NetFirewallRule
+
+	Write-Information -MessageData "" -InformationAction Continue
+	# Extract the localized "Please wait..." string from shell32.dll
+	Write-Verbose -Message ([WinAPI.GetStr]::GetString(12612)) -Verbose
+
+	# Remove IP addresses from hosts file that block Microsoft recourses added by WindowsSpyBlocker
+	# https://github.com/crazy-max/WindowsSpyBlocker
+	try
+	{
+		# Check the internet connection
+		$Parameters = @{
+			Uri              = "https://www.google.com"
+			Method           = "Head"
+			DisableKeepAlive = $true
+			UseBasicParsing  = $true
+		}
+		if (-not (Invoke-WebRequest @Parameters).StatusDescription)
+		{
+			return
+		}
+
+		try
+		{
+			# Check whether https://github.com is alive
+			$Parameters = @{
+				Uri              = "https://github.com"
+				Method           = "Head"
+				DisableKeepAlive = $true
+				UseBasicParsing  = $true
+			}
+			if (-not (Invoke-WebRequest @Parameters).StatusDescription)
+			{
+				return
+			}
+
+			Clear-Variable -Name Array -ErrorAction Ignore
+
+			# https://github.com/crazy-max/WindowsSpyBlocker/tree/master/data/hosts
+			$Parameters = @{
+				Uri              = "https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/extra.txt"
+				UseBasicParsing  = $true
+				Verbose          = $true
+			}
+			$extra = (Invoke-WebRequest @Parameters).Content
+
+			$Parameters = @{
+				Uri              = "https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/extra_v6.txt"
+				UseBasicParsing  = $true
+				Verbose          = $true
+			}
+			$extra_v6 = (Invoke-WebRequest @Parameters).Content
+
+			$Parameters = @{
+				Uri              = "https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/spy.txt"
+				UseBasicParsing  = $true
+				Verbose          = $true
+			}
+			$spy = (Invoke-WebRequest @Parameters).Content
+
+			$Parameters = @{
+				Uri              = "https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/spy_v6.txt"
+				UseBasicParsing  = $true
+				Verbose          = $true
+			}
+			$spy_v6 = (Invoke-WebRequest @Parameters).Content
+
+			$Parameters = @{
+				Uri              = "https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/update.txt"
+				UseBasicParsing  = $true
+				Verbose          = $true
+			}
+			$update =(Invoke-WebRequest @Parameters).Content
+
+			$Parameters = @{
+				Uri              = "https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/update_v6.txt"
+				UseBasicParsing  = $true
+				Verbose          = $true
+			}
+			$update_v6 = (Invoke-WebRequest @Parameters).Content
+
+			$IPArray += $extra, $extra_v6, $spy, $spy_v6, $update, $update_v6
+			# Split the Array variable content
+			$IPArray = $IPArray -split "`r?`n" | Where-Object -FilterScript {$_ -notmatch "#"}
+
+			# Clear hosts file
+			$hosts = Get-Content -Path "$env:SystemRoot\System32\drivers\etc\hosts" -Encoding Default -Force
+			$hosts | ForEach-Object -Process {
+				if (($_ -ne "") -and (-not $_.StartsWith("#")) -and ($IPArray -split "`r?`n" | Select-String -Pattern $_))
+				{
+					$UiData = $_
+					$hosts = $hosts | Where-Object -FilterScript {$_ -notmatch $UiData}
+				}
+			}
+			$hosts | Set-Content -Path "$env:SystemRoot\System32\drivers\etc\hosts" -Encoding Default -Force
+		}
+		catch [System.Net.WebException]
+		{
+			Write-Warning -Message ($Localization.NoResponse -f "https://github.com")
+			Write-Error -Message ($Localization.NoResponse -f "https://github.com") -ErrorAction SilentlyContinue
+
+			Write-Error -Message ($Localization.RestartFunction -f $MyInvocation.Line.Trim()) -ErrorAction SilentlyContinue
+		}
+	}
+	catch [System.Net.WebException]
+	{
+		Write-Warning -Message $Localization.NoInternetConnection
+		Write-Error -Message $Localization.NoInternetConnection -ErrorAction SilentlyContinue
+
+		Write-Error -Message ($Localization.RestartFunction -f $MyInvocation.Line.Trim()) -ErrorAction SilentlyContinue
+	}
+
+
+	# PowerShell 5.1 (7.3 too) interprets 8.3 file name literally, if an environment variable contains a non-latin word
+	Get-ChildItem -Path "$env:TEMP\Computer.txt", "$env:TEMP\User.txt" -Force -ErrorAction Ignore | Remove-Item -Recurse -Force -ErrorAction Ignore
+
+	# Save all opened folders in order to restore them after File Explorer restart
+	$Script:OpenedFolders = {(New-Object -ComObject Shell.Application).Windows() | ForEach-Object -Process {$_.Document.Folder.Self.Path}}.Invoke()
 
 	# Display a warning message about whether a user has customized the preset file
 	if ($Warning)
@@ -520,21 +699,6 @@ public static string GetString(uint strId)
 			}
 		}
 	}
-
-	# Enable back the SysMain service if it was disabled by harmful tweakers
-	if ((Get-Service -Name SysMain).Status -eq "Stopped")
-	{
-		Get-Service -Name SysMain | Set-Service -StartupType Automatic
-		Get-Service -Name SysMain | Start-Service
-
-		Start-Process -FilePath "https://www.outsidethebox.ms/19318/"
-	}
-
-	# PowerShell 5.1 (7.3 too) interprets 8.3 file name literally, if an environment variable contains a non-latin word
-	Get-ChildItem -Path "$env:TEMP\Computer.txt", "$env:TEMP\User.txt" -Force -ErrorAction Ignore | Remove-Item -Recurse -Force -ErrorAction Ignore
-
-	# Save all opened folders in order to restore them after File Explorer restart
-	$Script:OpenedFolders = {(New-Object -ComObject Shell.Application).Windows() | ForEach-Object -Process {$_.Document.Folder.Self.Path}}.Invoke()
 }
 #endregion Checks
 
@@ -543,8 +707,8 @@ public static string GetString(uint strId)
 # To stop logging just close the console or type "Stop-Transcript"
 function Logging
 {
-	$TrascriptFilename = "Log-$((Get-Date).ToString("dd.MM.yyyy-HH-mm"))"
-	Start-Transcript -Path $PSScriptRoot\..\$TrascriptFilename.txt -Force
+	$TranscriptFilename = "Log-$((Get-Date).ToString("dd.MM.yyyy-HH-mm"))"
+	Start-Transcript -Path $PSScriptRoot\..\$TranscriptFilename.txt -Force
 }
 
 # Create a restore point for the system drive
@@ -711,6 +875,46 @@ function DiagTrackService
 		[switch]
 		$Enable
 	)
+
+	# Revert back removed or commented out "Checks" functions
+	# Get the name of a preset (e.g Sophia.ps1) regardless it was named
+	$PresetName = ((Get-PSCallStack).Position | Where-Object -FilterScript {$_.File -match ".ps1"}).File
+	if (Select-String -Path $PresetName -Pattern Checks | Select-String -Pattern "{Checks}", "The mandatory checks" -NotMatch)
+	{
+		# The string exists and is commented
+		if ((Select-String -Path $PresetName -Pattern Checks | Select-String -Pattern "{Checks}", "The mandatory checks" -NotMatch).Line.StartsWith("#") -eq $true)
+		{
+			$Host.UI.RawUI.WindowTitle = "Checks | $($PresetName)"
+
+			$ReadFile = Get-Content -Path $PresetName -Encoding UTF8
+			# Calculate the string number to uncomment "Checks -Warning"
+			$LineNumber = (Select-String -Path $PresetName -Pattern Checks | Select-String -Pattern "{Checks}", "The mandatory checks" -NotMatch).LineNumber
+			# Get date from the required line to replace it with "Checks -Warning"
+			$RequiredLine = (Get-Content -Path $PresetName -Encoding UTF8) | Where-Object -FilterScript {$_.ReadCount -eq $LineNumber}
+			(Get-Content -Path $PresetName -Encoding UTF8).Replace($RequiredLine, "Checks -Warning") | Set-Content -Path $PresetName -Encoding UTF8 -Force
+
+			Start-Process -FilePath "https://t.me/sophia_chat"
+			Start-Process -FilePath "https://discord.gg/sSryhaEv79"
+
+			exit
+		}
+	}
+	else
+	{
+		$Host.UI.RawUI.WindowTitle = "Checks | $($PresetName)"
+
+		$ReadFile = Get-Content -Path $PresetName -Encoding UTF8
+		# Calculate the string number to add after "Checks -Warning"
+		$LineNumber = (Select-String -Path $PresetName -Pattern Import-LocalizedData).LineNumber
+		# Array of a new file: content before $LineNumber (including $LineNumber), new added string, the rest data of file
+		$UpdatedFile = @($ReadFile[0..($LineNumber - 1)], "`nChecks -Warning", $ReadFile[$LineNumber..($ReadFile.Length + 1)])
+		Set-Content -Path $PresetName -Value $UpdatedFile -Encoding UTF8 -Force
+
+		Start-Process -FilePath "https://t.me/sophia_chat"
+		Start-Process -FilePath "https://discord.gg/sSryhaEv79"
+
+		exit
+	}
 
 	switch ($PSCmdlet.ParameterSetName)
 	{
@@ -1069,8 +1273,7 @@ function ScheduledTasks
 "@
 	#endregion XAML Markup
 
-	$Reader = (New-Object -TypeName System.Xml.XmlNodeReader -ArgumentList $XAML)
-	$Form = [Windows.Markup.XamlReader]::Load($Reader)
+	$Form = [Windows.Markup.XamlReader]::Load((New-Object -TypeName System.Xml.XmlNodeReader -ArgumentList $XAML))
 	$XAML.SelectNodes("//*[@*[contains(translate(name(.),'n','N'),'Name')]]") | ForEach-Object -Process {
 		Set-Variable -Name ($_.Name) -Value $Form.FindName($_.Name)
 	}
@@ -1214,7 +1417,7 @@ function ScheduledTasks
 
 	Add-Type -AssemblyName System.Windows.Forms
 
-	$SetForegroundWindow = @{
+	$Signature = @{
 		Namespace        = "WinAPI"
 		Name             = "ForegroundWindow"
 		Language         = "CSharp"
@@ -1230,7 +1433,7 @@ public static extern bool SetForegroundWindow(IntPtr hWnd);
 
 	if (-not ("WinAPI.ForegroundWindow" -as [type]))
 	{
-		Add-Type @SetForegroundWindow
+		Add-Type @Signature
 	}
 
 	Get-Process | Where-Object -FilterScript {($_.ProcessName -eq "powershell") -and ($_.MainWindowTitle -match "Sophia Script for Windows 10 LTSC")} | ForEach-Object -Process {
@@ -3701,6 +3904,11 @@ function TempFolder
 	{
 		"SystemDrive"
 		{
+			if ((Get-LocalUser | Where-Object -FilterScript {$_.Enabled}).Count -gt 1)
+			{
+				return
+			}
+
 			# PowerShell 5.1 (7.3 too) interprets 8.3 file name literally, if an environment variable contains a non-latin word
 			if ((Get-Item -Path $env:TEMP).FullName -eq "$env:SystemDrive\Temp")
 			{
@@ -4415,8 +4623,7 @@ function WindowsFeatures
 "@
 	#endregion XAML Markup
 
-	$Reader = (New-Object -TypeName System.Xml.XmlNodeReader -ArgumentList $XAML)
-	$Form = [Windows.Markup.XamlReader]::Load($Reader)
+	$Form = [Windows.Markup.XamlReader]::Load((New-Object -TypeName System.Xml.XmlNodeReader -ArgumentList $XAML))
 	$XAML.SelectNodes("//*[@*[contains(translate(name(.),'n','N'),'Name')]]") | ForEach-Object -Process {
 		Set-Variable -Name ($_.Name) -Value $Form.FindName($_.Name)
 	}
@@ -4567,7 +4774,7 @@ function WindowsFeatures
 
 	Add-Type -AssemblyName System.Windows.Forms
 
-	$SetForegroundWindow = @{
+	$Signature = @{
 		Namespace        = "WinAPI"
 		Name             = "ForegroundWindow"
 		Language         = "CSharp"
@@ -4583,7 +4790,7 @@ public static extern bool SetForegroundWindow(IntPtr hWnd);
 
 	if (-not ("WinAPI.ForegroundWindow" -as [type]))
 	{
-		Add-Type @SetForegroundWindow
+		Add-Type @Signature
 	}
 
 	Get-Process | Where-Object -FilterScript {($_.ProcessName -eq "powershell") -and ($_.MainWindowTitle -match "Sophia Script for Windows 10 LTSC")} | ForEach-Object -Process {
@@ -4758,8 +4965,7 @@ function WindowsCapabilities
 "@
 	#endregion XAML Markup
 
-	$Reader = (New-Object -TypeName System.Xml.XmlNodeReader -ArgumentList $XAML)
-	$Form = [Windows.Markup.XamlReader]::Load($Reader)
+	$Form = [Windows.Markup.XamlReader]::Load((New-Object -TypeName System.Xml.XmlNodeReader -ArgumentList $XAML))
 	$XAML.SelectNodes("//*[@*[contains(translate(name(.),'n','N'),'Name')]]") | ForEach-Object -Process {
 		Set-Variable -Name ($_.Name) -Value $Form.FindName($_.Name)
 	}
@@ -4943,7 +5149,7 @@ function WindowsCapabilities
 
 	Add-Type -AssemblyName System.Windows.Forms
 
-	$SetForegroundWindow = @{
+	$Signature = @{
 		Namespace        = "WinAPI"
 		Name             = "ForegroundWindow"
 		Language         = "CSharp"
@@ -4959,7 +5165,7 @@ public static extern bool SetForegroundWindow(IntPtr hWnd);
 
 	if (-not ("WinAPI.ForegroundWindow" -as [type]))
 	{
-		Add-Type @SetForegroundWindow
+		Add-Type @Signature
 	}
 
 	Get-Process | Where-Object -FilterScript {($_.ProcessName -eq "powershell") -and ($_.MainWindowTitle -match "Sophia Script for Windows 10 LTSC")} | ForEach-Object -Process {
@@ -5624,8 +5830,8 @@ public extern static int SHSetKnownFolderPath(ref Guid folderId, uint flags, Int
 			$Default
 		)
 
-		Write-Information -MessageData $Title -InformationAction Continue
 		Write-Information -MessageData "" -InformationAction Continue
+		Write-Information -MessageData $Title -InformationAction Continue
 
 		# Extract the localized "Skip" string from shell32.dll
 		$Menu += [WinAPI.GetStr]::GetString(16956)
@@ -5685,14 +5891,6 @@ public extern static int SHSetKnownFolderPath(ref Guid folderId, uint flags, Int
 		while ($k.Key -notin ([ConsoleKey]::Escape, [ConsoleKey]::Enter))
 	}
 
-	# The localized user folders names
-	$DesktopLocalizedString   = [WinAPI.GetStr]::GetString(21769)
-	$DocumentsLocalizedString = [WinAPI.GetStr]::GetString(21770)
-	$DownloadsLocalizedString = [WinAPI.GetStr]::GetString(21798)
-	$MusicLocalizedString     = [WinAPI.GetStr]::GetString(21790)
-	$PicturesLocalizedString  = [WinAPI.GetStr]::GetString(21779)
-	$VideosLocalizedString    = [WinAPI.GetStr]::GetString(21791)
-
 	switch ($PSCmdlet.ParameterSetName)
 	{
 		"Root"
@@ -5712,14 +5910,14 @@ public extern static int SHSetKnownFolderPath(ref Guid folderId, uint flags, Int
 
 			# Desktop
 			Write-Information -MessageData "" -InformationAction Continue
-			Write-Verbose -Message ($Localization.DriveSelect -f $DesktopLocalizedString) -Verbose
+			Write-Verbose -Message ($Localization.DriveSelect -f [WinAPI.GetStr]::GetString(21769)) -Verbose
 
 			$CurrentUserFolderLocation = Get-ItemPropertyValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name Desktop
-			Write-Verbose -Message ($Localization.CurrentUserFolderLocation -f $DesktopLocalizedString, $CurrentUserFolderLocation) -Verbose
+			Write-Verbose -Message ($Localization.CurrentUserFolderLocation -f [WinAPI.GetStr]::GetString(21769), $CurrentUserFolderLocation) -Verbose
 			Write-Warning -Message $Localization.FilesWontBeMoved
 
 			$Title = ""
-			$Message       = $Localization.UserFolderRequest -f $DesktopLocalizedString
+			$Message       = $Localization.UserFolderRequest -f [WinAPI.GetStr]::GetString(21769)
 			# Extract the localized "&No" string from shell32.dll
 			$No            = [WinAPI.GetStr]::GetString(33232)
 			# Extract the localized "&Yes" string from shell32.dll
@@ -5734,7 +5932,7 @@ public extern static int SHSetKnownFolderPath(ref Guid folderId, uint flags, Int
 				{
 					if ($DriveLetters.Count -gt 1)
 					{
-						$SelectedDrive = ShowMenu -Title ($Localization.DriveSelect -f $DesktopLocalizedString) -Menu $DriveLetters -Default $Script:Default
+						$SelectedDrive = ShowMenu -Title ($Localization.DriveSelect -f [WinAPI.GetStr]::GetString(21769)) -Menu $DriveLetters -Default $Script:Default
 					}
 					else
 					{
@@ -5754,14 +5952,14 @@ public extern static int SHSetKnownFolderPath(ref Guid folderId, uint flags, Int
 
 			# Documents
 			Write-Information -MessageData "" -InformationAction Continue
-			Write-Verbose -Message ($Localization.DriveSelect -f $DocumentsLocalizedString) -Verbose
+			Write-Verbose -Message ($Localization.DriveSelect -f [WinAPI.GetStr]::GetString(21770)) -Verbose
 
 			$CurrentUserFolderLocation = Get-ItemPropertyValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name Personal
-			Write-Verbose -Message ($Localization.CurrentUserFolderLocation -f $DocumentsLocalizedString, $CurrentUserFolderLocation) -Verbose
+			Write-Verbose -Message ($Localization.CurrentUserFolderLocation -f [WinAPI.GetStr]::GetString(21770), $CurrentUserFolderLocation) -Verbose
 			Write-Warning -Message $Localization.FilesWontBeMoved
 
 			$Title         = ""
-			$Message       = $Localization.UserFolderRequest -f $DocumentsLocalizedString
+			$Message       = $Localization.UserFolderRequest -f [WinAPI.GetStr]::GetString(21770)
 			# Extract the localized "&No" string from shell32.dll
 			$No            = [WinAPI.GetStr]::GetString(33232)
 			# Extract the localized "&Yes" string from shell32.dll
@@ -5776,7 +5974,7 @@ public extern static int SHSetKnownFolderPath(ref Guid folderId, uint flags, Int
 				{
 					if ($DriveLetters.Count -gt 1)
 					{
-						$SelectedDrive = ShowMenu -Title ($Localization.DriveSelect -f $DesktopLocalizedString) -Menu $DriveLetters -Default $Script:Default
+						$SelectedDrive = ShowMenu -Title ($Localization.DriveSelect -f [WinAPI.GetStr]::GetString(21770)) -Menu $DriveLetters -Default $Script:Default
 					}
 					else
 					{
@@ -5796,14 +5994,14 @@ public extern static int SHSetKnownFolderPath(ref Guid folderId, uint flags, Int
 
 			# Downloads
 			Write-Information -MessageData "" -InformationAction Continue
-			Write-Verbose -Message ($Localization.DriveSelect -f $DownloadsLocalizedString) -Verbose
+			Write-Verbose -Message ($Localization.DriveSelect -f [WinAPI.GetStr]::GetString(21798)) -Verbose
 
 			$CurrentUserFolderLocation = Get-ItemPropertyValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "{374DE290-123F-4565-9164-39C4925E467B}"
-			Write-Verbose -Message ($Localization.CurrentUserFolderLocation -f $DownloadsLocalizedString, $CurrentUserFolderLocation) -Verbose
+			Write-Verbose -Message ($Localization.CurrentUserFolderLocation -f [WinAPI.GetStr]::GetString(21798), $CurrentUserFolderLocation) -Verbose
 			Write-Warning -Message $Localization.FilesWontBeMoved
 
 			$Title         = ""
-			$Message       = $Localization.UserFolderRequest -f $DownloadsLocalizedString
+			$Message       = $Localization.UserFolderRequest -f [WinAPI.GetStr]::GetString(21798)
 			# Extract the localized "&No" string from shell32.dll
 			$No            = [WinAPI.GetStr]::GetString(33232)
 			# Extract the localized "&Yes" string from shell32.dll
@@ -5818,7 +6016,7 @@ public extern static int SHSetKnownFolderPath(ref Guid folderId, uint flags, Int
 				{
 					if ($DriveLetters.Count -gt 1)
 					{
-						$SelectedDrive = ShowMenu -Title ($Localization.DriveSelect -f $DesktopLocalizedString) -Menu $DriveLetters -Default $Script:Default
+						$SelectedDrive = ShowMenu -Title ($Localization.DriveSelect -f [WinAPI.GetStr]::GetString(21798)) -Menu $DriveLetters -Default $Script:Default
 					}
 					else
 					{
@@ -5838,14 +6036,14 @@ public extern static int SHSetKnownFolderPath(ref Guid folderId, uint flags, Int
 
 			# Music
 			Write-Information -MessageData "" -InformationAction Continue
-			Write-Verbose -Message ($Localization.DriveSelect -f $MusicLocalizedString) -Verbose
+			Write-Verbose -Message ($Localization.DriveSelect -f [WinAPI.GetStr]::GetString(21790)) -Verbose
 
 			$CurrentUserFolderLocation = Get-ItemPropertyValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "My Music"
-			Write-Verbose -Message ($Localization.CurrentUserFolderLocation -f $MusicLocalizedString, $CurrentUserFolderLocation) -Verbose
+			Write-Verbose -Message ($Localization.CurrentUserFolderLocation -f [WinAPI.GetStr]::GetString(21790), $CurrentUserFolderLocation) -Verbose
 			Write-Warning -Message $Localization.FilesWontBeMoved
 
 			$Title         = ""
-			$Message       = $Localization.UserFolderRequest -f $MusicLocalizedString
+			$Message       = $Localization.UserFolderRequest -f [WinAPI.GetStr]::GetString(21790)
 			# Extract the localized "&No" string from shell32.dll
 			$No            = [WinAPI.GetStr]::GetString(33232)
 			# Extract the localized "&Yes" string from shell32.dll
@@ -5860,7 +6058,7 @@ public extern static int SHSetKnownFolderPath(ref Guid folderId, uint flags, Int
 				{
 					if ($DriveLetters.Count -gt 1)
 					{
-						$SelectedDrive = ShowMenu -Title ($Localization.DriveSelect -f $DesktopLocalizedString) -Menu $DriveLetters -Default $Script:Default
+						$SelectedDrive = ShowMenu -Title ($Localization.DriveSelect -f [WinAPI.GetStr]::GetString(21790)) -Menu $DriveLetters -Default $Script:Default
 					}
 					else
 					{
@@ -5880,14 +6078,14 @@ public extern static int SHSetKnownFolderPath(ref Guid folderId, uint flags, Int
 
 			# Pictures
 			Write-Information -MessageData "" -InformationAction Continue
-			Write-Verbose -Message ($Localization.DriveSelect -f $PicturesLocalizedString) -Verbose
+			Write-Verbose -Message ($Localization.DriveSelect -f [WinAPI.GetStr]::GetString(21779)) -Verbose
 
 			$CurrentUserFolderLocation = Get-ItemPropertyValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "My Pictures"
-			Write-Verbose -Message ($Localization.CurrentUserFolderLocation -f $PicturesLocalizedString, $CurrentUserFolderLocation) -Verbose
+			Write-Verbose -Message ($Localization.CurrentUserFolderLocation -f [WinAPI.GetStr]::GetString(21779), $CurrentUserFolderLocation) -Verbose
 			Write-Warning -Message $Localization.FilesWontBeMoved
 
 			$Title         = ""
-			$Message       = $Localization.UserFolderRequest -f $PicturesLocalizedString
+			$Message       = $Localization.UserFolderRequest -f [WinAPI.GetStr]::GetString(21779)
 			# Extract the localized "&No" string from shell32.dll
 			$No            = [WinAPI.GetStr]::GetString(33232)
 			# Extract the localized "&Yes" string from shell32.dll
@@ -5902,7 +6100,7 @@ public extern static int SHSetKnownFolderPath(ref Guid folderId, uint flags, Int
 				{
 					if ($DriveLetters.Count -gt 1)
 					{
-						$SelectedDrive = ShowMenu -Title ($Localization.DriveSelect -f $DesktopLocalizedString) -Menu $DriveLetters -Default $Script:Default
+						$SelectedDrive = ShowMenu -Title ($Localization.DriveSelect -f [WinAPI.GetStr]::GetString(21779)) -Menu $DriveLetters -Default $Script:Default
 					}
 					else
 					{
@@ -5922,14 +6120,14 @@ public extern static int SHSetKnownFolderPath(ref Guid folderId, uint flags, Int
 
 			# Videos
 			Write-Information -MessageData "" -InformationAction Continue
-			Write-Verbose -Message ($Localization.DriveSelect -f $VideosLocalizedString) -Verbose
+			Write-Verbose -Message ($Localization.DriveSelect -f [WinAPI.GetStr]::GetString(21791)) -Verbose
 
 			$CurrentUserFolderLocation = Get-ItemPropertyValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "My Video"
-			Write-Verbose -Message ($Localization.CurrentUserFolderLocation -f $VideosLocalizedString, $CurrentUserFolderLocation) -Verbose
+			Write-Verbose -Message ($Localization.CurrentUserFolderLocation -f [WinAPI.GetStr]::GetString(21791), $CurrentUserFolderLocation) -Verbose
 			Write-Warning -Message $Localization.FilesWontBeMoved
 
 			$Title         = ""
-			$Message       = $Localization.UserFolderRequest -f $VideosLocalizedString
+			$Message       = $Localization.UserFolderRequest -f [WinAPI.GetStr]::GetString(21791)
 			# Extract the localized "&No" string from shell32.dll
 			$No            = [WinAPI.GetStr]::GetString(33232)
 			# Extract the localized "&Yes" string from shell32.dll
@@ -5944,7 +6142,7 @@ public extern static int SHSetKnownFolderPath(ref Guid folderId, uint flags, Int
 				{
 					if ($DriveLetters.Count -gt 1)
 					{
-						$SelectedDrive = ShowMenu -Title ($Localization.DriveSelect -f $DesktopLocalizedString) -Menu $DriveLetters -Default $Script:Default
+						$SelectedDrive = ShowMenu -Title ($Localization.DriveSelect -f [WinAPI.GetStr]::GetString(21791)) -Menu $DriveLetters -Default $Script:Default
 					}
 					else
 					{
@@ -5968,11 +6166,11 @@ public extern static int SHSetKnownFolderPath(ref Guid folderId, uint flags, Int
 			Write-Information -MessageData "" -InformationAction Continue
 			$CurrentUserFolderLocation = Get-ItemPropertyValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name Desktop
 
-			Write-Verbose -Message ($Localization.CurrentUserFolderLocation -f $DesktopLocalizedString, $CurrentUserFolderLocation) -Verbose
+			Write-Verbose -Message ($Localization.CurrentUserFolderLocation -f [WinAPI.GetStr]::GetString(21769), $CurrentUserFolderLocation) -Verbose
 			Write-Warning -Message $Localization.FilesWontBeMoved
 
 			$Title         = ""
-			$Message       = $Localization.UserFolderSelect -f $DesktopLocalizedString
+			$Message       = $Localization.UserFolderSelect -f [WinAPI.GetStr]::GetString(21769)
 			# Extract the localized "Browse" string from shell32.dll
 			$Browse        = [WinAPI.GetStr]::GetString(9015)
 			# Extract the localized "&No" string from shell32.dll
@@ -6009,11 +6207,11 @@ public extern static int SHSetKnownFolderPath(ref Guid folderId, uint flags, Int
 			Write-Information -MessageData "" -InformationAction Continue
 			$CurrentUserFolderLocation = Get-ItemPropertyValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name Personal
 
-			Write-Verbose -Message ($Localization.CurrentUserFolderLocation -f $DocumentsLocalizedString, $CurrentUserFolderLocation) -Verbose
+			Write-Verbose -Message ($Localization.CurrentUserFolderLocation -f [WinAPI.GetStr]::GetString(21770), $CurrentUserFolderLocation) -Verbose
 			Write-Warning -Message $Localization.FilesWontBeMoved
 
 			$Title         = ""
-			$Message       = $Localization.UserFolderSelect -f $DocumentsLocalizedString
+			$Message       = $Localization.UserFolderSelect -f [WinAPI.GetStr]::GetString(21770)
 			# Extract the localized "Browse" string from shell32.dll
 			$Browse        = [WinAPI.GetStr]::GetString(9015)
 			# Extract the localized "&No" string from shell32.dll
@@ -6050,11 +6248,11 @@ public extern static int SHSetKnownFolderPath(ref Guid folderId, uint flags, Int
 			Write-Information -MessageData "" -InformationAction Continue
 			$CurrentUserFolderLocation = Get-ItemPropertyValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "{374DE290-123F-4565-9164-39C4925E467B}"
 
-			Write-Verbose -Message ($Localization.CurrentUserFolderLocation -f $DownloadsLocalizedString, $CurrentUserFolderLocation) -Verbose
+			Write-Verbose -Message ($Localization.CurrentUserFolderLocation -f [WinAPI.GetStr]::GetString(21798), $CurrentUserFolderLocation) -Verbose
 			Write-Warning -Message $Localization.FilesWontBeMoved
 
 			$Title         = ""
-			$Message       = $Localization.UserFolderSelect -f $DownloadsLocalizedString
+			$Message       = $Localization.UserFolderSelect -f [WinAPI.GetStr]::GetString(21798)
 			# Extract the localized "Browse" string from shell32.dll
 			$Browse        = [WinAPI.GetStr]::GetString(9015)
 			# Extract the localized "&No" string from shell32.dll
@@ -6091,11 +6289,11 @@ public extern static int SHSetKnownFolderPath(ref Guid folderId, uint flags, Int
 			Write-Information -MessageData "" -InformationAction Continue
 			$CurrentUserFolderLocation = Get-ItemPropertyValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "My Music"
 
-			Write-Verbose -Message ($Localization.CurrentUserFolderLocation -f $MusicLocalizedString, $CurrentUserFolderLocation) -Verbose
+			Write-Verbose -Message ($Localization.CurrentUserFolderLocation -f [WinAPI.GetStr]::GetString(21790), $CurrentUserFolderLocation) -Verbose
 			Write-Warning -Message $Localization.FilesWontBeMoved
 
 			$Title         = ""
-			$Message       = $Localization.UserFolderSelect -f $MusicLocalizedString
+			$Message       = $Localization.UserFolderSelect -f [WinAPI.GetStr]::GetString(21790)
 			# Extract the localized "Browse" string from shell32.dll
 			$Browse        = [WinAPI.GetStr]::GetString(9015)
 			# Extract the localized "&No" string from shell32.dll
@@ -6132,11 +6330,11 @@ public extern static int SHSetKnownFolderPath(ref Guid folderId, uint flags, Int
 			Write-Information -MessageData "" -InformationAction Continue
 			$CurrentUserFolderLocation = Get-ItemPropertyValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "My Pictures"
 
-			Write-Verbose -Message ($Localization.CurrentUserFolderLocation -f $PicturesLocalizedString, $CurrentUserFolderLocation) -Verbose
+			Write-Verbose -Message ($Localization.CurrentUserFolderLocation -f [WinAPI.GetStr]::GetString(21779), $CurrentUserFolderLocation) -Verbose
 			Write-Warning -Message $Localization.FilesWontBeMoved
 
 			$Title         = ""
-			$Message       = $Localization.UserFolderSelect -f $PicturesLocalizedString
+			$Message       = $Localization.UserFolderSelect -f [WinAPI.GetStr]::GetString(21779)
 			# Extract the localized "Browse" string from shell32.dll
 			$Browse        = [WinAPI.GetStr]::GetString(9015)
 			# Extract the localized "&No" string from shell32.dll
@@ -6173,11 +6371,11 @@ public extern static int SHSetKnownFolderPath(ref Guid folderId, uint flags, Int
 			Write-Information -MessageData "" -InformationAction Continue
 			$CurrentUserFolderLocation = Get-ItemPropertyValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "My Video"
 
-			Write-Verbose -Message ($Localization.CurrentUserFolderLocation -f $VideosLocalizedString, $CurrentUserFolderLocation) -Verbose
+			Write-Verbose -Message ($Localization.CurrentUserFolderLocation -f [WinAPI.GetStr]::GetString(21791), $CurrentUserFolderLocation) -Verbose
 			Write-Warning -Message $Localization.FilesWontBeMoved
 
 			$Title         = ""
-			$Message       = $Localization.UserFolderSelect -f $VideosLocalizedString
+			$Message       = $Localization.UserFolderSelect -f [WinAPI.GetStr]::GetString(21791)
 			# Extract the localized "Browse" string from shell32.dll
 			$Browse        = [WinAPI.GetStr]::GetString(9015)
 			# Extract the localized "&No" string from shell32.dll
@@ -6216,11 +6414,11 @@ public extern static int SHSetKnownFolderPath(ref Guid folderId, uint flags, Int
 			Write-Information -MessageData "" -InformationAction Continue
 			$CurrentUserFolderLocation = Get-ItemPropertyValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name Desktop
 
-			Write-Verbose -Message ($Localization.CurrentUserFolderLocation -f $DesktopLocalizedString, $CurrentUserFolderLocation) -Verbose
+			Write-Verbose -Message ($Localization.CurrentUserFolderLocation -f [WinAPI.GetStr]::GetString(21769), $CurrentUserFolderLocation) -Verbose
 			Write-Warning -Message $Localization.FilesWontBeMoved
 
 			$Title         = ""
-			$Message       = $Localization.UserDefaultFolder -f $DesktopLocalizedString
+			$Message       = $Localization.UserDefaultFolder -f [WinAPI.GetStr]::GetString(21769)
 			# Extract the localized "&Yes" string from shell32.dll
 			$Yes           = [WinAPI.GetStr]::GetString(33224)
 			# Extract the localized "&No" string from shell32.dll
@@ -6245,11 +6443,11 @@ public extern static int SHSetKnownFolderPath(ref Guid folderId, uint flags, Int
 			Write-Information -MessageData "" -InformationAction Continue
 			$CurrentUserFolderLocation = Get-ItemPropertyValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name Personal
 
-			Write-Verbose -Message ($Localization.CurrentUserFolderLocation -f $DocumentsLocalizedString, $CurrentUserFolderLocation) -Verbose
+			Write-Verbose -Message ($Localization.CurrentUserFolderLocation -f [WinAPI.GetStr]::GetString(21770), $CurrentUserFolderLocation) -Verbose
 			Write-Warning -Message $Localization.FilesWontBeMoved
 
 			$Title         = ""
-			$Message       = $Localization.UserDefaultFolder -f $DocumentsLocalizedString
+			$Message       = $Localization.UserDefaultFolder -f [WinAPI.GetStr]::GetString(21770)
 			# Extract the localized "&Yes" string from shell32.dll
 			$Yes           = [WinAPI.GetStr]::GetString(33224)
 			# Extract the localized "&No" string from shell32.dll
@@ -6274,11 +6472,11 @@ public extern static int SHSetKnownFolderPath(ref Guid folderId, uint flags, Int
 			Write-Information -MessageData "" -InformationAction Continue
 			$CurrentUserFolderLocation = Get-ItemPropertyValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "{374DE290-123F-4565-9164-39C4925E467B}"
 
-			Write-Verbose -Message ($Localization.CurrentUserFolderLocation -f $DownloadsLocalizedString, $CurrentUserFolderLocation) -Verbose
+			Write-Verbose -Message ($Localization.CurrentUserFolderLocation -f [WinAPI.GetStr]::GetString(21798), $CurrentUserFolderLocation) -Verbose
 			Write-Warning -Message $Localization.FilesWontBeMoved
 
 			$Title         = ""
-			$Message       = $Localization.UserDefaultFolder -f $DownloadsLocalizedString
+			$Message       = $Localization.UserDefaultFolder -f [WinAPI.GetStr]::GetString(21798)
 			# Extract the localized "&Yes" string from shell32.dll
 			$Yes           = [WinAPI.GetStr]::GetString(33224)
 			# Extract the localized "&No" string from shell32.dll
@@ -6303,11 +6501,11 @@ public extern static int SHSetKnownFolderPath(ref Guid folderId, uint flags, Int
 			Write-Information -MessageData "" -InformationAction Continue
 			$CurrentUserFolderLocation = Get-ItemPropertyValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "My Music"
 
-			Write-Verbose -Message ($Localization.CurrentUserFolderLocation -f $MusicLocalizedString, $CurrentUserFolderLocation) -Verbose
+			Write-Verbose -Message ($Localization.CurrentUserFolderLocation -f [WinAPI.GetStr]::GetString(21790), $CurrentUserFolderLocation) -Verbose
 			Write-Warning -Message $Localization.FilesWontBeMoved
 
 			$Title         = ""
-			$Message       = $Localization.UserDefaultFolder -f $MusicLocalizedString
+			$Message       = $Localization.UserDefaultFolder -f [WinAPI.GetStr]::GetString(21790)
 			# Extract the localized "&Yes" string from shell32.dll
 			$Yes           = [WinAPI.GetStr]::GetString(33224)
 			# Extract the localized "&No" string from shell32.dll
@@ -6332,11 +6530,11 @@ public extern static int SHSetKnownFolderPath(ref Guid folderId, uint flags, Int
 			Write-Information -MessageData "" -InformationAction Continue
 			$CurrentUserFolderLocation = Get-ItemPropertyValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "My Pictures"
 
-			Write-Verbose -Message ($Localization.CurrentUserFolderLocation -f $PicturesLocalizedString, $CurrentUserFolderLocation) -Verbose
+			Write-Verbose -Message ($Localization.CurrentUserFolderLocation -f [WinAPI.GetStr]::GetString(21779), $CurrentUserFolderLocation) -Verbose
 			Write-Warning -Message $Localization.FilesWontBeMoved
 
 			$Title         = ""
-			$Message       = $Localization.UserDefaultFolder -f $PicturesLocalizedString
+			$Message       = $Localization.UserDefaultFolder -f [WinAPI.GetStr]::GetString(21779)
 			# Extract the localized "&Yes" string from shell32.dll
 			$Yes           = [WinAPI.GetStr]::GetString(33224)
 			# Extract the localized "&No" string from shell32.dll
@@ -6361,11 +6559,11 @@ public extern static int SHSetKnownFolderPath(ref Guid folderId, uint flags, Int
 			Write-Information -MessageData "" -InformationAction Continue
 			$CurrentUserFolderLocation = Get-ItemPropertyValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "My Video"
 
-			Write-Verbose -Message ($Localization.CurrentUserFolderLocation -f $VideosLocalizedString, $CurrentUserFolderLocation) -Verbose
+			Write-Verbose -Message ($Localization.CurrentUserFolderLocation -f [WinAPI.GetStr]::GetString(21791), $CurrentUserFolderLocation) -Verbose
 			Write-Warning -Message $Localization.FilesWontBeMoved
 
 			$Title         = ""
-			$Message       = $Localization.UserDefaultFolder -f $VideosLocalizedString
+			$Message       = $Localization.UserDefaultFolder -f [WinAPI.GetStr]::GetString(21791)
 			# Extract the localized "&Yes" string from shell32.dll
 			$Yes           = [WinAPI.GetStr]::GetString(33224)
 			# Extract the localized "&No" string from shell32.dll
@@ -7240,73 +7438,6 @@ public static int UnloadHive(RegistryHives hive, string subKey)
 		Add-Type @Signature
 	}
 
-
-	function Set-Icon
-	{
-		Param
-		(
-			[Parameter(
-				Mandatory = $true,
-				Position = 0
-
-			)]
-			[string]
-			$ProgId,
-
-			[Parameter(
-				Mandatory = $true,
-				Position = 1
-			)]
-			[string]
-			$Icon
-		)
-
-		if (-not (Test-Path -Path "HKCU:\Software\Classes\$ProgId\DefaultIcon"))
-		{
-			New-Item -Path "HKCU:\Software\Classes\$ProgId\DefaultIcon" -Force
-		}
-		New-ItemProperty -Path "HKCU:\Software\Classes\$ProgId\DefaultIcon" -Name "(default)" -PropertyType String -Value $Icon -Force
-	}
-
-	function Remove-UserChoiceKey
-	{
-		Param
-		(
-			[Parameter(
-				Mandatory = $true,
-				Position = 0
-			)]
-			[string]
-			$SubKey
-		)
-
-		[WinAPI.Action]::DeleteKey([Microsoft.Win32.RegistryHive]::CurrentUser,$SubKey)
-	}
-
-	function Set-UserAccessKey
-	{
-		Param
-		(
-			[Parameter(
-				Mandatory = $true,
-				Position = 0
-			)]
-			[string]
-			$SubKey
-		)
-
-		$OpenSubKey = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey($SubKey,'ReadWriteSubTree','TakeOwnership')
-		if ($OpenSubKey)
-		{
-			$Acl = [System.Security.AccessControl.RegistrySecurity]::new()
-			# Get current user SID
-			$UserSID = (Get-CimInstance -ClassName Win32_UserAccount | Where-Object -FilterScript {$_.Name -eq $env:USERNAME}).SID
-			$Acl.SetSecurityDescriptorSddlForm("O:$UserSID`G:$UserSID`D:AI(D;;DC;;;$UserSID)")
-			$OpenSubKey.SetAccessControl($Acl)
-			$OpenSubKey.Close()
-		}
-	}
-
 	function Write-ExtensionKeys
 	{
 		Param
@@ -7346,7 +7477,7 @@ public static int UnloadHive(RegistryHives hive, string subKey)
 
 		# If ProgId doesn't exist set the specified ProgId for the extensions
 		# Due to "Set-StrictMode -Version Latest" we have to check everything
-		if (-not (Get-Variable -Name OrigProgID -ErrorAction Ignore))
+		if (-not (Get-Variable -Name ProgId -ErrorAction Ignore))
 		{
 			if (-not (Test-Path -Path "HKCU:\Software\Classes\$Extension"))
 			{
@@ -7380,7 +7511,7 @@ public static int UnloadHive(RegistryHives hive, string subKey)
 		New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\FileExts\$Extension\OpenWithProgids" -Name $ProgID -PropertyType None -Value ([byte[]]@()) -Force
 
 		# Removing the UserChoice key
-		Remove-UserChoiceKey -SubKey "Software\Microsoft\Windows\CurrentVersion\Explorer\FileExts\$Extension\UserChoice"
+		[WinAPI.Action]::DeleteKey([Microsoft.Win32.RegistryHive]::CurrentUser, "Software\Microsoft\Windows\CurrentVersion\Explorer\FileExts\$Extension\UserChoice")
 
 		# Setting parameters in UserChoice. The key is being autocreated
 		if (-not (Test-Path -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\FileExts\$Extension\UserChoice"))
@@ -7398,8 +7529,17 @@ public static int UnloadHive(RegistryHives hive, string subKey)
 		}
 		New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\FileExts\$Extension\UserChoice" -Name Hash -PropertyType String -Value $ProgHash -Force
 
-		# Setting a ban on changing the UserChoice section
-		Set-UserAccessKey -SubKey "Software\Microsoft\Windows\CurrentVersion\Explorer\FileExts\$Extension\UserChoice"
+		# Setting a block on changing the UserChoice section
+		$OpenSubKey = [Microsoft.Win32.Registry]::CurrentUser.OpenSubKey("Software\Microsoft\Windows\CurrentVersion\Explorer\FileExts\$Extension\UserChoice", "ReadWriteSubTree", "TakeOwnership")
+		if ($OpenSubKey)
+		{
+			$Acl = [System.Security.AccessControl.RegistrySecurity]::new()
+			# Get current user SID
+			$UserSID = (Get-CimInstance -ClassName Win32_UserAccount | Where-Object -FilterScript {$_.Name -eq $env:USERNAME}).SID
+			$Acl.SetSecurityDescriptorSddlForm("O:$UserSID`G:$UserSID`D:AI(D;;DC;;;$UserSID)")
+			$OpenSubKey.SetAccessControl($Acl)
+			$OpenSubKey.Close()
+		}
 	}
 
 	function Write-AdditionalKeys
@@ -7710,7 +7850,11 @@ public static long MakeLong(uint left, uint right)
 
 	if ($Icon)
 	{
-		Set-Icon -ProgId $ProgId -Icon $Icon
+		if (-not (Test-Path -Path "HKCU:\Software\Classes\$ProgId\DefaultIcon"))
+		{
+			New-Item -Path "HKCU:\Software\Classes\$ProgId\DefaultIcon" -Force
+		}
+		New-ItemProperty -Path "HKCU:\Software\Classes\$ProgId\DefaultIcon" -Name "(default)" -PropertyType String -Value $Icon -Force
 	}
 
 	Write-Information -MessageData "" -InformationAction Continue
@@ -7879,6 +8023,7 @@ function InstallDotNetRuntimes
 			# https://github.com/dotnet/core/blob/main/release-notes/releases-index.json
 			$Parameters = @{
 				Uri             = "https://dotnetcli.blob.core.windows.net/dotnet/release-metadata/6.0/releases.json"
+				Verbose         = $true
 				UseBasicParsing = $true
 			}
 			$LatestRelease = (Invoke-RestMethod @Parameters)."latest-release"
@@ -7918,6 +8063,7 @@ function InstallDotNetRuntimes
 			# https://github.com/dotnet/core/blob/main/release-notes/releases-index.json
 			$Parameters = @{
 				Uri             = "https://dotnetcli.blob.core.windows.net/dotnet/release-metadata/7.0/releases.json"
+				Verbose         = $true
 				UseBasicParsing = $true
 			}
 			$LatestRelease = (Invoke-RestMethod @Parameters)."latest-release"
@@ -8379,6 +8525,9 @@ function Set-AppGraphicsPerformance
 	A native interactive toast notification pops up every 30 days
 
 	.NOTES
+	Windows Script Host has to be enabled
+
+	.NOTES
 	Current user
 #>
 function CleanupTask
@@ -8798,6 +8947,9 @@ CreateObject("Wscript.Shell").Run "powershell.exe -ExecutionPolicy Bypass -NoPro
 	The task will wait until the Windows Updates service finishes running. The task runs every 90 days
 
 	.NOTES
+	Windows Script Host has to be enabled
+
+	.NOTES
 	Current user
 #>
 function SoftwareDistributionTask
@@ -9084,6 +9236,9 @@ CreateObject("Wscript.Shell").Run "powershell.exe -ExecutionPolicy Bypass -NoPro
 
 	.NOTES
 	Only files older than one day will be deleted. The task runs every 60 days
+
+	.NOTES
+	Windows Script Host has to be enabled
 
 	.NOTES
 	Current user
