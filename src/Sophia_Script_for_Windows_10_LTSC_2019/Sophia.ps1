@@ -2,8 +2,8 @@
 	.SYNOPSIS
 	Default preset file for "Sophia Script for Windows 10 LTSC 2019"
 
-	Version: v5.6.4
-	Date: 01.04.2023
+	Version: v5.7.3
+	Date: 11.07.2023
 
 	Copyright (c) 2014—2023 farag
 	Copyright (c) 2019—2023 farag & Inestic
@@ -27,7 +27,7 @@
 	.NOTES
 	Supported Windows 10 version
 	Version: 1809
-	Build: 17763.4131+
+	Build: 17763.4645+
 	Edition: Enterprise LTSC 2019
 	Architecture: x64
 
@@ -70,7 +70,7 @@ param
 
 Clear-Host
 
-$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 10 LTSC 2019 v5.6.4 | Made with $([char]::ConvertFromUtf32(0x1F497)) of Windows | $([char]0x00A9) farag & Inestic, 2014$([char]0x2013)2023"
+$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 10 LTSC 2019 v5.7.3 | Made with $([char]::ConvertFromUtf32(0x1F497)) of Windows | $([char]0x00A9) farag & Inestic, 2014$([char]0x2013)2023"
 
 Remove-Module -Name Sophia -Force -ErrorAction Ignore
 Import-Module -Name $PSScriptRoot\Manifest\Sophia.psd1 -PassThru -Force
@@ -91,7 +91,7 @@ Import-LocalizedData -BindingVariable Global:Localization -BaseDirectory $PSScri
 #>
 if ($Functions)
 {
-	Invoke-Command -ScriptBlock {Checks}
+	Invoke-Command -ScriptBlock {InitialActions}
 
 	foreach ($Function in $Functions)
 	{
@@ -107,7 +107,7 @@ if ($Functions)
 #region Protection
 # The mandatory checks. If you want to disable a warning message about whether the preset file was customized, remove the "-Warning" argument
 # Обязательные проверки. Чтобы выключить предупреждение о необходимости настройки пресет-файла, удалите аргумент "-Warning"
-Checks -Warning
+InitialActions -Warning
 
 # Enable script logging. Log will be recorded into the script folder. To stop logging just close console or type "Stop-Transcript"
 # Включить логирование работы скрипта. Лог будет записываться в папку скрипта. Чтобы остановить логгирование, закройте консоль или наберите "Stop-Transcript"
@@ -182,7 +182,6 @@ AdvertisingID -Disable
 # Let apps use advertising ID to make ads more interresting to you based on your app usage (default value)
 # Разрешить приложениям использовать идентификатор рекламы (значение по умолчанию)
 # AdvertisingID -Enable
-
 #endregion Privacy & Telemetry
 
 #region UI & Personalization
@@ -234,6 +233,14 @@ OpenFileExplorerTo -ThisPC
 # Открывать проводник для "Быстрый доступ" (значение по умолчанию)
 # OpenFileExplorerTo -QuickAccess
 
+# Expand the File Explorer ribbon
+# Развернуть ленту проводника
+FileExplorerRibbon -Expanded
+
+# Minimize the File Explorer ribbon (default value)
+# Свернуть ленту проводника (значение по умолчанию)
+# FileExplorerRibbon -Minimized
+
 # When I snap a window, do not show what I can snap next to it
 # При прикреплении окна не показывать, что можно прикрепить рядом с ним
 SnapAssist -Disable
@@ -249,14 +256,6 @@ FileTransferDialog -Detailed
 # Show the file transfer dialog box in the compact mode (default value)
 # Отображать диалоговое окно передачи файлов в свернутом виде (значение по умолчанию)
 # FileTransferDialog -Compact
-
-# Expand the File Explorer ribbon
-# Развернуть ленту проводника
-FileExplorerRibbon -Expanded
-
-# Minimize the File Explorer ribbon (default value)
-# Свернуть ленту проводника (значение по умолчанию)
-# FileExplorerRibbon -Minimized
 
 # Display the recycle bin files delete confirmation dialog
 # Запрашивать подтверждение на удаление файлов в корзину
@@ -290,6 +289,18 @@ QuickAccessFrequentFolders -Hide
 # Показать часто используемые папки на панели быстрого доступа (значение по умолчанию)
 # QuickAccessFrequentFolders -Show
 
+# Hide the search on the taskbar
+# Скрыть поле или значок поиска на панели задач
+TaskbarSearch -Hide
+
+# Show the search icon on the taskbar
+# Показать значок поиска на панели задач
+# TaskbarSearch -SearchIcon
+
+# Show the search box on the taskbar (default value)
+# Показать поле поиска на панели задач (значение по умолчанию)
+# TaskbarSearch -SearchBox
+
 # Hide the Task View button on the taskbar
 # Скрыть кнопку Просмотра задач
 TaskViewButton -Hide
@@ -306,26 +317,6 @@ PeopleTaskbar -Hide
 # Отобразить панель "Люди" на панели задач (значение по умолчанию)
 # PeopleTaskbar -Show
 
-# Show seconds on the taskbar clock
-# Отобразить секунды в системных часах на панели задач
-SecondsInSystemClock -Show
-
-# Hide seconds on the taskbar clock (default value)
-# Скрыть секунды в системных часах на панели задач (значение по умолчанию)
-# SecondsInSystemClock -Hide
-
-# Hide the search on the taskbar
-# Скрыть поле или значок поиска на панели задач
-TaskbarSearch -Hide
-
-# Show the search icon on the taskbar
-# Показать значок поиска на панели задач
-# TaskbarSearch -SearchIcon
-
-# Show the search box on the taskbar (default value)
-# Показать поле поиска на панели задач (значение по умолчанию)
-# TaskbarSearch -SearchBox
-
 # Always show all icons in the notification area
 # Всегда отображать все значки в области уведомлений
 NotificationAreaIcons -Show
@@ -333,6 +324,14 @@ NotificationAreaIcons -Show
 # Hide all icons in the notification area (default value)
 # Скрыть все значки в области уведомлений (значение по умолчанию)
 # NotificationAreaIcons -Hide
+
+# Show seconds on the taskbar clock
+# Отобразить секунды в системных часах на панели задач
+SecondsInSystemClock -Show
+
+# Hide seconds on the taskbar clock (default value)
+# Скрыть секунды в системных часах на панели задач (значение по умолчанию)
+# SecondsInSystemClock -Hide
 
 # View the Control Panel icons by large icons
 # Просмотр иконок Панели управления как: крупные значки
@@ -386,14 +385,6 @@ TaskManagerWindow -Expanded
 # Запускать Диспетчера задач в свернутом виде (значение по умолчанию)
 # TaskManagerWindow -Compact
 
-# Show a notification when your PC requires a restart to finish updating
-# Показывать уведомление, когда компьютеру требуется перезагрузка для завершения обновления
-RestartNotification -Show
-
-# Do not show a notification when your PC requires a restart to finish updating (default value)
-# Не показывать уведомление, когда компьютеру требуется перезагрузка для завершения обновления (значение по умолчанию)
-# RestartNotification -Hide
-
 # Do not add the "- Shortcut" suffix to the file name of created shortcuts
 # Нe дoбaвлять "- яpлык" к имени coздaвaeмых яpлыков
 ShortcutsSuffix -Disable
@@ -426,8 +417,8 @@ Cursors -Dark
 # Скачать и установить бесплатные светлые курсоры "Windows 11 Cursors Concept v2" от Jepri Creations
 # Cursors -Light
 
-# Set default cursors (default value)
-# Установить курсоры по умолчанию (значение по умолчанию)
+# Set default cursors
+# Установить курсоры по умолчанию
 # Cursors -Default
 
 # Do not group files and folder in the Downloads folder
@@ -469,12 +460,12 @@ StorageSenseFrequency -Month
 # Удалять временные файлы, не используемые в приложениях
 StorageSenseTempFiles -Enable
 
-# Do not delete temporary files that apps aren't using
-# Не удалять временные файлы, не используемые в приложениях
+# Do not delete temporary files that apps aren't using (default value)
+# Не удалять временные файлы, не используемые в приложениях (значение по умолчанию)
 # StorageSenseTempFiles -Disable
 #endregion StorageSense
 
-# Disable hibernation. Do not recommend turning it off on laptops
+# Disable hibernation. It isn't recommended to turn off for laptops
 # Отключить режим гибернации. Не рекомендуется выключать на ноутбуках
 Hibernation -Disable
 
@@ -580,21 +571,16 @@ UpdateMicrosoftProducts -Enable
 # При обновлении Windows не получать обновления для других продуктов Майкрософт (значение по умолчанию)
 # UpdateMicrosoftProducts -Disable
 
-<#
-	Set power plan on "High performance"
-	It isn't recommended to turn on the "High performance" power plan on laptops
-
-	Установить схему управления питанием на "Высокая производительность"
-	Не рекомендуется включать схему управления питанием "Высокая производительность" для ноутбуков
-#>
+# Set power plan on "High performance". It isn't recommended to turn on for laptops
+# Установить схему управления питанием на "Высокая производительность". Не рекомендуется включать на ноутбуках
 PowerPlan -High
 
 # Set power plan on "Balanced" (default value)
 # Установить схему управления питанием на "Сбалансированная" (значение по умолчанию)
 # PowerPlan -Balanced
 
-# Do not allow the computer to turn off the network adapters to save power
-# Запретить отключение всех сетевых адаптеров для экономии энергии
+# Do not allow the computer to turn off the network adapters to save power. It isn't recommended to turn off for laptops
+# Запретить отключение всех сетевых адаптеров для экономии энергии. Не рекомендуется выключать на ноутбуках
 NetworkAdaptersSavePower -Disable
 
 # Allow the computer to turn off the network adapters to save power (default value)
@@ -749,6 +735,14 @@ NetworkDiscovery -Enable
 # Выключить сетевое обнаружение и общий доступ к файлам и принтерам для рабочих групп (значение по умолчанию)
 # NetworkDiscovery -Disable
 
+# Show a notification when your PC requires a restart to finish updating
+# Показывать уведомление, когда компьютеру требуется перезагрузка для завершения обновления
+RestartNotification -Show
+
+# Do not show a notification when your PC requires a restart to finish updating (default value)
+# Не показывать уведомление, когда компьютеру требуется перезагрузка для завершения обновления (значение по умолчанию)
+# RestartNotification -Hide
+
 # Automatically adjust active hours for me based on daily usage
 # Автоматически изменять период активности для этого устройства на основе действий
 ActiveHours -Automatically
@@ -756,14 +750,29 @@ ActiveHours -Automatically
 # Manually adjust active hours for me based on daily usage (default value)
 # Вручную изменять период активности для этого устройства на основе действий (значение по умолчанию)
 # ActiveHours -Manually
+
 <#
 	Register app, calculate hash, and associate with an extension with the "How do you want to open this" pop-up hidden
 	Зарегистрировать приложение, вычислить хэш и ассоциировать его с расширением без всплывающего окна "Каким образом вы хотите открыть этот файл?"
 
 	Set-Association -ProgramPath "C:\SumatraPDF.exe" -Extension .pdf -Icon "shell32.dll,100"
 	Set-Association -ProgramPath "%ProgramFiles%\Notepad++\notepad++.exe" -Extension .txt -Icon "%ProgramFiles%\Notepad++\notepad++.exe,0"
+	Set-Association -ProgramPath MSEdgeMHT -Extension .html
 #>
 # Set-Association -ProgramPath "%ProgramFiles%\Notepad++\notepad++.exe" -Extension .txt -Icon "%ProgramFiles%\Notepad++\notepad++.exe,0"
+
+# Экспортировать все ассоциации в Windows в корень папки в виде файла Application_Associations.json
+# Export all Windows associations into Application_Associations.json file to script root folder
+# Export-Associations
+
+<#
+	Импортировать все ассоциации в Windows из файла Application_Associations.json
+	Вам необходимо установить все приложения согласно экспортированному файлу Application_Associations.json, чтобы восстановить все ассоциации
+
+	Import all Windows associations from an Application_Associations.json file
+	You need to install all apps according to an exported Application_Associations.json file to restore all associations
+#>
+# Import-Associations
 
 <#
 	Install the latest Microsoft Visual C++ Redistributable Packages 2015–2022 (x86/x64)
@@ -834,11 +843,11 @@ Set-AppGraphicsPerformance
 
 #region Scheduled tasks
 <#
-	Create the "Windows Cleanup" scheduled task for cleaning up Windows unused files and updates
-	A native interactive toast notification pops up every 30 days. The task runs every 30 days
+	Create the "Windows Cleanup" scheduled task for cleaning up Windows unused files and updates.
+	A native interactive toast notification pops up every 30 days. You have to enable Windows Script Host in order to make the function work
 
-	Создать задание "Windows Cleanup" по очистке неиспользуемых файлов и обновлений Windows в Планировщике заданий
-	Нативный интерактивный тост всплывает каждые 30 дней. Задание выполняется каждые 30 дней
+	Создать задание "Windows Cleanup" по очистке неиспользуемых файлов и обновлений Windows в Планировщике заданий.
+	Задание выполняется каждые 30 дней. Необходимо включить Windows Script Host для того, чтобы работала функция
 #>
 CleanupTask -Register
 
@@ -848,10 +857,10 @@ CleanupTask -Register
 
 <#
 	Create the "SoftwareDistribution" scheduled task for cleaning up the %SystemRoot%\SoftwareDistribution\Download folder
-	The task will wait until the Windows Updates service finishes running. The task runs every 90 days
+	The task will wait until the Windows Updates service finishes running. The task runs every 90 days. You have to enable Windows Script Host in order to make the function work
 
 	Создать задание "SoftwareDistribution" по очистке папки %SystemRoot%\SoftwareDistribution\Download в Планировщике заданий
-	Задание будет ждать, пока служба обновлений Windows не закончит работу. Задание выполняется каждые 90 дней
+	Задание будет ждать, пока служба обновлений Windows не закончит работу. Задание выполняется каждые 90 дней. Необходимо включить Windows Script Host для того, чтобы работала функция
 #>
 SoftwareDistributionTask -Register
 
@@ -861,10 +870,10 @@ SoftwareDistributionTask -Register
 
 <#
 	Create the "Temp" scheduled task for cleaning up the %TEMP% folder
-	Only files older than one day will be deleted. The task runs every 60 days
+	Only files older than one day will be deleted. The task runs every 60 days. You have to enable Windows Script Host in order to make the function work
 
 	Создать задание "Temp" в Планировщике заданий по очистке папки %TEMP%
-	Удаляться будут только файлы старше одного дня. Задание выполняется каждые 60 дней
+	Удаляться будут только файлы старше одного дня. Задание выполняется каждые 60 дней. Необходимо включить Windows Script Host для того, чтобы работала функция
 #>
 TempTask -Register
 
@@ -879,7 +888,7 @@ TempTask -Register
 NetworkProtection -Enable
 
 # Disable Microsoft Defender Exploit Guard network protection (default value)
-# Выключить защиту сети в Microsoft Defender Exploit Guard
+# Выключить защиту сети в Microsoft Defender Exploit Guard (значение по умолчанию)
 # NetworkProtection -Disable
 
 # Enable detection for potentially unwanted applications and block them
@@ -942,7 +951,7 @@ CommandLineProcessAudit -Enable
 EventViewerCustomView -Enable
 
 # Remove the "Process Creation" custom view in the Event Viewer to log executed processes and their arguments (default value)
-# Удалить настаиваемое представление "Создание процесса" в Просмотре событий для журналирования запускаемых процессов и их аргументов (значение по умолчанию)
+# Удалить настраиваемое представление "Создание процесса" в Просмотре событий для журналирования запускаемых процессов и их аргументов (значение по умолчанию)
 # EventViewerCustomView -Disable
 
 # Enable logging for all Windows PowerShell modules
@@ -977,13 +986,8 @@ SaveZoneInformation -Disable
 # Включить проверку Диспетчера вложений файлов, скачанных из интернета как небезопасные (значение по умолчанию)
 # SaveZoneInformation -Enable
 
-<#
-	Disable Windows Script Host
-	Blocks WSH from executing .js and .vbs files
-
-	Отключить Windows Script Host
-	Блокирует запуск файлов .js и .vbs
-#>
+# Disable Windows Script Host. Blocks WSH from executing .js and .vbs files
+# Отключить Windows Script Host. Блокирует запуск файлов .js и .vbs
 # WindowsScriptHost -Disable
 
 # Enable Windows Script Host (default value)

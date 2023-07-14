@@ -1,6 +1,7 @@
 <div align="right">
   This page also in:
   <a title="Українська" href="README_uk-ua.md"><img src="https://upload.wikimedia.org/wikipedia/commons/4/49/Flag_of_Ukraine.svg" height="11px"/></a>
+  <a title="Deutsch" href="README_de-de.md"><img src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Flag_of_Germany.svg" height="11px"/></a>
 </div>
 
 # Sophia Script for Windows
@@ -113,10 +114,10 @@
 |               Version                |    Marketing name   |    Build    | Arch |      Editions       |
 |:-------------------------------------|--------------------:|:-----------:|:----:|:-------------------:|
 | Windows 11 Insider Preview 23H2      | 2023 Update         | 22509+      |      | Home/Pro/Enterprise |
-| Windows 11 22H2                      | 2022 Update         | 22621.1344+ |      | Home/Pro/Enterprise |
-| Windows 10 22H2                      | 2022 Update         | 19045.2364+ | x64  | Home/Pro/Enterprise |
-| Windows 10 21H2 Enterprise LTSC 2021 | October 2021 Update | 19044.2604+ | x64  | Enterprise          |
-| Windows 10 1809 Enterprise LTSC 2019 | October 2018 Update | 17763.4010+ | x64  | Enterprise          |
+| Windows 11 22H2                      | 2022 Update         | 22621.1928+ |      | Home/Pro/Enterprise |
+| Windows 10 22H2                      | 2022 Update         | 19045.3155+ | x64  | Home/Pro/Enterprise |
+| Windows 10 21H2 Enterprise LTSC 2021 | October 2021 Update | 19044.3155+ | x64  | Enterprise          |
+| Windows 10 1809 Enterprise LTSC 2019 | October 2018 Update | 17763.4499+ | x64  | Enterprise          |
 
 ### Warning
 
@@ -149,6 +150,8 @@
 * Uninstall Windows capabilities displaying friendly packages names with pop-up form written in [WPF](#screenshots);
 * Download and install the [HEVC Video Extensions from Device Manufacturer](https://www.microsoft.com/p/hevc-video-extensions-from-device-manufacturer/9n4wgh0z6vhq) to be able to open [HEVC](https://en.wikipedia.org/wiki/H.265) format;
 * Register app, calculate hash, and set as default for specific extension without the "How do you want to open this" pop-up using special [function](https://github.com/DanysysTeam/PS-SFTA);
+* Export all Windows associations. Associations will be exported as Application_Associations.json file in script root folder;
+* Import exported JSON file after a clean installation. You have to install all apps according to an exported JSON file to restore all associations;
 * Install any supported Linux distrobution for WSL displaying friendly distro names with pop-up form written in [WPF](#screenshots);
 * Create a `Windows Cleanup` and `Windows Cleanup Notification` scheduled tasks for Windows cleaning up unused files and updates;
   * A native toast notification will be displayed where you can choose to snooze, run the cleanup task or [dismiss](#native-interactive-toasts-for-the-scheduled-tasks)
@@ -163,6 +166,7 @@
 * Add exclusion file from Microsoft Defender Antivirus scanning using dialog menu;
 * Refresh desktop icons, environment variables and taskbar without restarting File Explorer;
 * Configure the Windows security;
+* Display all policy registry keys (even manually created ones) in the Local Group Policy Editor snap-in (gpedit.msc);
 * Many more File Explorer and context menu "deep" tweaks.
 
 ## Screenshots
@@ -173,7 +177,7 @@ https://user-images.githubusercontent.com/10544660/225270281-908abad1-d125-4cae-
 
 ### Change user folders location programmatically using the interactive menu
 
-https://user-images.githubusercontent.com/10544660/225270532-8f0694d3-0b9e-44df-8a48-677212d62315.mp4
+https://user-images.githubusercontent.com/10544660/252783578-1a5d93ee-6cf9-4d9e-9f55-ad9322a9b6a6.mp4
 
 ### Localized UWP packages names
 
@@ -193,7 +197,7 @@ https://user-images.githubusercontent.com/10544660/225270532-8f0694d3-0b9e-44df-
 
 ### @BenchTweakGaming Sophia Script Wrapper
 
-![Wrapper](https://i.imgur.com/x0W7zqm.png)
+![Wrapper](https://i.imgur.com/AiuCUvW.png)
 
 ## Videos
 
@@ -223,7 +227,7 @@ https://user-images.githubusercontent.com/10544660/225270532-8f0694d3-0b9e-44df-
 ```
 
 * Run `Sophia.ps1`
-  * On `Windows 11` paste copied path to `Sophia.ps1` from the previous step (with [&](https://en.wikipedia.org/wiki/Ampersand));
+  * On `Windows 10` paste copied path to `Sophia.ps1` from the previous step (with [&](https://en.wikipedia.org/wiki/Ampersand));
 
    ```powershell
    & <path_from_buffer>

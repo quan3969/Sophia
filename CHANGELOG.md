@@ -5,6 +5,77 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 5.17.3 | 6.5.3 — 11.07.2023
+
+* Replaced interactive menus overall within a custom `Show-Menu` function;
+  * Thanks to [MaxKozlov](https://habr.com/users/MaxKozlov)
+  * [How-to](https://github.com/farag2/Sophia-Script-for-Windows/tree/master#change-user-folders-location-programmatically-using-the-interactive-menu).
+* Improved German translation. #514 merged;
+  * Thanks to @sensinsane.
+* Minor changes.
+
+### Wrapper 2.6.9
+
+* Small changes;
+  * Thanks to `ajt174`.
+
+## 5.17.2 | 6.5.2 — 02.07.2023
+
+* Added `BrowsingHistory` function to hide websites from your browsing history in the Start menu;
+* Fixed #506;
+* Improved and fixed descriptions;
+* Minor changes.
+
+Thanks to @amd64fox for providing a remote access to reproduce the bug.
+Thanks to frost_tg for bug reporting
+
+### Wrapper 2.6.8
+
+* Improved preset exporting function;
+* Fixed #506;
+* Improved numerous JSON descriptions typos.
+
+## 5.17.1 | 6.5.1 — 26.06.2023
+
+* Fixed bug in `Export-Associations`;
+  * Reported by @lowl1f3.
+* Closed #494;
+  * Now `TaskbarChat` function except hiding the iсon also prevents `Microsoft Teams` from installing for new users by creating a special registry key as `NT SERVICE\TrustedInstaller`;
+* Fixed `Cursors` function.
+  * If you encountered with a wrong cursor applied, please re-apply the function.
+
+### Wrapper 2.6.7
+
+* Closed #490.
+
+## 5.17.0 | 6.5.0 — 27.05.2023
+
+* Expanded start-up checks;
+  * Now the script checks and removes all IP addresses add to `hosts` file that block Microsoft recourses added by harmful tweaker [WindowsSpyBlocker](https://github.com/crazy-max/WindowsSpyBlocker);
+  * Now the script checks whether `Microsoft Edge` is installed, and if not it will be downloaded and installed.
+* Improved and fixed `Set-Association` function
+  * Now you can associate extensions with protocols: `Set-Association -ProgramPath MSEdgeMHT -Extension .html`.
+* Added `Export-Associations` and `Import-Associations` to let user export all Windows associations and import all Windows associations from a JSON file;
+  * `Export-Associations` exports `Application_Associations.json` to script root folder;
+  * You have to install all apps to the same folders according to an exported JSON file to restore all associations, unless this extension will be skipped;
+  * `Import-Associations` lets you import `Application_Associations.json` via an open file dialog;
+  * This is more of a `proof of concept` (and may contain bugs) which shows that is possible to restore associations from an old PC to a new one (like in some harmful tweakers like `Modern Tweaker` and `Win10Tweaker` provide). But I'd not recommend to rely on this approach. Better do it manually. But the functions works. :cat:
+* Added `SecondsInSystemClock` function for Windows 11 to enable seconds in the taskbar as Windows 10 provides.
+* Fixes for #472, #476, #480, and #482;
+* Improved translations;
+* Minor changes.
+
+### Wrapper 2.6.6
+
+* Fixed JSON configs;
+* Improved the German translation;
+  * Thanks to @sensinsane.
+* Minor changes.
+
+> **Note**: Please note that Wrapper doesn't have all functions as CLI `Sophia Script` provides. If you want to apply all functions, you need to configure `Sophia.ps1` file.
+
+`Sophia Script for Windows` hits more than 700 000 downloads! Thank you for your interest in Windows tweaking! ❤️
+
 ## 5.16.4 | 6.4.4 — 01.04.2023
 
 * Fixes for #466, #472, #470, and #469

@@ -1,6 +1,7 @@
 <div align="right">
   This page also in:
   <a title="English" href="README.md"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Flag_of_the_United_Kingdom_(1-2).svg" height="11px"/></a>
+  <a title="Deutsch" href="README_de-de.md"><img src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Flag_of_Germany.svg" height="11px"/></a>
 </div>
 
 # Sophia Script для Windows
@@ -113,10 +114,10 @@
 |                Версія                | Маркетингова назва  |   Збіркa    | Архітектура |       Видання       |
 |:-------------------------------------|--------------------:|:-----------:|:-----------:|:-------------------:|
 | Windows 11 Insider Preview 23H2      | 2023 Update         | 22509+      |             | Home/Pro/Enterprise |
-| Windows 11 22H2                      | 2022 Update         | 22621.1344+ |             | Home/Pro/Enterprise |
-| Windows 10 22H2                      | 2022 Update         | 19045.2364+ |     x64     | Home/Pro/Enterprise |
-| Windows 10 21H2 Enterprise LTSC 2021 | October 2021 Update | 19044.2604+ |     x64     | Enterprise          |
-| Windows 10 1809 Enterprise LTSC 2019 | October 2018 Update | 17763.4010+ |     x64     | Enterprise          |
+| Windows 11 22H2                      | 2022 Update         | 22621.1928+ |             | Home/Pro/Enterprise |
+| Windows 10 22H2                      | 2022 Update         | 19045.3155+ |     x64     | Home/Pro/Enterprise |
+| Windows 10 21H2 Enterprise LTSC 2021 | October 2021 Update | 19044.3155+ |     x64     | Enterprise          |
+| Windows 10 1809 Enterprise LTSC 2019 | October 2018 Update | 17763.4499+ |     x64     | Enterprise          |
 
 ### Увага
 
@@ -144,12 +145,13 @@
 * Видалення UWP-додатків, що відображають назви пакетів;
   * Динамічна генерація списку встановлених UWP-додатків
 * Відновлення видалених за замовчуванням UWP-додатків для поточного користувача з відображенням [локалізованих](#локалізовані-назви-uwp-пакетів) назв пакетів;
-
 * <kbd>TAB</kbd> [автодоповнення](#автодоповнення-tab-детальніше-тут) для функції та її аргументів шляхом введення перших літер;
 * Вимкнення функцій Windows для відображення дружніх назв пакетів у спливаючій формі, написаній на [WPF](#скріншоти);
 * Видалення можливостей Windows відображати дружні назви пакетів у спливаючій формі, написаній на [WPF](#скріншоти);
 * Завантаження та встановлення [HEVC Video Extensions від виробника пристрою](https://www.microsoft.com/p/hevc-video-extensions-from-device-manufacturer/9n4wgh0z6vhq) для відкриття формата [HEVC](https://uk.wikipedia.org/wiki/H.265);
 * Реєстрація програми, розрахунок хешу та встановлення за замовчуванням для певного розширення без спливаючого вікна "Як ви хочете відкрити це" за допомогою спеціальної [функції](https://github.com/DanysysTeam/PS-SFTA);
+* Експортувати всі асоціації в Windows у корінь папки у вигляді файлу Application_Associations.json;
+Імпортувати всі асоціації в Windows з файлу Application_Associations.json. Вам необхідно встановити всі програми згідно з експортованим файлом Application_Associations.json, щоб відновити всі асоціації;
 * Встановлення будь-якого підтримуваного дистрибутива Linux для WSL з відображенням дружніх назв дистрибутивів у спливаючій формі, написаній на [WPF](#скріншоти);
 * Створення запланованих завдань `Очищення Windows` та `Повідомлення про очищення Windows` для очищення Windows від невикористовуваних файлів та оновлень;
   * Буде відображено сповіщення про інтерактивний тост, де ви можете вибрати сплячий режим, запустити завдання очищення або [відхилити](#інтерактивні-тости-для-запланованих-завдань)
@@ -174,7 +176,7 @@ https://user-images.githubusercontent.com/10544660/225270281-908abad1-d125-4cae-
 
 ### Програмна зміна розташування папок користувача за допомогою інтерактивного меню
 
-https://user-images.githubusercontent.com/10544660/225270532-8f0694d3-0b9e-44df-8a48-677212d62315.mp4
+https://user-images.githubusercontent.com/10544660/252783578-1a5d93ee-6cf9-4d9e-9f55-ad9322a9b6a6.mp4
 
 ### Локалізовані назви UWP-пакетів
 
@@ -194,7 +196,7 @@ https://user-images.githubusercontent.com/10544660/225270532-8f0694d3-0b9e-44df-
 
 ### @BenchTweakGaming Sophia Script Wrapper
 
-![Wrapper](https://i.imgur.com/x0W7zqm.png)
+![Wrapper](https://i.imgur.com/AiuCUvW.png)
 
 ## Відео
 
@@ -211,23 +213,29 @@ https://user-images.githubusercontent.com/10544660/225270532-8f0694d3-0b9e-44df-
 * Перегляньте файл `Sophia.ps1` для налаштування функцій, які потрібно запустити;
   * Помістіть символ "#" перед функцією, якщо ви не бажаєте, щоб вона виконувалась.
   * Приберіть символ "#" перед функцією, якщо ви бажаєте, щоб вона виконувалась.
-* Скопіюйте весь шлях до Sophia.ps1
-  * У Windows 10 натисніть і утримуйте клавішу <kbd>Shift</kbd>, клацніть правою кнопкою миші на Sophia.ps1 і виберіть Копіювати як шлях;
-  * У Windows 11 клацніть правою кнопкою миші на Sophia.ps1 і виберіть Копіювати як шлях.
-* Відкрийте Windows PowerShell
-  * У Windows 10 натисніть Файл у Провіднику файлів, наведіть курсор на Відкрити Windows PowerShell і виберіть Відкрити Windows PowerShell від імені адміністратора [(покрокова інструкція зі скріншотами)](https://www.howtogeek.com/662611/9-ways-to-open-powershell-in-windows-10/);
-  * У Windows 11 натисніть правою кнопкою миші на іконку <kbd>Windows</kbd> і відкрийте Термінал Windows (Admin).
+* Скопіюйте весь шлях до `Sophia.ps1`
+  * У `Windows 10` натисніть і утримуйте клавішу <kbd>Shift</kbd>, клацніть правою кнопкою миші на `Sophia.ps1` і виберіть Копіювати як шлях;
+  * У `Windows 11` клацніть правою кнопкою миші на `Sophia.ps1` і виберіть `Копіювати як шлях`.
+* Відкрийте `Windows PowerShell`
+  * У `Windows 10` натисніть `Файл` у Провіднику файлів, наведіть курсор на `Відкрити Windows PowerShell` і виберіть `Відкрити Windows PowerShell від імені адміністратора` [(покрокова інструкція зі скріншотами)](https://www.howtogeek.com/662611/9-ways-to-open-powershell-in-windows-10/);
+  * У `Windows 11` натисніть правою кнопкою миші на іконку <kbd>Windows</kbd> і відкрийте `Термінал Windows (Адміністратор)`.
 * Встановіть політику виконання, щоб мати змогу запускати сценарії лише у поточному сеансі PowerShell;
 
 ```powershell
   Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
 ```
 
-* Вставте скопійований шлях до Sophia.ps1 з попереднього кроку (за допомогою [&](https://en.wikipedia.org/wiki/Ampersand));
+* На `Windows 10` вставте скопійований шлях до `Sophia.ps1` з попереднього кроку (за допомогою [&](https://en.wikipedia.org/wiki/Ampersand));
 
-```powershell
-  & <path_from_buffer>
-```
+   ```powershell
+   & <path_from_buffer>
+   ```
+
+  * На `Windows 11`
+
+   ```powershell
+   .\Sophia.ps1
+   ```
 
 ## Як використовувати Wrapper
 
