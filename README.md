@@ -113,16 +113,16 @@
 
 |               Version                |    Marketing name   |    Build    | Arch |      Editions       |
 |:-------------------------------------|--------------------:|:-----------:|:----:|:-------------------:|
-| Windows 11 Insider Preview 23H2      | 2023 Update         | 22509+      |      | Home/Pro/Enterprise |
-| Windows 11 22H2                      | 2022 Update         | 22621.1928+ |      | Home/Pro/Enterprise |
-| Windows 10 22H2                      | 2022 Update         | 19045.3155+ | x64  | Home/Pro/Enterprise |
-| Windows 10 21H2 Enterprise LTSC 2021 | October 2021 Update | 19044.3155+ | x64  | Enterprise          |
-| Windows 10 1809 Enterprise LTSC 2019 | October 2018 Update | 17763.4499+ | x64  | Enterprise          |
+| Windows 11 Insider Preview 24H2      | 2024 Update         | 22509+      |      | Home/Pro/Enterprise |
+| Windows 11 23H2                      | 2023 Update         | 22631.2861+ |      | Home/Pro/Enterprise |
+| Windows 10 22H2                      | 2022 Update         | 19045.3803+ | x64  | Home/Pro/Enterprise |
+| Windows 10 21H2 Enterprise LTSC 2021 | October 2021 Update | 19044.3803+ | x64  | Enterprise          |
+| Windows 10 1809 Enterprise LTSC 2019 | October 2018 Update | 17763.5206+ | x64  | Enterprise          |
 
 ### Warning
 
 * It's allowed to be logged in as one admin user only during application startup.
-* 🔥🔥🔥`Sophia Script for Windows` may not work on a homebrew Windows. Especially, if the homebrew image was created by OS makers being all thumbs who break Microsoft Defender and disable OS telemetry by purposely uprooting system components
+* 🔥🔥🔥 `Sophia Script for Windows` may not work on a homebrew Windows. Especially, if the homebrew image was created by OS makers being all thumbs who break Microsoft Defender and disable OS telemetry by purposely uprooting system components
 
 ## Key features
 
@@ -148,7 +148,7 @@
 * The <kbd>TAB</kbd> [autocompletion](#the-tab-autocomplete-read-more-here) for function and its' arguments by typing first letters;
 * Disable Windows features displaying friendly packages names with pop-up form written in [WPF](#screenshots);
 * Uninstall Windows capabilities displaying friendly packages names with pop-up form written in [WPF](#screenshots);
-* Download and install the [HEVC Video Extensions from Device Manufacturer](https://www.microsoft.com/p/hevc-video-extensions-from-device-manufacturer/9n4wgh0z6vhq) to be able to open [HEVC](https://en.wikipedia.org/wiki/H.265) format;
+* Download and install the [HEVC Video Extensions from Device Manufacturer](https://apps.microsoft.com/detail/9N4WGH0Z6VHQ) to be able to open [HEVC](https://en.wikipedia.org/wiki/H.265) format;
 * Register app, calculate hash, and set as default for specific extension without the "How do you want to open this" pop-up using special [function](https://github.com/DanysysTeam/PS-SFTA);
 * Export all Windows associations. Associations will be exported as Application_Associations.json file in script root folder;
 * Import exported JSON file after a clean installation. You have to install all apps according to an exported JSON file to restore all associations;
@@ -159,7 +159,7 @@
   * `%SystemRoot%\SoftwareDistribution\Download`
   * `%TEMP%`
 * Pin shortcuts to Start via pure PowerShell
-  * Three shortcuts are pre-configured to be pinned: Control Panel, "old style" Devices and Printers, and Windows PowerShell
+  * Three shortcuts are pre-configured to be pinned: Control Panel, "old style" Devices and Printers.
 * Unpin all Start menu tiles;
 * Turn on Controlled folder access and add protected folders using dialog menu;
 * Add exclusion folder from Microsoft Defender Antivirus scanning using dialog menu;
@@ -177,7 +177,7 @@ https://user-images.githubusercontent.com/10544660/225270281-908abad1-d125-4cae-
 
 ### Change user folders location programmatically using the interactive menu
 
-https://user-images.githubusercontent.com/10544660/252783578-1a5d93ee-6cf9-4d9e-9f55-ad9322a9b6a6.mp4
+https://user-images.githubusercontent.com/10544660/253818031-b7ce6bf1-d968-41ea-a5c0-27f6845de402.mp4
 
 ### Localized UWP packages names
 
@@ -284,7 +284,7 @@ Or use an old-style format without the TAB functions autocomplete (the quotation
 * Download the always latest Sophia Script archive by invoking (`not as administrator too`) in PowerShell
 
 ```powershell
-irm script.sophi.app -useb | iex
+iwr script.sophia.team -useb | iex
 ```
 
 * The command will download and expand the latest Sophia Script archive (`without running`) according which Windows and PowerShell versions it is run on. If you run it on, e.g., Windows 11 via PowerShell 5.1, it will download Sophia Script for `Windows 11 PowerShell 5.1`.

@@ -113,11 +113,11 @@
 
 |                Версія                | Маркетингова назва  |   Збіркa    | Архітектура |       Видання       |
 |:-------------------------------------|--------------------:|:-----------:|:-----------:|:-------------------:|
-| Windows 11 Insider Preview 23H2      | 2023 Update         | 22509+      |             | Home/Pro/Enterprise |
-| Windows 11 22H2                      | 2022 Update         | 22621.1928+ |             | Home/Pro/Enterprise |
-| Windows 10 22H2                      | 2022 Update         | 19045.3155+ |     x64     | Home/Pro/Enterprise |
-| Windows 10 21H2 Enterprise LTSC 2021 | October 2021 Update | 19044.3155+ |     x64     | Enterprise          |
-| Windows 10 1809 Enterprise LTSC 2019 | October 2018 Update | 17763.4499+ |     x64     | Enterprise          |
+| Windows 11 Insider Preview 24H2      | 2024 Update         | 22509+      |             | Home/Pro/Enterprise |
+| Windows 11 23H2                      | 2023 Update         | 22631.2861+ |             | Home/Pro/Enterprise |
+| Windows 10 22H2                      | 2022 Update         | 19045.3803+ |     x64     | Home/Pro/Enterprise |
+| Windows 10 21H2 Enterprise LTSC 2021 | October 2021 Update | 19044.3803+ |     x64     | Enterprise          |
+| Windows 10 1809 Enterprise LTSC 2019 | October 2018 Update | 17763.5206+ |     x64     | Enterprise          |
 
 ### Увага
 
@@ -148,7 +148,7 @@
 * <kbd>TAB</kbd> [автодоповнення](#автодоповнення-tab-детальніше-тут) для функції та її аргументів шляхом введення перших літер;
 * Вимкнення функцій Windows для відображення дружніх назв пакетів у спливаючій формі, написаній на [WPF](#скріншоти);
 * Видалення можливостей Windows відображати дружні назви пакетів у спливаючій формі, написаній на [WPF](#скріншоти);
-* Завантаження та встановлення [HEVC Video Extensions від виробника пристрою](https://www.microsoft.com/p/hevc-video-extensions-from-device-manufacturer/9n4wgh0z6vhq) для відкриття формата [HEVC](https://uk.wikipedia.org/wiki/H.265);
+* Завантаження та встановлення [HEVC Video Extensions від виробника пристрою](https://apps.microsoft.com/detail/9N4WGH0Z6VHQ) для відкриття формата [HEVC](https://uk.wikipedia.org/wiki/H.265);
 * Реєстрація програми, розрахунок хешу та встановлення за замовчуванням для певного розширення без спливаючого вікна "Як ви хочете відкрити це" за допомогою спеціальної [функції](https://github.com/DanysysTeam/PS-SFTA);
 * Експортувати всі асоціації в Windows у корінь папки у вигляді файлу Application_Associations.json;
 Імпортувати всі асоціації в Windows з файлу Application_Associations.json. Вам необхідно встановити всі програми згідно з експортованим файлом Application_Associations.json, щоб відновити всі асоціації;
@@ -159,7 +159,7 @@
   * `%SystemRoot%\SoftwareDistribution\Download`
   * `%TEMP%`
 * Закріплення ярликів в Пуск через чистий PowerShell
-  * Три ярлики попередньо налаштовані для закріплення: Панель керування, Пристрої та принтери "старого зразка" та Windows PowerShell
+  * Три ярлики попередньо налаштовані для закріплення: Панель керування, Пристрої та принтери "старого зразка".
 * Відкріплення всіх плиток меню "Пуск";
 * Ввімкнення Контрольованого доступу до папок та додавання захищених папок за допомогою діалогового меню;
 * Додавання папки виключення з перевірки антивірусом Microsoft Defender за допомогою діалогового меню;
@@ -176,7 +176,7 @@ https://user-images.githubusercontent.com/10544660/225270281-908abad1-d125-4cae-
 
 ### Програмна зміна розташування папок користувача за допомогою інтерактивного меню
 
-https://user-images.githubusercontent.com/10544660/252783578-1a5d93ee-6cf9-4d9e-9f55-ad9322a9b6a6.mp4
+https://user-images.githubusercontent.com/10544660/253818031-b7ce6bf1-d968-41ea-a5c0-27f6845de402.mp4
 
 ### Локалізовані назви UWP-пакетів
 
@@ -282,7 +282,7 @@ UninstallUWPApps, "PinToStart -UnpinAll"
 * Завантажте актуальний архів Sophia Script, викликавши (`також не від імені адміністратора`) в PowerShell
 
 ```powershell
-irm script.sophi.app -useb | iex
+iwr script.sophia.team -useb | iex
 ```
 
 * Команда завантажить і розпакує останній архів Sophia Script (`без запуску`) відповідно до того, під якою версією Windows і PowerShell він запускається. Якщо запустити її, наприклад, в Windows 11 через PowerShell 5.1, вона завантажить Sophia Script для `Windows 11 PowerShell 5.1`.

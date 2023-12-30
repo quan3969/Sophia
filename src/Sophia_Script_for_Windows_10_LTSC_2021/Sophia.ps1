@@ -2,11 +2,11 @@
 	.SYNOPSIS
 	Default preset file for "Sophia Script for Windows 10 LTSC 2021"
 
-	Version: v5.17.3
-	Date: 11.07.2023
+	Version: v5.17.9
+	Date: 26.12.2023
 
-	Copyright (c) 2014—2023 farag
-	Copyright (c) 2019—2023 farag & Inestic
+	Copyright (c) 2014—2024 farag
+	Copyright (c) 2019—2024 farag & Inestic
 
 	Thanks to all https://forum.ru-board.com members involved
 
@@ -27,7 +27,7 @@
 	.NOTES
 	Supported Windows 10 version
 	Version: 21H2
-	Build: 19044.3208+
+	Build: 19044.3803+
 	Edition: Enterprise LTSC 2021
 	Architecture: x64
 
@@ -70,7 +70,7 @@ param
 
 Clear-Host
 
-$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 10 LTSC 2021 v5.17.3 | Made with $([char]::ConvertFromUtf32(0x1F497)) of Windows | $([char]0x00A9) farag & Inestic, 2014$([char]0x2013)2023"
+$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 10 LTSC 2021 v5.17.9 | Made with $([System.Char]::ConvertFromUtf32(0x1F497)) of Windows | $([System.Char]0x00A9) farag & Inestic, 2014$([System.Char]0x2013)2024"
 
 Remove-Module -Name Sophia -Force -ErrorAction Ignore
 Import-Module -Name $PSScriptRoot\Manifest\Sophia.psd1 -PassThru -Force
@@ -297,13 +297,13 @@ RecycleBinDeleteConfirmation -Enable
 # Не запрашивать подтверждение на удаление файлов в корзину (значение по умолчанию)
 # RecycleBinDeleteConfirmation -Disable
 
-# Hide the "3D Objects" folder in "This PC" and Quick access
-# Скрыть папку "Объемные объекты" в "Этот компьютер" и панели быстрого доступа
-3DObjects -Hide
+# Hide user folders in "This PC"
+# Скрыть пользовательские папки в "Этот компьютер"
+# UserFolders -ThreeDObjects Hide -Desktop Hide -Documents Hide -Downloads Hide -Music Hide -Pictures Hide -Videos Hide
 
-# Show the "3D Objects" folder in "This PC" and Quick access (default value)
-# Отобразить папку "Объемные объекты" в "Этот компьютер" и панели быстрого доступа (значение по умолчанию)
-# 3DObjects -Show
+# Show user folders in "This PC" (default value)
+# Отобразить пользовательские папки в "Этот компьютер" (значение по умолчанию)
+# UserFolders -ThreeDObjects Show -Desktop Show -Documents Show -Downloads Show -Music Show -Pictures Show -Videos Show
 
 # Hide recently used files in Quick access
 # Скрыть недавно использовавшиеся файлы на панели быстрого доступа
@@ -576,14 +576,6 @@ DeliveryOptimization -Disable
 # Turn on Delivery Optimization (default value)
 # Включить оптимизацию доставки (значение по умолчанию)
 # DeliveryOptimization -Enable
-
-# Always wait for the network at computer startup and logon for workgroup networks
-# Всегда ждать сеть при запуске и входе в систему для рабочих групп
-WaitNetworkStartup -Enable
-
-# Never wait for the network at computer startup and logon for workgroup networks (default value)
-# Никогда не ждать сеть при запуске и входе в систему для рабочих групп (значение по умолчанию)
-# WaitNetworkStartup -Disable
 
 # Do not let Windows manage my default printer
 # Не разрешать Windows управлять принтером, используемым по умолчанию

@@ -113,16 +113,16 @@
 
 |               Version                |    Marketing name   |    Build    | Arch |      Editions       |
 |:-------------------------------------|--------------------:|:-----------:|:----:|:-------------------:|
-| Windows 11 Insider Preview 23H2      | 2023 Update         | 22509+      |      | Home/Pro/Enterprise |
-| Windows 11 22H2                      | 2022 Update         | 22621.1928+ |      | Home/Pro/Enterprise |
-| Windows 10 22H2                      | 2022 Update         | 19045.3155+ | x64  | Home/Pro/Enterprise |
-| Windows 10 21H2 Enterprise LTSC 2021 | October 2021 Update | 19044.3155+ | x64  | Enterprise          |
-| Windows 10 1809 Enterprise LTSC 2019 | October 2018 Update | 17763.4499+ | x64  | Enterprise          |
+| Windows 11 Insider Preview 24H2      | 2024 Update         | 22509+      |      | Home/Pro/Enterprise |
+| Windows 11 23H2                      | 2023 Update         | 22631.2861+ |      | Home/Pro/Enterprise |
+| Windows 10 22H2                      | 2022 Update         | 19045.3803+ | x64  | Home/Pro/Enterprise |
+| Windows 10 21H2 Enterprise LTSC 2021 | October 2021 Update | 19044.3803+ | x64  | Enterprise          |
+| Windows 10 1809 Enterprise LTSC 2019 | October 2018 Update | 17763.5206+ | x64  | Enterprise          |
 
 ### Warnung
 
 * Es darf nur ein Admin-Benutzer während des Starts der Anwendung angemeldet sein.
-* 🔥🔥🔥`Sophia Script for Windows` funktioniert möglicherweise nicht auf einem selbstgebauten Windows. Insbesondere, wenn das Homebrew-Image von Betriebssystemherstellern erstellt wurde, die Microsoft Defender zerstören und die Telemetrie des Betriebssystems deaktivieren, indem sie absichtlich Systemkomponenten "uprooten".
+* 🔥🔥🔥 `Sophia Script for Windows` funktioniert möglicherweise nicht auf einem selbstgebauten Windows. Insbesondere, wenn das Homebrew-Image von Betriebssystemherstellern erstellt wurde, die Microsoft Defender zerstören und die Telemetrie des Betriebssystems deaktivieren, indem sie absichtlich Systemkomponenten "uprooten".
 
 ## Haupt-Features
 
@@ -148,7 +148,7 @@
 * Die <kbd>TAB</kbd> [Autovervollständigung](#the-tab-autocomplete-read-more-here) für Funktionen und ihre Argumente durch Eingabe der ersten Buchstaben;
 * Deaktivieren Sie Windows-Funktionen, die Paketnamen mit einem in [WPF] geschriebenen Popup-Formular, in lokalisierter Sprache anzeigen (#screenshots);
 * Deinstallieren Sie Windows-Funktionen, die Paketnamen mit einem in [WPF] geschriebenen Popup-Formular, in lokalisierter Sprache anzeigen (#screenshots);
-* Laden Sie die [HEVC Video Extensions from Device Manufacturer](https://www.microsoft.com/p/hevc-video-extensions-from-device-manufacturer/9n4wgh0z6vhq) herunter und installieren Sie sie, um das Format [HEVC] (https://en.wikipedia.org/wiki/H.265) öffnen zu können;
+* Laden Sie die [HEVC Video Extensions from Device Manufacturer](https://apps.microsoft.com/detail/9N4WGH0Z6VHQ) herunter und installieren Sie sie, um das Format [HEVC] (https://en.wikipedia.org/wiki/H.265) öffnen zu können;
 * Registrieren Sie Anwendung, berechnen Sie den Hash und legen Sie ihn als Standard für eine bestimmte Erweiterung fest, ohne das Popup-Fenster "Wie möchten Sie dies öffnen?" sehen zu müssen. All das mit einer speziellen [Funktion] (https://github.com/DanysysTeam/PS-SFTA);
 * Exportieren Sie alle Windows-Verknüpfungen in die Datei Application_Associations.json in den Skriptstammordner;
 * Importieren Sie alle Windows-Zuordnungen aus einer JSON-Datei. Sie müssen alle Anwendungen gemäß einer exportierten JSON-Datei installieren, um alle Zuordnungen wiederherzustellen;
@@ -159,7 +159,7 @@
   * `%SystemRoot%\SoftwareDistribution\Download`
   * `%TEMP%`
 * Anheften von Verknüpfungen an Start über reinen PowerShell-Code
-  * Drei Verknüpfungen sind so vorkonfiguriert, dass sie angeheftet werden können: Systemsteuerung, Geräte und Drucker im "alten Stil" und Windows PowerShell
+  * Drei Verknüpfungen sind so vorkonfiguriert, dass sie angeheftet werden können: Systemsteuerung, Geräte und Drucker im "alten Stil".
 * Heben Sie die Anheftung aller Startmenü-Kacheln auf;
 * Aktivieren Sie den kontrollierten Ordnerzugriff und fügen Sie geschützte Ordner über das Dialogmenü hinzu;
 * Hinzufügen von Ausschlussordnern, die von der Überprüfung durch Microsoft Defender Antivirus ausgeschlossen werden, über das Dialogmenü;
@@ -177,7 +177,7 @@ https://user-images.githubusercontent.com/10544660/225270281-908abad1-d125-4cae-
 
 ### Ändern Sie den Speicherort von Benutzerordnern programmatisch über das interaktive Menü
 
-https://user-images.githubusercontent.com/10544660/252783578-1a5d93ee-6cf9-4d9e-9f55-ad9322a9b6a6.mp4
+https://user-images.githubusercontent.com/10544660/253818031-b7ce6bf1-d968-41ea-a5c0-27f6845de402.mp4
 
 ### Lokalisierte Namen von UWP-Paketen
 
@@ -284,7 +284,7 @@ Oder verwenden Sie ein Format im alten Stil ohne die TAB-Funktionen zum automati
 * Laden Sie das stets aktuelle Sophia-Script-Archiv herunter, indem Sie die PowerShell aufrufen (`auch als nicht-Administrator`)
 
 ```powershell
-irm script.sophi.app -useb | iex
+iwr script.sophia.team -useb | iex
 ```
 
 * Der Befehl lädt das neueste Sophia Script-Archiv herunter und extrahiert es (`ohne Ausführung`) entsprechend der Windows- und PowerShell-Version, unter der er ausgeführt wird. Wenn Sie es z. B. unter Windows 11 über PowerShell 5.1 ausführen, wird Sophia Script für `Windows 11 PowerShell 5.1` heruntergeladen.

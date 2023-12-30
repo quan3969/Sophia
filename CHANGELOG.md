@@ -5,6 +5,97 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 5.17.9 | 6.5.9 — 26.12.2023
+
+* Fixed bug in `HEVC` function that prevented package downloading;
+* Removed `WaitNetworkStartup` function as unnecessary one;
+* Renamed `TaskbarChat` function into `PreventTeamsInstallation`;
+* Fixed typos;
+* Minor changes.
+
+### Wrapper 2.6.13
+
+* Added compatibility with the latest `Sophia Script` version;
+* Bug fix.
+
+> **Note**: Please note that Wrapper doesn't have all functions as CLI `Sophia Script` provides. If you want to apply all functions, you need to configure `Sophia.ps1` file.
+
+With best wishes for a happy New Year from `Team Sophia` ![img](https://forum.ru-board.com/board/s/deds.gif)
+
+## 5.17.8 | 6.5.8 — 08.12.2023
+
+* The `InitialActions` function simplified;
+* Fixed bug in `TempTask` when `$env:SystemDrive\Recovery` folder wasn't removed;
+  * Just in case re-create `Temp` scheduled task via `. .\Functions.ps1` [method](https://github.com/farag2/Sophia-Script-for-Windows#how-to-run-the-specific-functions).
+  * Thanks to `linchel23`.
+* Added `CopilotButton` function for `Windows 10` to hide ot show Copilot button on the taskbar as Windows starts supporting it with the latest available build;
+* Added `WindowsLatestUpdate` function for `Windows 10` to let user get Windows updates as soon as they're available for your device as Windows starts supporting it with the latest available build;
+* Removed `HEVC` function for `Windows 11` as unnecessary one as `Windows 11` already has `Microsoft.HEVCVideoExtension` package pre-installed;
+* Fixed typos;
+* Minor changes.
+
+## 5.17.7 | 6.5.7 — 20.10.2023
+
+* Added `UserFolders` function to hide or show user folders in `This PC`;
+  * Applicable for `Windows 10` only;
+  * `UserFolders -ThreeDObjects Show -Desktop Show -Documents Show -Downloads Show -Music Show -Pictures Show -Videos Show`;
+  * Closed #535.
+* Added `CopilotButton` function to hide or show Copilot on the taskbar.
+  * Applicable for `Windows 11` only;
+
+  ```powershell
+  CopilotButton -Hide
+  CopilotButton -Show
+  ```
+
+* Added `TaskbarCombine` function to configure the icons on icons behaviour on the taskbar;
+  * Applicable for `Windows 11` only;
+
+  ```powershell
+  TaskbarCombine -Always
+  TaskbarCombine -Full
+  TaskbarCombine -Never
+  ```
+
+* Added `ComssOneDNS` argument for `DNSoverHTTPS` function to enable DNS-over-HTTPS via Comss.one DNS server;
+  * Applicable for Russia only
+  * <https://www.comss.ru/page.php?id=7315>
+* Minor changes.
+
+### Wrapper 2.6.12
+
+* Added compatibility with the latest `Sophia Script`` version;
+* Bug fix.
+
+
+## 5.17.6 | 6.5.6 — 17.09.2023
+
+* Change method to detect whether Internet connection exist;
+  * Now it relies on `dns.msftncsi.com` instead of `google.com/cloudflare.com`.
+* #532 fixed;
+* Fixed typos.
+
+### Wrapper 2.6.11
+
+* Wrapper runs now even if internet is down;
+* Wrapper now checks whether PowerShell 7 is installed if preset contains appropriate string;
+* Bug fix.
+
+## 5.17.5 | 6.5.5 — 19.08.2023
+
+* #525 closed;
+* Minor changes.
+
+### Wrapper 2.6.10
+
+* Added `Set-Association` function;
+
+## 5.17.4 | 6.5.4 — 16.07.2023
+
+* Improved interactive menu UX.
+
+https://user-images.githubusercontent.com/10544660/253818031-b7ce6bf1-d968-41ea-a5c0-27f6845de402.mp4
+
 ## 5.17.3 | 6.5.3 — 11.07.2023
 
 * Replaced interactive menus overall within a custom `Show-Menu` function;

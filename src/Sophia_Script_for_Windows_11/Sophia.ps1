@@ -2,11 +2,11 @@
 	.SYNOPSIS
 	Default preset file for "Sophia Script for Windows 11"
 
-	Version: v6.5.3
-	Date: 11.07.2023
+	Version: v6.5.9
+	Date: 26.12.2023
 
-	Copyright (c) 2014—2023 farag
-	Copyright (c) 2019—2023 farag & Inestic
+	Copyright (c) 2014—2024 farag
+	Copyright (c) 2019—2024 farag & Inestic
 
 	Thanks to all https://forum.ru-board.com members involved
 
@@ -26,8 +26,8 @@
 
 	.NOTES
 	Supported Windows 11 versions
-	Version: 22H2
-	Builds: 22621.1992+
+	Version: 23H2+
+	Builds: 22631.2861+
 	Editions: Home/Pro/Enterprise
 
 	.NOTES
@@ -69,7 +69,7 @@ param
 
 Clear-Host
 
-$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 11 v6.5.3 | Made with $([char]::ConvertFromUtf32(0x1F497)) of Windows | $([char]0x00A9) farag & Inestic, 2014$([char]0x2013)2023"
+$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 11 v6.5.9 | Made with $([System.Char]::ConvertFromUtf32(0x1F497)) of Windows | $([System.Char]0x00A9) farag & Inestic, 2014$([System.Char]0x2013)2024"
 
 Remove-Module -Name Sophia -Force -ErrorAction Ignore
 Import-Module -Name $PSScriptRoot\Manifest\Sophia.psd1 -PassThru -Force
@@ -243,8 +243,8 @@ BingSearch -Disable
 # Включить поиск через Bing в меню "Пуск" (значение по умолчанию)
 # BingSearch -Enable
 
-# Do not show websites from your browsing history in the Start menu
-# Не показать веб-сайты из журнала браузера в меню "Пуск"
+# Do not show websites from your browsing history in the Start menu. Windows 11 build 23451 (Dev) required
+# Не показать веб-сайты из журнала браузера в меню "Пуск". Требуется Windows 11 build 23451 (Dev)
 BrowsingHistory -Hide
 
 # Show websites from your browsing history in the Start menu (default value)
@@ -389,6 +389,14 @@ TaskbarSearch -Hide
 # Показать поле поиска на панели задач (значение по умолчанию)
 # TaskbarSearch -SearchBox
 
+# Hide Copilot button on the taskbar
+# Скрыть кнопку Copilot с панели задач
+CopilotButton -Hide
+
+# Show Copilot button on the taskbar (default value)
+# Отобразить кнопку Copilot на панели задач (значение по умолчанию)
+# CopilotButton -Show
+
 # Hide the Task view button from the taskbar
 # Скрыть кнопку "Представление задач" с панели задач
 TaskViewButton -Hide
@@ -399,11 +407,11 @@ TaskViewButton -Hide
 
 # Hide the Chat icon (Microsoft Teams) on the taskbar and prevent Microsoft Teams from installing for new users
 # Скрыть кнопку чата (Microsoft Teams) с панели задач и запретить установку Microsoft Teams для новых пользователей
-TaskbarChat -Hide
+PreventTeamsInstallation -Enable
 
 # Show the Chat icon (Microsoft Teams) on the taskbar and remove block from installing Microsoft Teams for new users (default value)
 # Отобразить кнопку чата (Microsoft Teams) на панели задач и убрать блокировку на устанвоку Microsoft Teams для новых пользователей (значение по умолчанию)
-# TaskbarChat -Show
+# PreventTeamsInstallation -Disable
 
 # Show seconds on the taskbar clock
 # Показывать секунды на часах на панели задач
@@ -412,6 +420,18 @@ SecondsInSystemClock -Show
 # Hide seconds on the taskbar clock (default value)
 # Скрыть секунды на часах на панели задач (значение по умолчанию)
 # SecondsInSystemClock -Hide
+
+# Combine taskbar buttons and always hide labels (default value)
+# Объединить кнопки панели задач и всегда скрывать метки (значение по умолчанию)
+TaskbarCombine -Always
+
+# Combine taskbar buttons and hide labels when taskbar is full
+# Объединить кнопки панели задач и скрывать метки при переполнении панели задач
+# TaskbarCombine -Full
+
+# Combine taskbar buttons and never hide labels
+# Объединить кнопки панели задач и никогда не скрывать метки
+# TaskbarCombine -Never
 
 # Unpin the "Microsoft Edge", "Microsoft Store" shortcuts from the taskbar
 # Открепить ярлыки "Microsoft Edge", "Microsoft Store" от панели задач
@@ -618,14 +638,6 @@ DeliveryOptimization -Disable
 # Turn on Delivery Optimization (default value)
 # Включить оптимизацию доставки (значение по умолчанию)
 # DeliveryOptimization -Enable
-
-# Always wait for the network at computer startup and logon for workgroup networks
-# Всегда ждать сеть при запуске и входе в систему для рабочих групп
-WaitNetworkStartup -Enable
-
-# Never wait for the network at computer startup and logon for workgroup networks (default value)
-# Никогда не ждать сеть при запуске и входе в систему для рабочих групп (значение по умолчанию)
-# WaitNetworkStartup -Disable
 
 # Do not let Windows manage my default printer
 # Не разрешать Windows управлять принтером, используемым по умолчанию
@@ -1034,19 +1046,6 @@ UninstallUWPApps
 #>
 # RestoreUWPApps
 
-# Download and install "HEVC Video Extensions from Device Manufacturer" to be able to open .heic and .heif formats
-# Скачать и установить "Расширения для видео HEVC от производителя устройства", чтобы иметь возможность открывать форматы .heic и .heif
-HEVC -Install
-
-<#
-	Open Microsoft Store "HEVC Video Extensions from Device Manufacturer" page to install this extension manually to be able to open .heic and .heif formats
-	The extension can be installed without an Microsoft account
-
-	Открыть страницу "Расширения для видео HEVC от производителя устройства" в Microsoft Store, чтобы вручную установить расширение для открытия форматов .heic и .heif
-	Расширение может быть установлено бесплатно без учетной записи Microsoft
-#>
-# HEVC -Manually
-
 # Disable Cortana autostarting
 # Выключить автозагрузку Кортана
 CortanaAutostart -Disable
@@ -1264,6 +1263,10 @@ DNSoverHTTPS -Enable -PrimaryDNS 1.0.0.1 -SecondaryDNS 1.1.1.1
 # Disable DNS-over-HTTPS for IPv4 (default value)
 # Выключить DNS-over-HTTPS для IPv4 (значение по умолчанию)
 # DNSoverHTTPS -Disable
+
+# Enable DNS-over-HTTPS via Comss.one DNS server. Applicable for Russia only
+# Включить DNS-over-HTTPS для IPv4 через DNS-сервер Comss.one. Применимо только для России
+# DNSoverHTTPS -ComssOneDNS
 
 # Enable Local Security Authority protection to prevent code injection
 # Включить защиту локальной системы безопасности, чтобы предотвратить внедрение кода
